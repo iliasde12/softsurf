@@ -1,0 +1,88 @@
+<html lang="nl-BE">
+
+ <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="css/register.css">
+    <title>SoftSurf</title>
+  </head>
+  <body >
+    <header class="bg-[#100E22] h-16 flex items-center overflow-hidden">
+      <img src="/assets/images/softsurf_logo.png" alt="softsurf_logo" class="ml-2 w-36" />
+    </header>
+
+  <main>
+    <div class="container-box">
+
+      <div class="container-buttons">
+        <button>Inloggen</button>
+        <button>Registreren</button>
+      </div>
+
+      <div class="container-text">
+        <h2>Account aanmaken</h2>
+        <p>Maak een account aan om je favoriete nummers op te slaan</p>
+        <p>en playlists te genereren.</p>
+      </div>
+
+      <form>
+
+        <div class="form-input">
+          <label for="weergavenaam">WEERGAVENAAM</label>
+          <input type="text" id="weergavenaam" placeholder="Hoe wil je genoemd worden?">
+        </div>
+
+        <div class="form-input">
+          <label for="email">E-MAILADRES</label>
+          <input type="email" id="email" placeholder="jouw@email.nl">
+        </div>
+
+        <div class="form-input">
+          <label for="wachtwoord">WACHTWOORD</label>
+          <input type="password" id="wachtwoord" placeholder="Minimaal 8 tekens">
+          <div class="container-bar"><span></span><span></span><span></span><span></span>
+          </div>
+          <span class="text">Wachtwoordsterkte</span>
+        </div>
+
+        <div class="form-input">
+          <label for="wachtwoord2">BEVESTIG WACHTWOORD</label>
+          <input type="password" id="wachtwoord2" placeholder="Minimaal 8 tekens">
+        </div>
+
+        <div>
+          <label>KIES JE AVATAR</label>
+          <div class="container-avatars-icon">
+            <span class="circkel-img">
+              <img src="https://em-content.zobj.net/thumbs/240/apple/354/grinning-face_1f600.png" alt="smily-face">
+            </span>
+            <span class="circkel-img">
+              <img src="https://em-content.zobj.net/thumbs/240/apple/354/musical-note_1f3b5.png" alt="muziek-noot">
+            </span>
+            <span class="circkel-img">
+              <img src="https://em-content.zobj.net/thumbs/240/apple/354/headphone_1f3a7.png" alt="headphone">
+            </span>
+            <span class="circkel-img">
+              <img src="https://em-content.zobj.net/thumbs/240/apple/354/fire_1f525.png" alt="fire">
+            </span>
+            <span class="circkel-img">
+              <img src="https://em-content.zobj.net/thumbs/240/apple/354/flag-in-hole_26f3.png" alt="golf">
+            </span>
+            <span class="circkel-img">
+              <img src="https://em-content.zobj.net/thumbs/240/apple/354/high-voltage_26a1.png" alt="bliksem">
+            </span>
+          </div>
+        </div>
+
+        <input type="submit" value="Account Aanmaken">
+
+      </form>
+    </div>
+
+  </main>
+  <aside></aside>
+  <footer></footer>
+</body>
+
+</html>
