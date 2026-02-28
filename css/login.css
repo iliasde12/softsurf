@@ -10,3 +10,21 @@
     background: unset;
     background-color: #0A0714;
 }
+
+main{
+  margin-top: 100px;
+}
+
+
+.container-text-ww-vergeten{
+    display: flex;
+    justify-content: right;
+}
+
+.container-text-ww-vergeten{
+    margin-top: 10px;
+}
+
+input[type=submit] {
+    margin-top: 30px;
+}
