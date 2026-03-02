@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>playlist</title>
+    <link rel="stylesheet" href="./css/playlist.css" />
+    <link rel="stylesheet" href="./css/general.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="grid grid-cols-4">
+    <head>
+      <nav class="col-span-4">
+        <img src="./img/softsurf_logo.png" alt="" />
+      </nav>
+    </head>
+    <main class="col-span-3">
+      <section class="top">
+        <h1>Playlist Generator</h1>
+        <p>
+          Genereer een afspeellijst op basis van je stemming en gelikete nummers
+        </p>
+      </section>
+      <section class="flex flex-row gap-3 navdoor">
+        <section class="grid grid-cols-3">
+          <p class="text-zinc-400">Huidige stemming</p>
+          <p class="text-zinc-400">gelikete nummers</p>
+          <p class="text-zinc-400">mix type</p>
+          <p class="navdoor-element">feest</p>
+          <p class="navdoor-element">4 nummers</p>
+          <p class="navdoor-element">Populair + ontdekking</p>
+        </section>
+        <section class="flex flex-row title2">
+          <p id="button-generate">genereer afspeellijst</p>
+        </section>
+      </section>
+      <section class="flex flex-row justify-between">
+        <h2>Gegenereerde Afspeellijst - 12 Nummers</h2>
+        <p id="button-opslaan">Alles Opslaan</p>
+      </section>
+      <section>
+        <ol class="list-decimal list-inside flex flex-col gap-2 lijst">
+          <li class="list-item numbers">
+            <img src="placeholder" alt="" />
+            <span>Last Last</span>
+            <span>Burnaboy</span>
+            <span>4:24</span>
+            <span><img src="" alt="" /></span>
+          </li>
+          <li class="list-item numbers">
+            <img src="placeholder" alt="" />
+            <span>Last Last</span>
+            <span>Burnaboy</span>
+            <span>4:24</span>
+            <span><img src="" alt="" /></span>
+          </li>
+          <li class="list-item numbers">
+            <span class="cover"></span>
+            <span>Last Last</span>
+            <span>Burnaboy</span>
+            <span>4:24</span>
+            <span><img src="" alt="" /></span>
+          </li>
+        </ol>
+      </section>
+    </main>
+    <aside class="row-span-2 row-start-2">
+      <section>
+        <h2>Ontdekken</h2>
+        <p>zoeken</p>
+        <p>vergelijken</p>
+        <p>Stemming</p>
+      </section>
+      <section>
+        <h2>Bibliotheek</h2>
+        <p>Mijn collectie</p>
+        <p>Afspeellijsten</p>
+      </section>
+      <section>
+        <h2>Spelletjes</h2>
+        <p>Raad het nummer</p>
+      </section>
+    </aside>
+    <footer class="col-span-4">
+      <section class="flex flex-row">
+        <h3>Last</h3>
+        <p>Burna boy</p>
+        <figure></figure>
+      </section>
+      <section class="flex flex-row">
+        <p>1:22</p>
+        <p>5:22</p>
+      </section>
+      <section>
+        <h3>volume</h3>
+      </section>
+    </footer>
+  </body>
+</html>
