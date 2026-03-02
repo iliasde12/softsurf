@@ -1,0 +1,72 @@
+:root {
+  --primary-bg-color: #0d0b1a;
+  --primary-navbg-color: #100e22;
+  --primary-sidebg-color: #363156;
+}
+
+.top p {
+  margin: 20px;
+  font-size: 15px;
+  color: grey;
+}
+
+.navdoor {
+  background-color: var(--primary-sidebg-color);
+  width: 97%;
+  font-size: 13px;
+  border-radius: 20px;
+  margin: 20px;
+}
+
+.navdoor p {
+  text-align: center;
+  padding: 10px;
+}
+
+h2 {
+  font-size: 17px;
+  padding: 0px 20px;
+  font-weight: bold;
+  width: 100%f;
+}
+
+.navdoor-element {
+  background-color: #4d467a;
+  border-radius: 8px;
+  margin: 10px;
+  box-shadow: 1px 1px 10px 3px #0000007a;
+}
+
+#button-generate {
+  background-color: #934c99;
+  margin: 30px 20px;
+  padding: 0px 10px;
+  border-radius: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#button-opslaan {
+  margin-right: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  border: 3px solid #4d467a;
+}
+
+.lijst {
+  margin-left: 60px;
+  list-style: decimal;
+}
+
+.numbers {
+  padding-bottom: 20px;
+}
+
+.cover {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-color: #934c99;
+  border-radius: 8px;
+}
