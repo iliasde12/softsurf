@@ -1,0 +1,143 @@
+<html lang="nl-BE">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="icon" type="image/x-icon" href="/assets/images/softsurf_logo.png">
+    <title>SoftSurf</title>
+  </head>
+
+  <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
+
+    <!-- HEADER -->
+    <header class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start">
+      <!-- Mobile hamburger -->
+      <button class="md:hidden text-white text-xl">☰</button>
+      <img src="/assets/images/softsurf_logo.png" alt="softsurf_logo" class="w-28 md:w-36 mx-auto md:mx-0" />
+      <div class="md:hidden w-6"></div>
+    </header>
+
+    <!-- BODY ROW -->
+    <div class="flex flex-1 overflow-hidden">
+
+      <!-- ASIDE (hidden on mobile) -->
+      <aside class="hidden md:flex w-[20%] bg-[#100E22] flex-col justify-between py-4 px-4 overflow-y-auto">
+        <div>
+          <div class="flex items-center gap-2 mb-6">
+            <div class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold">M</div>
+            <span class="font-bold text-white text-sm">MusicMatch</span>
+          </div>
+
+          <p class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest">Ontdekken</p>
+          <nav class="flex flex-col gap-1 mb-6">
+            <a href="#" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">🔍 <span>Zoeken</span></a>
+            <a href="#" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">⚖️ <span>Vergelijken</span></a>
+            <a href="#" class="flex items-center gap-2 text-white text-sm py-1 px-2 rounded-lg bg-[#7B6BF5] transition">😊 <span>Stemming</span></a>
+          </nav>
+
+          <p class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest">Bibliotheek</p>
+          <nav class="flex flex-col gap-1 mb-6">
+            <a href="#" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">🎵 <span>Mijn Collectie</span></a>
+            <a href="#" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">🎶 <span>Afspeellijsten</span></a>
+          </nav>
+
+          <p class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest">Spelletjes</p>
+          <nav class="flex flex-col gap-1">
+            <a href="#" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">🎯 <span>Raad het Nummer</span></a>
+          </nav>
+        </div>
+
+        <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
+          <div class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold">S</div>
+          <div>
+            <p class="text-white text-sm font-semibold">Saint</p>
+            <p class="text-[#7B6BF5] text-xs">● Feest-stemming</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT COLUMN -->
+      <div class="flex flex-col w-full md:w-[80%]">
+
+        <!-- MAIN -->
+        <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+          <h1 class="text-xl md:text-2xl font-bold mb-1">Stel Je Stemming In</h1>
+          <p class="text-[#6B6B8A] text-xs md:text-sm mb-6">Je huidige stemming beïnvloedt aanbevelingen en de playlist generator</p>
+
+          <!-- Mood knoppen: 2 cols mobile, 6 cols desktop -->
+          <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
+            <div class="bg-[#1E1B3A] rounded-xl p-4 text-center hover:bg-[#2A2650] cursor-pointer transition">
+              <div class="text-2xl mb-2">😊</div>
+              <p class="text-white text-xs font-semibold">Chill</p>
+              <p class="text-[#6B6B8A] text-[10px]">Ontspannen & rustig</p>
+            </div>
+            <div class="bg-[#1B3A2A] rounded-xl p-4 text-center hover:bg-[#1E4A33] cursor-pointer transition">
+              <div class="text-2xl mb-2">🎯</div>
+              <p class="text-white text-xs font-semibold">Focus</p>
+              <p class="text-[#6B6B8A] text-[10px]">Diepe concentratie</p>
+            </div>
+            <div class="bg-[#3A1B2A] rounded-xl p-4 text-center border-2 border-[#7B6BF5] cursor-pointer transition">
+              <div class="text-2xl mb-2">🎉</div>
+              <p class="text-white text-xs font-semibold">Feest</p>
+              <p class="text-[#6B6B8A] text-[10px]">Hoge energie brengen</p>
+            </div>
+            <div class="bg-[#1E1B3A] rounded-xl p-4 text-center hover:bg-[#2A2650] cursor-pointer transition">
+              <div class="text-2xl mb-2">🌧️</div>
+              <p class="text-white text-xs font-semibold">Verdrietig</p>
+              <p class="text-[#6B6B8A] text-[10px]">Melancholisch & reflectief</p>
+            </div>
+            <div class="bg-[#1E1B3A] rounded-xl p-4 text-center hover:bg-[#2A2650] cursor-pointer transition">
+              <div class="text-2xl mb-2">💪</div>
+              <p class="text-white text-xs font-semibold">Workout</p>
+              <p class="text-[#6B6B8A] text-[10px]">Opzwepende nummers</p>
+            </div>
+            <div class="bg-[#1E1B3A] rounded-xl p-4 text-center hover:bg-[#2A2650] cursor-pointer transition">
+              <div class="text-2xl mb-2">✨</div>
+              <p class="text-white text-xs font-semibold">Aangepast</p>
+              <p class="text-[#6B6B8A] text-[10px]">Maak je eigen stemming</p>
+            </div>
+          </div>
+
+          <!-- Aanbevolen -->
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-base md:text-lg font-bold">Aanbevolen voor Feest</h2>
+            <button class="border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition">Alles Bekijken</button>
+          </div>
+
+          <!-- 2 cols mobile, 4 cols desktop -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-gradient-to-br from-[#2A1B4A] to-[#1B1B3A] rounded-xl p-3 hover:scale-105 transition cursor-pointer">
+              <div class="w-full h-24 md:h-28 bg-gradient-to-br from-[#3A2A5A] to-[#2A1B4A] rounded-lg mb-3 flex items-center justify-center text-2xl">🎵</div>
+              <p class="text-white text-sm font-semibold">Ye</p>
+              <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
+            </div>
+            <div class="bg-gradient-to-br from-[#4A1B4A] to-[#2A1B3A] rounded-xl p-3 hover:scale-105 transition cursor-pointer">
+              <div class="w-full h-24 md:h-28 bg-gradient-to-br from-[#7B2A7B] to-[#4A1B5A] rounded-lg mb-3 flex items-center justify-center text-2xl">🎵</div>
+              <p class="text-white text-sm font-semibold">Mood</p>
+              <p class="text-[#6B6B8A] text-xs">24kGoldn ft. Iann Dior</p>
+            </div>
+            <div class="bg-gradient-to-br from-[#4A1B2A] to-[#2A1B3A] rounded-xl p-3 hover:scale-105 transition cursor-pointer">
+              <div class="w-full h-24 md:h-28 bg-gradient-to-br from-[#7B2A3A] to-[#4A1B2A] rounded-lg mb-3 flex items-center justify-center text-2xl">🎵</div>
+              <p class="text-white text-sm font-semibold">Calm Down</p>
+              <p class="text-[#6B6B8A] text-xs">Rema</p>
+            </div>
+            <div class="bg-gradient-to-br from-[#1B2A4A] to-[#1B1B3A] rounded-xl p-3 hover:scale-105 transition cursor-pointer">
+              <div class="w-full h-24 md:h-28 bg-gradient-to-br from-[#2A3A7B] to-[#1B2A5A] rounded-lg mb-3 flex items-center justify-center text-2xl">🎵</div>
+              <p class="text-white text-sm font-semibold">Rush</p>
+              <p class="text-[#6B6B8A] text-xs">Ayra Starr</p>
+            </div>
+          </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
+          <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
+            <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+            <div>
+              <p class="text-white text-xs font-semibold">Last Last</p>
+              <p class="text-[#6B6B8A] text-[10px]">Burna Boy</p>
+            </div>
+          </div>
+
+          <!-- Progress bar
