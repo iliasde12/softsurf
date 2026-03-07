@@ -100,7 +100,11 @@ form,
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 5px;
+    margin-bottom: 10px;
+}
 
+.text{
+    margin-bottom: 10px;
 }
 
 .form-input input::placeholder {
@@ -205,7 +209,12 @@ input[type=submit] {
     height: 20px;
 }
 
+.circkel-active{
+    border-color: white;
+    border-width: 2px;
+}
+
 .container-avatars-icon {
     display: flex;
-    gap: 5px;
+    gap: 15px;
 }
