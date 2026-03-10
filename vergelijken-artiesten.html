@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vergelijken – Artiesten</title>
 
-    <!-- Halyard via Adobe Fonts (vervang xxxxxxx met jouw kit-ID op fonts.adobe.com) -->
-    <link rel="stylesheet" href="https://use.typekit.net/xxxxxxx.css" />
-
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -44,192 +41,276 @@
     </script>
   </head>
 
-  <body class="font-body bg-base text-light min-h-screen px-6 py-10">
-    <div class="max-w-4xl mx-auto">
-      <!-- Header -->
-      <div class="animate-fadeUp mb-4">
-        <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Vergelijken</h1>
-        <p class="mt-1 text-sm text-muted">Selecteer twee artiesten om hun statistieken naast elkaar te zien</p>
-      </div>
+  <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
+    <!-- HEADER -->
+    <header class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start">
+      <button class="md:hidden text-white text-xl">☰</button>
+      <img src="/assets/images/softsurf_logo.png" alt="softsurf_logo" class="w-28 md:w-36 mx-auto md:mx-0" />
+      <div class="md:hidden w-6"></div>
+    </header>
 
-      <!-- Search -->
-      <div class="relative animate-fadeUp mb-6" style="animation-delay: 0.05s">
-        <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.35-4.35" />
-        </svg>
-        <input
-          type="search"
-          placeholder="Zoek een artiest…"
-          class="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-light placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition" />
-      </div>
-
-      <!-- Tabs -->
-      <div class="flex gap-2 mb-8 animate-fadeUp" style="animation-delay: 0.1s">
-        <a
-          href="vergelijken-artiesten.html"
-          class="px-4 py-1.5 rounded-full text-sm font-medium bg-gradient-to-br from-accent to-violet-400 text-white shadow-lg shadow-accent/30 border border-transparent">
-          Artiesten
-        </a>
-        <a href="vergelijken-nummers.html" class="px-4 py-1.5 rounded-full text-sm font-medium border border-border text-muted hover:text-light hover:border-violet-700 transition">Nummers</a>
-      </div>
-
-      <!-- Compare grid -->
-      <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-start animate-fadeUp" style="animation-delay: 0.15s">
-        <!-- ── Burna Boy ── -->
-        <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40">
-          <!-- Card header -->
-          <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
-            <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg" style="background: linear-gradient(135deg, #3b1f6b, #6d28d9, #a78bfa)">🎤</div>
-            <div class="text-center">
-              <h2 class="font-display text-lg font-semibold text-light">Burna Boy</h2>
-              <p class="text-xs text-muted mt-0.5">Artiest · Nigeriaans</p>
-            </div>
+    <div class="flex flex-1 overflow-hidden">
+      <aside class="hidden md:flex w-[20%] bg-[#100E22] flex-col justify-between py-4 px-4 overflow-y-auto">
+        <div>
+          <div class="flex items-center gap-2 mb-6">
+            <div class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold">M</div>
+            <span class="font-bold text-white text-sm">MusicMatch</span>
           </div>
 
-          <!-- Stats -->
-          <div class="px-5 py-2">
-            <div class="py-3.5 border-b border-border group hover:bg-accent/5 rounded-lg px-1 transition">
-              <div class="flex justify-between items-center">
-                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Populariteit</span>
-                <span class="text-sm font-semibold text-green">88</span>
-              </div>
-              <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                <div class="h-full rounded-full bg-gradient-to-r from-accent to-violet-400" style="width: 88%"></div>
-              </div>
-            </div>
+          <p class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest">Ontdekken</p>
+          <nav class="flex flex-col gap-1 mb-6">
+            <a href="#" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">
+              🔍
+              <span>Zoeken</span>
+            </a>
+            <a href="#" class="flex items-center gap-2 text-white text-sm py-1 px-2 rounded-lg bg-[#7B6BF5] transition">
+              ⚖️
+              <span>Vergelijken</span>
+            </a>
+            <a href="#" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">
+              😊
+              <span>Stemming</span>
+            </a>
+          </nav>
 
-            <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-              <div class="flex justify-between items-center">
-                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Volgers</span>
-                <span class="text-sm font-semibold text-green">12,4M</span>
-              </div>
-              <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                <div class="h-full rounded-full bg-gradient-to-r from-accent to-violet-400" style="width: 82%"></div>
-              </div>
-            </div>
+          <p class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest">Bibliotheek</p>
+          <nav class="flex flex-col gap-1 mb-6">
+            <a href="#" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">
+              🎵
+              <span>Mijn Collectie</span>
+            </a>
+            <a href="#" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">
+              🎶
+              <span>Afspeellijsten</span>
+            </a>
+          </nav>
 
-            <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-              <div class="flex justify-between items-center">
-                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Albums</span>
-                <span class="text-sm font-semibold text-red">7</span>
-              </div>
-              <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 44%"></div>
-              </div>
-            </div>
-
-            <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-              <div class="flex justify-between items-center">
-                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Maandelijkse luisteraars</span>
-                <span class="text-sm font-semibold text-green">42M</span>
-              </div>
-              <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                <div class="h-full rounded-full bg-gradient-to-r from-accent to-violet-400" style="width: 76%"></div>
-              </div>
-            </div>
-
-            <div class="py-3.5 flex justify-between items-center px-1">
-              <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Genre</span>
-              <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20">Afrobeats</span>
-            </div>
-          </div>
+          <p class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest">Spelletjes</p>
+          <nav class="flex flex-col gap-1">
+            <a href="#" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">
+              🎯
+              <span>Raad het Nummer</span>
+            </a>
+          </nav>
         </div>
 
-        <!-- VS -->
-        <div class="flex items-center justify-center py-8 md:py-0 md:mt-28">
-          <div
-            class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold text-white tracking-widest"
-            style="
-              background: linear-gradient(135deg, #5b3fe8, #7c6aff);
-              box-shadow:
-                0 0 0 3px rgba(124, 106, 255, 0.22),
-                0 0 24px rgba(124, 106, 255, 0.18);
-            ">
-            VS
+        <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
+          <div class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold">S</div>
+          <div>
+            <p class="text-white text-sm font-semibold">Saint</p>
+            <p class="text-[#7B6BF5] text-xs">● Feest-stemming</p>
           </div>
         </div>
+      </aside>
 
-        <!-- ── Wizkid ── -->
-        <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40">
-          <!-- Card header -->
-          <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
-            <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg" style="background: linear-gradient(135deg, #1f3b6b, #2563eb, #818cf8)">🎤</div>
-            <div class="text-center">
-              <h2 class="font-display text-lg font-semibold text-light">Wizkid</h2>
-              <p class="text-xs text-muted mt-0.5">Artiest · Nigeriaans</p>
+      <!-- RIGHT COLUMN -->
+      <div class="flex flex-col w-full md:w-[80%]">
+        <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+          <!-- Title -->
+          <div class="animate-fadeUp mb-4">
+            <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Vergelijken</h1>
+            <p class="mt-1 text-sm text-muted">Selecteer twee artiesten om hun statistieken naast elkaar te zien</p>
+          </div>
+          <!-- Search -->
+          <div class="relative animate-fadeUp mb-6" style="animation-delay: 0.05s">
+            <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input
+              type="search"
+              placeholder="Zoek een artiest…"
+              class="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-light placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition" />
+          </div>
+          <!-- Tabs -->
+          <div class="flex gap-2 mb-8 animate-fadeUp" style="animation-delay: 0.1s">
+            <a
+              href="vergelijken-artiesten.html"
+              class="px-4 py-1.5 rounded-full text-sm font-medium bg-gradient-to-br from-accent to-violet-400 text-white shadow-lg shadow-accent/30 border border-transparent">
+              Artiesten
+            </a>
+            <a href="vergelijken-nummers.html" class="px-4 py-1.5 rounded-full text-sm font-medium border border-border text-muted hover:text-light hover:border-violet-700 transition">Nummers</a>
+          </div>
+          <!-- Compare grid -->
+          <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-start animate-fadeUp" style="animation-delay: 0.15s">
+            <!-- ── Burna Boy ── -->
+            <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40">
+              <!-- Card header -->
+              <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
+                <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg" style="background: linear-gradient(135deg, #3b1f6b, #6d28d9, #a78bfa)">🎤</div>
+                <div class="text-center">
+                  <h2 class="font-display text-lg font-semibold text-light">Burna Boy</h2>
+                  <p class="text-xs text-muted mt-0.5">Artiest · Nigeriaans</p>
+                </div>
+              </div>
+              <!-- Stats -->
+              <div class="px-5 py-2">
+                <div class="py-3.5 border-b border-border group hover:bg-accent/5 rounded-lg px-1 transition">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Populariteit</span>
+                    <span class="text-sm font-semibold text-green">88</span>
+                  </div>
+                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                    <div class="h-full rounded-full bg-gradient-to-r from-accent to-violet-400" style="width: 88%"></div>
+                  </div>
+                </div>
+                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Volgers</span>
+                    <span class="text-sm font-semibold text-green">12,4M</span>
+                  </div>
+                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                    <div class="h-full rounded-full bg-gradient-to-r from-accent to-violet-400" style="width: 82%"></div>
+                  </div>
+                </div>
+                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Albums</span>
+                    <span class="text-sm font-semibold text-red">7</span>
+                  </div>
+                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                    <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 44%"></div>
+                  </div>
+                </div>
+                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Maandelijkse luisteraars</span>
+                    <span class="text-sm font-semibold text-green">42M</span>
+                  </div>
+                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                    <div class="h-full rounded-full bg-gradient-to-r from-accent to-violet-400" style="width: 76%"></div>
+                  </div>
+                </div>
+                <div class="py-3.5 flex justify-between items-center px-1">
+                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Genre</span>
+                  <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20">Afrobeats</span>
+                </div>
+              </div>
+            </div>
+            <!-- VS -->
+            <div class="flex items-center justify-center py-8 md:py-0 md:mt-28">
+              <div
+                class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold text-white tracking-widest"
+                style="
+                  background: linear-gradient(135deg, #5b3fe8, #7c6aff);
+                  box-shadow:
+                    0 0 0 3px rgba(124, 106, 255, 0.22),
+                    0 0 24px rgba(124, 106, 255, 0.18);
+                ">
+                VS
+              </div>
+            </div>
+            <!-- ── Wizkid ── -->
+            <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40">
+              <!-- Card header -->
+              <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
+                <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg" style="background: linear-gradient(135deg, #1f3b6b, #2563eb, #818cf8)">🎤</div>
+                <div class="text-center">
+                  <h2 class="font-display text-lg font-semibold text-light">Wizkid</h2>
+                  <p class="text-xs text-muted mt-0.5">Artiest · Nigeriaans</p>
+                </div>
+              </div>
+              <!-- Stats -->
+              <div class="px-5 py-2">
+                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Populariteit</span>
+                    <span class="text-sm font-semibold text-red">85</span>
+                  </div>
+                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                    <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 85%"></div>
+                  </div>
+                </div>
+                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Volgers</span>
+                    <span class="text-sm font-semibold text-red">10,1M</span>
+                  </div>
+                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                    <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 67%"></div>
+                  </div>
+                </div>
+                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Albums</span>
+                    <span class="text-sm font-semibold text-green">9</span>
+                  </div>
+                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                    <div class="h-full rounded-full bg-gradient-to-r from-accent to-violet-400" style="width: 56%"></div>
+                  </div>
+                </div>
+                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Maandelijkse luisteraars</span>
+                    <span class="text-sm font-semibold text-red">36M</span>
+                  </div>
+                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                    <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 65%"></div>
+                  </div>
+                </div>
+                <div class="py-3.5 flex justify-between items-center px-1">
+                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Genre</span>
+                  <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20">Afropop</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /grid -->
+          <!-- Summary -->
+          <div class="mt-6 flex flex-wrap items-center justify-between gap-3 border border-border bg-card/50 rounded-xl px-6 py-4 animate-fadeUp" style="animation-delay: 0.2s">
+            <p class="text-sm text-muted">
+              <span class="text-light font-semibold">Burna Boy</span>
+              scoort hoger op populariteit, volgers en luisteraars.
+              <span class="text-light font-semibold">Wizkid</span>
+              heeft meer albums uitgebracht.
+            </p>
+            <div class="flex gap-4 shrink-0">
+              <span class="flex items-center gap-1.5 text-xs text-green font-medium">
+                <span class="w-2 h-2 rounded-full bg-green inline-block"></span>
+                Winnaar
+              </span>
+              <span class="flex items-center gap-1.5 text-xs text-red font-medium">
+                <span class="w-2 h-2 rounded-full bg-red inline-block"></span>
+                Lager
+              </span>
+            </div>
+          </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
+          <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
+            <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+            <div>
+              <p class="text-white text-xs font-semibold">Last Last</p>
+              <p class="text-[#6B6B8A] text-[10px]">Burna Boy</p>
             </div>
           </div>
 
-          <!-- Stats -->
-          <div class="px-5 py-2">
-            <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-              <div class="flex justify-between items-center">
-                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Populariteit</span>
-                <span class="text-sm font-semibold text-red">85</span>
-              </div>
-              <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 85%"></div>
-              </div>
+          <div class="hidden md:flex flex-col items-center flex-1 gap-1">
+            <div class="flex items-center gap-4">
+              <button class="text-[#A0A0C0] hover:text-white text-sm">⏮</button>
+              <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black text-sm">▶</button>
+              <button class="text-[#A0A0C0] hover:text-white text-sm">⏭</button>
             </div>
-
-            <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-              <div class="flex justify-between items-center">
-                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Volgers</span>
-                <span class="text-sm font-semibold text-red">10,1M</span>
+            <div class="flex items-center gap-2 w-full max-w-md">
+              <span class="text-[#6B6B8A] text-[10px]">1:22</span>
+              <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full">
+                <div class="w-[40%] h-full bg-[#7B6BF5] rounded-full"></div>
               </div>
-              <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 67%"></div>
-              </div>
-            </div>
-
-            <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-              <div class="flex justify-between items-center">
-                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Albums</span>
-                <span class="text-sm font-semibold text-green">9</span>
-              </div>
-              <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                <div class="h-full rounded-full bg-gradient-to-r from-accent to-violet-400" style="width: 56%"></div>
-              </div>
-            </div>
-
-            <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-              <div class="flex justify-between items-center">
-                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Maandelijkse luisteraars</span>
-                <span class="text-sm font-semibold text-red">36M</span>
-              </div>
-              <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 65%"></div>
-              </div>
-            </div>
-
-            <div class="py-3.5 flex justify-between items-center px-1">
-              <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Genre</span>
-              <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20">Afropop</span>
+              <span class="text-[#6B6B8A] text-[10px]">4:08</span>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- /grid -->
 
-      <!-- Summary -->
-      <div class="mt-6 flex flex-wrap items-center justify-between gap-3 border border-border bg-card/50 rounded-xl px-6 py-4 animate-fadeUp" style="animation-delay: 0.2s">
-        <p class="text-sm text-muted">
-          <span class="text-light font-semibold">Burna Boy</span>
-          scoort hoger op populariteit, volgers en luisteraars.
-          <span class="text-light font-semibold">Wizkid</span>
-          heeft meer albums uitgebracht.
-        </p>
-        <div class="flex gap-4 shrink-0">
-          <span class="flex items-center gap-1.5 text-xs text-green font-medium">
-            <span class="w-2 h-2 rounded-full bg-green inline-block"></span>
-            Winnaar
-          </span>
-          <span class="flex items-center gap-1.5 text-xs text-red font-medium">
-            <span class="w-2 h-2 rounded-full bg-red inline-block"></span>
-            Lager
-          </span>
-        </div>
+          <button class="md:hidden w-10 h-10 bg-white rounded-full flex items-center justify-center text-black text-sm shrink-0">▶</button>
+
+          <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
+            <span class="text-[#6B6B8A] text-xs">🔊</span>
+            <div class="w-20 h-1 bg-[#1E1B3A] rounded-full">
+              <div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   </body>
