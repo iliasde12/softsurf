@@ -7,13 +7,13 @@ let StrenghtPass = 0;
 
 passwordInput.addEventListener('input', (e) => {
     const password = e.target.value;
-    
+
     if (!password) {
         resetStrength();
-        StrenghtPass = 0; 
+        StrenghtPass = 0;
         return;
     }
-    
+
     let score = 0;
     //plus 1 punt als langer of gelijk is aan 8
     if (password.length >= 8) score++;
@@ -36,22 +36,22 @@ function updateStrength(level) {
     bars.forEach(bar => {
         bar.className = 'bar';
     });
-    
-    switch(level) {
-        case 1: 
+
+    switch (level) {
+        case 1:
             bars[0].classList.add('weak');
             strengthText.textContent = 'Zwak wachtwoord';
             strengthText.className = 'text weak';
             StrenghtPass = 1;
             break;
-        case 2: 
+        case 2:
             bars[0].classList.add('medium');
             bars[1].classList.add('medium');
             strengthText.textContent = 'Gemiddeld wachtwoord';
             strengthText.className = 'text medium';
             StrenghtPass = 2;
             break;
-        case 3: 
+        case 3:
             bars[0].classList.add('good');
             bars[1].classList.add('good');
             bars[2].classList.add('good');
@@ -59,7 +59,7 @@ function updateStrength(level) {
             strengthText.className = 'text good';
             StrenghtPass = 3;
             break;
-        case 4: 
+        case 4:
             bars.forEach(bar => bar.classList.add('strong'));
             strengthText.textContent = 'Sterk wachtwoord';
             strengthText.className = 'text strong';
@@ -76,7 +76,7 @@ function resetStrength() {
 
 
 const avatars = document.querySelectorAll('.circkel-img');
-let selectedAvatar = "https://em-content.zobj.net/thumbs/240/apple/354/grinning-face_1f600.png"; 
+let selectedAvatar = "https://em-content.zobj.net/thumbs/240/apple/354/grinning-face_1f600.png";
 
 avatars.forEach(avatar => {
     avatar.addEventListener('click', () => {
@@ -104,10 +104,10 @@ document.getElementById("form").addEventListener("submit", (e) => {
         saveUser(username, email, wachtwoord);
         window.location.href = "/login.html";
     } else {
-        const errorMessageContainer = document.querySelector(".container-message"); 
+        const errorMessageContainer = document.querySelector(".container-message");
         errorMessageContainer.style.display = "block";
-        errorMessageContainer.innerHTML = "";
-        
+        errorMessageContainer.textContent = "";
+
         const errorMessage = document.createElement("p");
         errorMessage.textContent = message;
         errorMessageContainer.append(errorMessage);
@@ -128,14 +128,14 @@ function checkRequirments(username, email, wachtwoord, HerhaalWachtwoord) {
         return { "error": true, "message": "Voer een geldig email adres in" };
     }
 
-    if (wachtwoord.length < 8) { 
+    if (wachtwoord.length < 8) {
         return { "error": true, "message": "Wachtwoord moet minimaal 8 karakters zijn" };
     }
 
     if (StrenghtPass < 3) {
-        return { 
-            "error": true, 
-            "message": "Wachtwoord is niet sterk genoeg. Gebruik hoofdletters, kleine letters en cijfers." 
+        return {
+            "error": true,
+            "message": "Wachtwoord is niet sterk genoeg. Gebruik hoofdletters, kleine letters en cijfers."
         };
     }
 
@@ -157,7 +157,7 @@ function saveUser(username, email, wachtwoord) {
         username: username,
         email: email,
         wachtwoord: wachtwoord,
-        avatar: selectedAvatar, 
+        avatar: selectedAvatar,
     };
 
     localStorage.setItem("user", JSON.stringify(user));
