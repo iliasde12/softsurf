@@ -1,24 +1,30 @@
 <html lang="nl-BE">
 
- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-      <link rel="icon" type="image/x-icon" href="/assets/images/softsurf_logo.png">
-    <link rel="stylesheet" href="css/register.css">
-    <title>SoftSurf</title>
-  </head>
-  <body >
-    <header class="bg-[#100E22] h-16 flex items-center overflow-hidden">
-      <img src="/assets/images/softsurf_logo.png" alt="softsurf_logo" class="ml-2 w-36" />
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="icon" type="image/x-icon" href="/assets/images/softsurf_logo.png">
+  <link rel="stylesheet" href="css/register.css">
+  <title>SoftSurf</title>
+  <script src="js/register.js" async></script>
+</head>
+
+<body>
+  <header class="bg-[#100E22] h-16 flex items-center overflow-hidden">
+    <img src="/assets/images/softsurf_logo.png" alt="softsurf_logo" class="ml-2 w-36" />
+  </header>
 
   <main>
     <div class="container-box">
 
       <div class="container-buttons">
-         <button><a href="/login.html">Inloggen</a></button>
+        <button><a href="/login.html">Inloggen</a></button>
         <button><a href="/Register.html">Registreren</a></button>
+      </div>
+
+      <div class="container-message" style="display: none;">
+
       </div>
 
       <div class="container-text">
@@ -27,7 +33,7 @@
         <p>en playlists te genereren.</p>
       </div>
 
-      <form>
+      <form id="form">
 
         <div class="form-input">
           <label for="weergavenaam">WEERGAVENAAM</label>
@@ -42,7 +48,11 @@
         <div class="form-input">
           <label for="wachtwoord">WACHTWOORD</label>
           <input type="password" id="wachtwoord" placeholder="Minimaal 8 tekens">
-          <div class="container-bar"><span></span><span></span><span></span><span></span>
+          <div class="container-bar">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
           </div>
           <span class="text">Wachtwoordsterkte</span>
         </div>
