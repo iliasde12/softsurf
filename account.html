@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account-Page</title>
+    <link rel="stylesheet" href="./css/template.css" />
+    <link rel="stylesheet" href="./css/account.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="grid grid-cols-4">
+    <head>
+      <nav class="col-span-4">
+        <img src="./img/softsurf_logo.png" alt="" />
+        <div class=""></div>
+      </nav>
+    </head>
+    <main class="col-span-3 col-start-2 flex">
+      <h1>Saint</h1>
+    </main>
+    <aside class="row-span-2 row-start-2">
+      <section class="sidelist">
+        <h2 class="ondertittel">Ontdekken</h2>
+        <p class="onderondertitel flex flex-row gap-3">
+          <img
+            class="icon"
+            src="./img/magnifying-glass-solid-full (2).svg"
+            alt=""
+          />zoeken
+        </p>
+        <p class="onderondertitel flex flex-row gap-3">
+          <img
+            id="square"
+            class="icon"
+            src="./img/square.svg"
+            alt=""
+          />vergelijken
+        </p>
+        <p class="onderondertitel flex flex-row gap-3">
+          <img class="icon" src="./img/emoiji.svg" alt="" />Stemming
+        </p>
+      </section>
+      <section class="sidelist">
+        <h2 class="ondertittel">Bibliotheek</h2>
+        <p class="onderondertitel flex flex-row gap-3">
+          <img class="icon" src="./img/heart-regular-full.svg" alt="" />Mijn
+          collectie
+        </p>
+        <p class="onderondertitel flex flex-row gap-3">
+          <img
+            class="icon"
+            src="./img/music-solid-full.svg"
+            alt=""
+          />Afspeellijsten
+        </p>
+      </section>
+      <section class="sidelist">
+        <h2 class="ondertittel">Spelletjes</h2>
+        <p class="onderondertitel flex flex-row gap-3">
+          <img class="icon" src="./img/question-solid-full.svg" alt="" />Raad
+          het nummer
+        </p>
+      </section>
+    </aside>
+    <footer class="col-span-4 grid grid-cols-5">
+      <section class="acc grid grid-cols-3">
+        <figure class="row-span-2 logobol"></figure>
+        <h3 class="naam col-span-2 content-end">Saint</h3>
+        <div class="stemming flex flex-row col-span-2 col-start-2">
+          <div id="bol"></div>
+          <p id="textstemming">Feest-Stemming</p>
+        </div>
+      </section>
+      <section class="song grid grid-cols-2">
+        <figure class="songbol row-span-2"></figure>
+        <h3 class="self-end">Last</h3>
+        <p class="artist self-start">Burna boy</p>
+        <figure></figure>
+      </section>
+      <section class="col-span-2">
+        <div class="flex flex-row gap-3 justify-center">
+          <img class="iconSong" src="./img/left.svg" alt="" />
+          <img class="iconSong" src="./img/pause.svg" alt="" />
+          <img class="iconSong" src="./img/right.svg" alt="" />
+        </div>
+        <div class="grid grid-cols-[5%_40%_40%_5%] gap-3 justify-items-center">
+          <p class="time">1:22</p>
+          <figure class="lijn col-span-2"></figure>
+          <p class="time">5:22</p>
+        </div>
+      </section>
+      <section class="volume flex flex-row items-center justify-end">
+        <img
+          class="iconSong justify-self-end"
+          src="./img/volume-solid-full.svg"
+          alt=""
+        />
+        <figure class="volumeLijn justify-self-start"></figure>
+      </section>
+    </footer>
+  </body>
+</html>
