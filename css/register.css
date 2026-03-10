@@ -100,7 +100,11 @@ form,
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 5px;
+    margin-bottom: 10px;
+}
 
+.text{
+    margin-bottom: 10px;
 }
 
 .form-input input::placeholder {
@@ -205,7 +209,66 @@ input[type=submit] {
     height: 20px;
 }
 
+.circkel-active{
+    border-color: white;
+    border-width: 2px;
+}
+
 .container-avatars-icon {
     display: flex;
-    gap: 5px;
+    gap: 15px;
+}
+
+.container-bar {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(139, 146, 176, 0.2);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.bar.weak {
+    background: #ff4444;
+}
+
+.bar.medium {
+    background: #ffaa00;
+}
+
+.bar.good {
+    background: #44ff44;
+}
+
+.bar.strong {
+    background: #00ff88;
+}
+
+.text {
+    display: block;
+    color: #8b92b0;
+    font-size: 13px;
+    transition: color 0.3s ease;
+}
+
+.text.weak {
+    color: #ff4444;
+}
+
+.text.medium {
+    color: #ffaa00;
+}
+
+.text.good {
+    color: #44ff44;
+}
+
+.text.strong {
+    color: #00ff88;
 }
