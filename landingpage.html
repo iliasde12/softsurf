@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoftSurf – Kies Je Project</title>
+
+    <link rel="stylesheet" href="https://use.typekit.net/halyard.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['"halyard-display"', "sans-serif"],
+              body: ['"halyard-text"', "sans-serif"],
+            },
+            colors: {
+              bg: "#0b0c1e",
+              accent: "#7c6fff",
+            },
+            keyframes: {
+              fadeUp: {
+                "0%": { opacity: "0", transform: "translateY(18px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideDown: {
+                "0%": { opacity: "0", transform: "translateY(-10px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+            animation: {
+              "fade-up": "fadeUp 0.55s ease forwards",
+              "slide-down": "slideDown 0.4s ease forwards",
+            },
+          },
+        },
+      };
+    </script>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+      body {
+        font-family: "halyard-text", sans-serif;
+        background: #0b0c1e;
+      }
+
+      .theme-music {
+        background: radial-gradient(ellipse at 30% 20%, #6c5ce7 0%, transparent 65%), radial-gradient(ellipse at 80% 80%, #a29bfe 0%, transparent 60%), #11142a;
+      }
+      .theme-game {
+        background: radial-gradient(ellipse at 40% 30%, #2d6a4f 0%, transparent 65%), radial-gradient(ellipse at 70% 75%, #52b788 0%, transparent 60%), #11142a;
+      }
+      .theme-lego {
+        background: radial-gradient(ellipse at 35% 25%, #7b2d00 0%, transparent 65%), radial-gradient(ellipse at 75% 70%, #e07b39 0%, transparent 60%), #11142a;
+      }
+
+      .card {
+        transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+      .card:hover {
+        transform: translateY(-6px) scale(1.015);
+      }
+
+      .delay-1 {
+        animation-delay: 0.1s;
+        opacity: 0;
+      }
+      .delay-2 {
+        animation-delay: 0.2s;
+        opacity: 0;
+      }
+      .delay-3 {
+        animation-delay: 0.3s;
+        opacity: 0;
+      }
+      .delay-4 {
+        animation-delay: 0.4s;
+        opacity: 0;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen text-white overflow-x-hidden">
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-50 flex items-center px-6 py-2 border-b border-white/[0.07] bg-[#0b0c1e]/85 backdrop-blur-md animate-slide-down">
+      <a href="/">
+        <img src="/assets/images/softsurf_logo.png" alt="SoftSurf" class="h-20 w-auto" />
+      </a>
+    </header>
+
+    <!-- MAIN -->
+    <main class="max-w-[900px] mx-auto px-5 sm:px-8 py-16 sm:py-24">
+      <!-- Hero -->
+      <section class="text-center mb-14 animate-fade-up delay-1">
+        <h1 class="font-display font-extrabold text-[clamp(2rem,5vw,3rem)] tracking-tight leading-tight text-white mb-3">Kies Je Project</h1>
+        <p class="text-sm text-white/50 max-w-xl mx-auto">Selecteer een project om te beginnen. Je moet ingelogd zijn om toegang te krijgen tot je persoonlijke collectie en functies.</p>
+      </section>
+
+      <!-- Cards -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- MusicMatch — goes to /musicmatch -->
+        <a
+          href="/musicmatch"
+          class="card theme-music rounded-[20px] border border-[#7c6fff]/40 overflow-hidden min-h-[260px] flex flex-col shadow-[0_8px_32px_rgba(124,111,255,0.12)] sm:col-span-2 lg:col-span-1 animate-fade-up delay-2">
+          <div class="flex-1 flex items-center justify-center py-10">
+            <svg style="width: 3.5rem; height: 3.5rem" class="text-white/80" viewBox="0 0 40 40" fill="none">
+              <path d="M16 30V14l16-4v16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="12" cy="30" r="4" stroke="currentColor" stroke-width="2" />
+              <circle cx="28" cy="26" r="4" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </div>
+          <div class="bg-[#0b0c1e]/70 backdrop-blur-sm px-5 py-4 border-t border-white/[0.08]">
+            <h2 class="font-display font-bold text-base text-white mb-0.5">MusicMatch</h2>
+            <p class="text-[0.78rem] text-white/50 leading-snug mb-3">Ontdek, vergelijk en bewaar muziek via de Spotify API.</p>
+            <span class="text-[0.65rem] font-bold tracking-[0.1em] uppercase px-3 py-[0.3rem] rounded-lg bg-[#7c6fff] text-white">OPEN PROJECT</span>
+          </div>
+        </a>
+
+        <!-- GameHub — shows popup -->
+        <div
+          onclick="document.getElementById('popup').classList.remove('hidden')"
+          class="card theme-game rounded-[20px] border border-white/[0.07] overflow-hidden min-h-[260px] flex flex-col cursor-pointer animate-fade-up delay-3">
+          <div class="flex-1 flex items-center justify-center py-10">
+            <ion-icon name="game-controller-outline" style="font-size: 3.5rem; color: rgba(255, 255, 255, 0.8)"></ion-icon>
+          </div>
+          <div class="bg-[#0b0c1e]/70 backdrop-blur-sm px-5 py-4 border-t border-white/[0.06]">
+            <h2 class="font-display font-bold text-base text-white mb-0.5">GameHub</h2>
+            <p class="text-[0.78rem] text-white/50 leading-snug mb-3">Beheer jouw videogames en vind iets leuks.</p>
+            <span class="text-[0.65rem] font-bold tracking-[0.1em] uppercase px-3 py-[0.3rem] rounded-lg bg-[#7c6fff] text-white">OPEN PROJECT</span>
+          </div>
+        </div>
+
+        <!-- Legomasters — shows popup -->
+        <div
+          onclick="document.getElementById('popup').classList.remove('hidden')"
+          class="card theme-lego rounded-[20px] border border-white/[0.07] overflow-hidden min-h-[260px] flex flex-col cursor-pointer animate-fade-up delay-4">
+          <div class="flex-1 flex items-center justify-center py-10">
+            <ion-icon name="build-outline" style="font-size: 3.5rem; color: rgba(255, 255, 255, 0.8)"></ion-icon>
+          </div>
+          <div class="bg-[#0b0c1e]/70 backdrop-blur-sm px-5 py-4 border-t border-white/[0.06]">
+            <h2 class="font-display font-bold text-base text-white mb-0.5">Legomasters</h2>
+            <p class="text-[0.78rem] text-white/35 leading-snug mb-3">Bouw jouw lego sets en maak er meer van.</p>
+            <span class="text-[0.65rem] font-bold tracking-[0.1em] uppercase px-3 py-[0.3rem] rounded-lg bg-[#7c6fff] text-white">OPEN PROJECT</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- POPUP -->
+    <div id="popup" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+      <div class="bg-[#11142a] border border-[#7c6fff]/40 rounded-2xl px-10 py-8 max-w-sm w-full text-center shadow-[0_0_40px_rgba(124,111,255,0.2)]">
+        <h2 class="font-display font-bold text-2xl text-white mb-3">Geen Toegang</h2>
+        <p class="text-white/60 text-sm leading-relaxed mb-6">
+          Je kunt niet deelnemen aan dit project.
+          <br />
+          Selecteer je eigen project om verder te gaan.
+        </p>
+        <button
+          onclick="document.getElementById('popup').classList.add('hidden')"
+          class="px-8 py-2 rounded-full border border-[#7c6fff]/60 text-white/80 text-sm hover:bg-[#7c6fff]/20 transition-all duration-200">
+          Begrepen
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
