@@ -1,0 +1,80 @@
+:root {
+  --primary-bg-color: #0d0b1a;
+  --primary-navbg-color: #100e22;
+  --primary-sidebg-color: #363156;
+}
+
+.top p {
+  margin: 20px;
+  font-size: 15px;
+  color: grey;
+  text-align: center;
+}
+
+.top h1 {
+  text-align: center;
+}
+
+.points {
+  justify-items: center;
+  justify-content: center;
+}
+
+#seven {
+  color: green;
+  font-weight: bold;
+  font-size: 30px;
+}
+#twelve {
+  color: purple;
+  font-weight: bold;
+  font-size: 30px;
+}
+#three {
+  color: red;
+  font-weight: bold;
+  font-size: 30px;
+}
+#plate {
+  width: 100px;
+  margin: auto;
+}
+
+.backg-plate {
+  margin: auto;
+  margin-top: 2rem;
+  max-width: 30%;
+  padding: 2rem;
+  background-color: var(--primary-sidebg-color);
+  border-radius: 8px;
+}
+form {
+  text-align: center;
+  margin-top: 1rem;
+}
+input {
+  background-color: var(--primary-sidebg-color);
+  border-radius: 100px;
+  padding: 5px;
+}
+label {
+  background-color: var(--primary-sidebg-color);
+  border-radius: 100px;
+  padding: 8px 10px;
+}
+
+.cover {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-color: #934c99;
+  border-radius: 8px;
+}
+.backg-list {
+  margin: auto;
+  background-color: #363156;
+  margin-top: 1rem;
+  max-width: 30%;
+  padding: 1rem;
+  border-radius: 8px;
+}
