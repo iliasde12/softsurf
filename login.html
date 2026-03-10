@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="css/register.css">
      <link rel="stylesheet" href="css/login.css">
       <link rel="icon" type="image/x-icon" href="/assets/images/softsurf_logo.png">
-      
     <title>SoftSurf</title>
+
+    <script src="js/login.js" async></script>
   </head>
   <body >
     <header class="bg-[#100E22] h-16 flex items-center overflow-hidden">
@@ -23,14 +24,19 @@
         <button><a href="/Register.html">Registreren</a></button>
       </div>
 
+
+      <div class="container-message" style="display: none;">
+
+      </div>
+
       <div class="container-text">
         <h2>Welkom terug</h2>
         <p>Log in om toegang te krijgen tot je collectie, afspeellijsten en</p>
         <p>spelscores</p>
       </div>
 
-      <form>
-<div class="form-input">
+      <form id="form">
+      <div class="form-input">
           <label for="email">E-MAILADRES</label>
           <input type="email" id="email" placeholder="jouw@email.nl">
         </div>
