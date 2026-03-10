@@ -1,0 +1,24 @@
+:root {
+  --primary-bg-color: #0d0b1a;
+  --primary-navbg-color: #100e22;
+  --primary-sidebg-color: #363156;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+  color: white;
+}
+nav {
+  background-color: var(--primary-navbg-color);
+  border-bottom: 2px solid var(--primary-sidebg-color);
+}
+
+footer {
+  background-color: var(--primary-navbg-color);
+  border-top: 2px solid var(--primary-sidebg-color);
+}
+
+aside {
+  background-color: var(--primary-navbg-color);
+  border-right: 2px solid var(--primary-sidebg-color);
+}
