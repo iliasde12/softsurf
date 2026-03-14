@@ -148,9 +148,6 @@ function checkRequirments(username, email, wachtwoord, HerhaalWachtwoord) {
 
 
 
-
-
-
 function saveUser(username, email, wachtwoord) {
     const user = {
         id: Date.now(),
