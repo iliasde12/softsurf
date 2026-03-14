@@ -6,7 +6,7 @@ document.getElementById("form").addEventListener("submit", (e) => {
     const { error, message, user } = CheckUser(email, wachtwoord);
 
     if (!error) {
-        LoggedinUser(user.id, user.username);
+        LoggedinUser(user.id, user.username, useSyncExternalStore.email, user.avatar);
         window.location.href = "/collectie.html";
     } else {
         const errorMessageContainer = document.querySelector(".container-message");
@@ -37,10 +37,13 @@ function CheckUser(email, wachtwoord) {
 
 
 
-function LoggedinUser(id, username) {
+function LoggedinUser(id, username, email, wachtwoord, image) {
     const user = {
         id: id,
-        username: username
+        username: username,
+        email: email,
+        wachtwoord: wachtwoord,
+        img: image
     }
     localStorage.setItem("LoggedinUser", JSON.stringify(user));
 }
