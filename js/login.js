@@ -6,7 +6,7 @@ document.getElementById("form").addEventListener("submit", (e) => {
     const { error, message, user } = CheckUser(email, wachtwoord);
 
     if (!error) {
-        LoggedinUser(user.id, user.username, useSyncExternalStore.email, user.avatar);
+        LoggedinUser(user.id, user.username, user.email, user.wachtwoord, user.avatar);
         window.location.href = "/collectie.html";
     } else {
         const errorMessageContainer = document.querySelector(".container-message");
@@ -32,7 +32,7 @@ function CheckUser(email, wachtwoord) {
         return { "error": true, "message": "verkeerd wachtwoord.", user: null }
     }
 
-    return { "error": false, "message": "verkeerd wachtwoord.", user: { id: user.id, username: user.username } }
+    return { "error": false, "message": "verkeerd wachtwoord.", user: user }
 }
 
 

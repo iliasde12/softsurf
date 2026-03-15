@@ -1,70 +1,110 @@
+<!DOCTYPE html>
 <html lang="nl-BE">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="icon" type="image/x-icon" href="/assets/images/softsurf_logo.png" />
+    <script src="js/userData.js" async></script>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/assets/images/softsurf_logo.png"
+    />
     <title>SoftSurf - Mijn Collectie</title>
   </head>
 
   <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
     <!-- HEADER -->
-    <header class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start">
+    <header
+      class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start"
+    >
       <button class="md:hidden text-white text-xl">☰</button>
-      <img src="/assets/images/softsurf_logo.png" alt="softsurf_logo" class="w-28 md:w-36 mx-auto md:mx-0" />
+      <img
+        src="/assets/images/softsurf_logo.png"
+        alt="softsurf_logo"
+        class="w-28 md:w-36 mx-auto md:mx-0"
+      />
       <div class="md:hidden w-6"></div>
     </header>
 
     <div class="flex flex-1 overflow-hidden">
       <!-- ASIDE (hidden on mobile) -->
-      <aside class="hidden md:flex w-[20%] bg-[#100E22] flex-col justify-between py-4 px-4 overflow-y-auto">
+      <aside
+        class="hidden md:flex w-[20%] bg-[#100E22] flex-col justify-between py-4 px-4 overflow-y-auto"
+      >
         <div>
           <div class="flex items-center gap-2 mb-6">
-            <div class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold">M</div>
+            <div
+              class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold"
+            >
+              M
+            </div>
             <span class="font-bold text-white text-sm">MusicMatch</span>
           </div>
 
-          <p class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest">Ontdekken</p>
+          <p
+            class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest"
+          >
+            Ontdekken
+          </p>
           <nav class="flex flex-col gap-1 mb-6">
-            <a href="/search.html" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">
-              🔍
-              <span>Zoeken</span>
-            </a>
-            <a href="/vergelijken-artiesten.html" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">
-              ⚖️
-              <span>Vergelijken</span>
-            </a>
-            <a href="/mood.html" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">
-              😊
-              <span>Stemming</span>
-            </a>
+            <a
+              href="#"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >🔍 <span>Zoeken</span></a
+            >
+            <a
+              href="#"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >⚖️ <span>Vergelijken</span></a
+            >
+            <a
+              href="#"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >😊 <span>Stemming</span></a
+            >
           </nav>
 
-          <p class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest">Bibliotheek</p>
+          <p
+            class="text-[#6B6B8A] text-xs uppercase font-sesmibold mb-2 tracking-widest"
+          >
+            Bibliotheek
+          </p>
           <nav class="flex flex-col gap-1 mb-6">
-            <a href="/collectie.html" class="flex items-center gap-2 text-white text-sm py-1 px-2 rounded-lg bg-[#7B6BF5] transition">
-              🎵
-              <span>Mijn Collectie</span>
-            </a>
-            <a href="/playlist.html" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">
-              🎶
-              <span>Afspeellijsten</span>
-            </a>
+            <a
+              href="#"
+              class="flex items-center gap-2 text-white text-sm py-1 px-2 rounded-lg bg-[#7B6BF5] transition"
+              >🎵 <span>Mijn Collectie</span></a
+            >
+            <a
+              href="#"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >🎶 <span>Afspeellijsten</span></a
+            >
           </nav>
 
-          <p class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest">Spelletjes</p>
+          <p
+            class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest"
+          >
+            Spelletjes
+          </p>
           <nav class="flex flex-col gap-1">
-            <a href="/guessthesong.html" class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition">
-              🎯
-              <span>Raad het Nummer</span>
-            </a>
+            <a
+              href="#"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >🎯 <span>Raad het Nummer</span></a
+            >
           </nav>
         </div>
 
         <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
-          <div class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold">S</div>
+          <!--<div
+            class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold"          
+          </div>   >-->
+          <!-- image update voor user foto -->
+          <img width="25" height="25" id="profiel-picutre" />
           <div>
-            <p class="text-white text-sm font-semibold">Saint</p>
+            <p class="text-white text-sm font-semibold" id="username">Saint</p>
             <p class="text-[#7B6BF5] text-xs">● Feest-stemming</p>
           </div>
         </div>
@@ -78,30 +118,65 @@
           <div class="flex items-start justify-between mb-1">
             <div>
               <h1 class="text-xl md:text-2xl font-bold">Mijn Collectie</h1>
-              <p class="text-[#6B6B8A] text-xs md:text-sm mb-4">Je gelikte nummers, georganiseerd en klaar om af te spelen</p>
+              <p class="text-[#6B6B8A] text-xs md:text-sm mb-4">
+                Je gelikte nummers, georganiseerd en klaar om af te spelen
+              </p>
             </div>
             <div class="flex gap-2 mt-1">
-              <button class="bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full">Lijst</button>
-              <button class="border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition">Raster</button>
+              <button
+                class="bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full"
+              >
+                Lijst
+              </button>
+              <button
+                class="border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition"
+              >
+                Raster
+              </button>
             </div>
           </div>
 
           <!-- Search + filters -->
           <div class="flex flex-col md:flex-row gap-3 mb-6">
             <div class="relative flex-1 md:max-w-xs">
-              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B8A] text-sm">🔍</span>
-              <input type="text" placeholder="Collectie filteren..." class="w-full bg-[#1E1B3A] text-white text-sm pl-8 pr-4 py-2 rounded-full outline-none placeholder-[#6B6B8A]" />
+              <span
+                class="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B8A] text-sm"
+                >🔍</span
+              >
+              <input
+                type="text"
+                placeholder="Collectie filteren..."
+                class="w-full bg-[#1E1B3A] text-white text-sm pl-8 pr-4 py-2 rounded-full outline-none placeholder-[#6B6B8A]"
+              />
             </div>
             <div class="flex gap-2 flex-wrap">
-              <button class="bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full">Alles</button>
-              <button class="bg-[#E91E8C] text-white text-xs px-3 py-1 rounded-full">Favorieten</button>
-              <button class="bg-[#1E1B3A] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#2A2650] transition">Chill</button>
-              <button class="bg-[#1E1B3A] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#2A2650] transition">Workout</button>
+              <button
+                class="bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full"
+              >
+                Alles
+              </button>
+              <button
+                class="bg-[#E91E8C] text-white text-xs px-3 py-1 rounded-full"
+              >
+                Favorieten
+              </button>
+              <button
+                class="bg-[#1E1B3A] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#2A2650] transition"
+              >
+                Chill
+              </button>
+              <button
+                class="bg-[#1E1B3A] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#2A2650] transition"
+              >
+                Workout
+              </button>
             </div>
           </div>
 
           <!-- Table header (hidden on mobile) -->
-          <div class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-xs uppercase tracking-widest mb-2 px-2">
+          <div
+            class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-xs uppercase tracking-widest mb-2 px-2"
+          >
             <span>#</span>
             <span>Titel</span>
             <span>Label</span>
@@ -112,79 +187,127 @@
 
           <!-- Tracks -->
           <div class="flex flex-col gap-1">
-            <<<<<<< HEAD =======
-
             <!-- js een grote for loop-->
             >>>>>>> 1fa420b98ec1c9864b3049bef83ffe77943f228a
             <!-- Track 1 -->
-            <div class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition">
+            <div
+              class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
+            >
               <span class="text-[#6B6B8A] text-sm text-center">1</span>
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+                <div
+                  class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
+                >
+                  🎵
+                </div>
                 <div>
                   <p class="text-white text-sm font-semibold">Last Last</p>
                   <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
                 </div>
               </div>
-              <span class="hidden md:block"><span class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full">Favorieten</span></span>
+              <span class="hidden md:block"
+                ><span
+                  class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full"
+                  >Favorieten</span
+                ></span
+              >
               <span class="hidden md:block text-[#6B6B8A] text-xs">15 jan</span>
               <span class="hidden md:block text-[#A0A0C0] text-xs">92</span>
               <span class="text-[#E91E8C] text-sm">♥</span>
             </div>
 
             <!-- Track 2 -->
-            <div class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition">
+            <div
+              class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
+            >
               <span class="text-[#6B6B8A] text-sm text-center">2</span>
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-[#1B2A3A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+                <div
+                  class="w-9 h-9 bg-[#1B2A3A] rounded-lg flex items-center justify-center text-sm shrink-0"
+                >
+                  🎵
+                </div>
                 <div>
                   <p class="text-white text-sm font-semibold">Essence</p>
                   <p class="text-[#6B6B8A] text-xs">Wizkid ft. Tems</p>
                 </div>
               </div>
-              <span class="hidden md:block"><span class="bg-[#1E3A2A] border border-[#2A5A3A] text-[#4ADE80] text-[10px] px-2 py-1 rounded-full">Chill</span></span>
+              <span class="hidden md:block"
+                ><span
+                  class="bg-[#1E3A2A] border border-[#2A5A3A] text-[#4ADE80] text-[10px] px-2 py-1 rounded-full"
+                  >Chill</span
+                ></span
+              >
               <span class="hidden md:block text-[#6B6B8A] text-xs">12 jan</span>
               <span class="hidden md:block text-[#A0A0C0] text-xs">89</span>
               <span class="text-[#E91E8C] text-sm">♥</span>
             </div>
 
             <!-- Track 3 -->
-            <div class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition">
+            <div
+              class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
+            >
               <span class="text-[#6B6B8A] text-sm text-center">3</span>
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+                <div
+                  class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
+                >
+                  🎵
+                </div>
                 <div>
                   <p class="text-white text-sm font-semibold">Peru</p>
                   <p class="text-[#6B6B8A] text-xs">Fireboy DML</p>
                 </div>
               </div>
-              <span class="hidden md:block"><span class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full">Favorieten</span></span>
+              <span class="hidden md:block"
+                ><span
+                  class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full"
+                  >Favorieten</span
+                ></span
+              >
               <span class="hidden md:block text-[#6B6B8A] text-xs">10 jan</span>
               <span class="hidden md:block text-[#A0A0C0] text-xs">87</span>
               <span class="text-[#E91E8C] text-sm">♥</span>
             </div>
 
             <!-- Track 4 -->
-            <div class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition">
+            <div
+              class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
+            >
               <span class="text-[#6B6B8A] text-sm text-center">4</span>
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-[#1B3A2A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+                <div
+                  class="w-9 h-9 bg-[#1B3A2A] rounded-lg flex items-center justify-center text-sm shrink-0"
+                >
+                  🎵
+                </div>
                 <div>
                   <p class="text-white text-sm font-semibold">Calm Down</p>
                   <p class="text-[#6B6B8A] text-xs">Rema</p>
                 </div>
               </div>
-              <span class="hidden md:block"><span class="bg-[#1B2A4A] border border-[#2A3A7B] text-[#60A5FA] text-[10px] px-2 py-1 rounded-full">Workout</span></span>
+              <span class="hidden md:block"
+                ><span
+                  class="bg-[#1B2A4A] border border-[#2A3A7B] text-[#60A5FA] text-[10px] px-2 py-1 rounded-full"
+                  >Workout</span
+                ></span
+              >
               <span class="hidden md:block text-[#6B6B8A] text-xs">8 jan</span>
               <span class="hidden md:block text-[#A0A0C0] text-xs">94</span>
               <span class="text-[#E91E8C] text-sm">♥</span>
             </div>
 
             <!-- Track 5 -->
-            <div class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition">
+            <div
+              class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
+            >
               <span class="text-[#6B6B8A] text-sm text-center">5</span>
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-[#1E1B3A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+                <div
+                  class="w-9 h-9 bg-[#1E1B3A] rounded-lg flex items-center justify-center text-sm shrink-0"
+                >
+                  🎵
+                </div>
                 <div>
                   <p class="text-white text-sm font-semibold">Kilometre</p>
                   <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
@@ -199,9 +322,15 @@
         </main>
 
         <!-- FOOTER -->
-        <footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
+        <footer
+          class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0"
+        >
           <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
-            <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+            <div
+              class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
+            >
+              🎵
+            </div>
             <div>
               <p class="text-white text-xs font-semibold">Last Last</p>
               <p class="text-[#6B6B8A] text-[10px]">Burna Boy</p>
@@ -211,7 +340,11 @@
           <div class="hidden md:flex flex-col items-center flex-1 gap-1">
             <div class="flex items-center gap-4">
               <button class="text-[#A0A0C0] hover:text-white text-sm">⏮</button>
-              <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black text-sm">▶</button>
+              <button
+                class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black text-sm"
+              >
+                ▶
+              </button>
               <button class="text-[#A0A0C0] hover:text-white text-sm">⏭</button>
             </div>
             <div class="flex items-center gap-2 w-full max-w-md">
@@ -223,7 +356,11 @@
             </div>
           </div>
 
-          <button class="md:hidden w-10 h-10 bg-white rounded-full flex items-center justify-center text-black text-sm shrink-0">▶</button>
+          <button
+            class="md:hidden w-10 h-10 bg-white rounded-full flex items-center justify-center text-black text-sm shrink-0"
+          >
+            ▶
+          </button>
 
           <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
             <span class="text-[#6B6B8A] text-xs">🔊</span>
