@@ -2,6 +2,7 @@ export async function getSpotifyAccessToken() {
     const clientId = "82d9b9d16b58426e8f889f35d5af88aa";
     const clientSecret = "1c856ece54f84ca9ad86cf10a0c394a1";
 
+    //btoa is een functie voor js die een string omzet naar base64 encoding
     const authString = btoa(`${clientId}:${clientSecret}`);
 
     try {
