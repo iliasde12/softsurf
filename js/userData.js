@@ -8,9 +8,11 @@ console.log(user);
 
 //de data showen en de nodige containers selecteren
 const userData = JSON.parse(localStorage.getItem("LoggedinUser"));
-const usernameContainer = document.getElementById("username");
-const imgContainer = document.getElementById("profiel-picutre");
+document.getElementById("username").innerText = userData.username;
+document.getElementById("profiel-picutre").src = userData.img;
 
-//de nodige data in de containers zetten
-usernameContainer.textContent = userData.username;
-imgContainer.src = userData.img;
+document.getElementById("uitloggen").addEventListener("click", () => {
+    localStorage.removeItem("LoggedinUser");
+    localStorage.removeItem("access_token_spotify");
+    window.location.href = "/login.html";
+});
