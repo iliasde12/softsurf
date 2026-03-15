@@ -1,102 +1,371 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Account-Page</title>
-    <link rel="stylesheet" href="./css/template.css" />
-    <link rel="stylesheet" href="./css/account.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Account – MusicMatch</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['"halyard-display"', "sans-serif"],
+              body: ['"halyard-text"', "sans-serif"],
+            },
+            colors: {
+              base: "#0f0e17",
+              surface: "#1a1828",
+              card: "#221f33",
+              border: "#2e2b42",
+              accent: "#7c6aff",
+              green: "#4ade80",
+              red: "#f87171",
+              muted: "#6b6889",
+              light: "#e8e6f0",
+            },
+            keyframes: {
+              fadeUp: {
+                "0%": { opacity: "0", transform: "translateY(14px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+            animation: {
+              fadeUp: "fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both",
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body class="grid grid-cols-4">
-    <head>
-      <nav class="col-span-4">
-        <img src="./img/softsurf_logo.png" alt="" />
-        <div class=""></div>
-      </nav>
-    </head>
-    <main class="col-span-3 col-start-2 flex">
-      <h1>Saint</h1>
-    </main>
-    <aside class="row-span-2 row-start-2">
-      <section class="sidelist">
-        <h2 class="ondertittel">Ontdekken</h2>
-        <p class="onderondertitel flex flex-row gap-3">
-          <img
-            class="icon"
-            src="./img/magnifying-glass-solid-full (2).svg"
-            alt=""
-          />zoeken
-        </p>
-        <p class="onderondertitel flex flex-row gap-3">
-          <img
-            id="square"
-            class="icon"
-            src="./img/square.svg"
-            alt=""
-          />vergelijken
-        </p>
-        <p class="onderondertitel flex flex-row gap-3">
-          <img class="icon" src="./img/emoiji.svg" alt="" />Stemming
-        </p>
-      </section>
-      <section class="sidelist">
-        <h2 class="ondertittel">Bibliotheek</h2>
-        <p class="onderondertitel flex flex-row gap-3">
-          <img class="icon" src="./img/heart-regular-full.svg" alt="" />Mijn
-          collectie
-        </p>
-        <p class="onderondertitel flex flex-row gap-3">
-          <img
-            class="icon"
-            src="./img/music-solid-full.svg"
-            alt=""
-          />Afspeellijsten
-        </p>
-      </section>
-      <section class="sidelist">
-        <h2 class="ondertittel">Spelletjes</h2>
-        <p class="onderondertitel flex flex-row gap-3">
-          <img class="icon" src="./img/question-solid-full.svg" alt="" />Raad
-          het nummer
-        </p>
-      </section>
-    </aside>
-    <footer class="col-span-4 grid grid-cols-5">
-      <section class="acc grid grid-cols-3">
-        <figure class="row-span-2 logobol"></figure>
-        <h3 class="naam col-span-2 content-end">Saint</h3>
-        <div class="stemming flex flex-row col-span-2 col-start-2">
-          <div id="bol"></div>
-          <p id="textstemming">Feest-Stemming</p>
+
+  <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
+    <!-- HEADER -->
+    <header
+      class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start"
+    >
+      <button class="md:hidden text-white text-xl">☰</button>
+      <img
+        src="/assets/images/softsurf_logo.png"
+        alt="softsurf_logo"
+        class="w-28 md:w-36 mx-auto md:mx-0"
+      />
+      <div class="md:hidden w-6"></div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+      <!-- SIDEBAR -->
+      <aside
+        class="hidden md:flex w-[20%] bg-[#100E22] flex-col justify-between py-4 px-4 overflow-y-auto"
+      >
+        <div>
+          <div class="flex items-center gap-2 mb-6">
+            <div
+              class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold"
+            >
+              M
+            </div>
+            <span class="font-bold text-white text-sm">MusicMatch</span>
+          </div>
+
+          <p
+            class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest"
+          >
+            Ontdekken
+          </p>
+          <nav class="flex flex-col gap-1 mb-6">
+            <a
+              href="/search.html"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >🔍 <span>Zoeken</span></a
+            >
+            <a
+              href="/vergelijken-artiesten.html"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >⚖️ <span>Vergelijken</span></a
+            >
+            <a
+              href="/mood.html"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >😊 <span>Stemming</span></a
+            >
+          </nav>
+
+          <p
+            class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest"
+          >
+            Bibliotheek
+          </p>
+          <nav class="flex flex-col gap-1 mb-6">
+            <a
+              href="/collectie.html"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >🎵 <span>Mijn Collectie</span></a
+            >
+            <a
+              href="/playlist.html"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >🎶 <span>Afspeellijsten</span></a
+            >
+          </nav>
+
+          <p
+            class="text-[#6B6B8A] text-xs uppercase font-semibold mb-2 tracking-widest"
+          >
+            Spelletjes
+          </p>
+          <nav class="flex flex-col gap-1">
+            <a
+              href="/guessthesong.html"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              >🎯 <span>Raad het Nummer</span></a
+            >
+          </nav>
         </div>
-      </section>
-      <section class="song grid grid-cols-2">
-        <figure class="songbol row-span-2"></figure>
-        <h3 class="self-end">Last</h3>
-        <p class="artist self-start">Burna boy</p>
-        <figure></figure>
-      </section>
-      <section class="col-span-2">
-        <div class="flex flex-row gap-3 justify-center">
-          <img class="iconSong" src="./img/left.svg" alt="" />
-          <img class="iconSong" src="./img/pause.svg" alt="" />
-          <img class="iconSong" src="./img/right.svg" alt="" />
+
+        <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
+          <div
+            class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold"
+          >
+            S
+          </div>
+          <div>
+            <p class="text-white text-sm font-semibold">Saint</p>
+            <p class="text-[#7B6BF5] text-xs">● Feest-stemming</p>
+          </div>
         </div>
-        <div class="grid grid-cols-[5%_40%_40%_5%] gap-3 justify-items-center">
-          <p class="time">1:22</p>
-          <figure class="lijn col-span-2"></figure>
-          <p class="time">5:22</p>
-        </div>
-      </section>
-      <section class="volume flex flex-row items-center justify-end">
-        <img
-          class="iconSong justify-self-end"
-          src="./img/volume-solid-full.svg"
-          alt=""
-        />
-        <figure class="volumeLijn justify-self-start"></figure>
-      </section>
-    </footer>
+      </aside>
+
+      <!-- RIGHT COLUMN -->
+      <div class="flex flex-col w-full md:w-[80%]">
+        <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+          <!-- Title -->
+          <div class="animate-fadeUp mb-6">
+            <h1
+              class="font-display text-3xl font-semibold tracking-tight text-light"
+            >
+              Mijn Account
+            </h1>
+            <p class="mt-1 text-sm text-muted">
+              Beheer je profiel en persoonlijke gegevens
+            </p>
+          </div>
+
+          <!-- Cards grid -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start animate-fadeUp"
+            style="animation-delay: 0.05s"
+          >
+            <!-- Profielkaart -->
+            <div
+              class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40"
+            >
+              <div
+                class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border"
+              >
+                <div
+                  class="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-lg"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      #3b1f6b,
+                      #6d28d9,
+                      #a78bfa
+                    );
+                  "
+                >
+                  S
+                </div>
+                <div class="text-center">
+                  <h2 class="font-display text-lg font-semibold text-light">
+                    Saint
+                  </h2>
+                  <p class="text-xs text-muted mt-0.5">saint@email.com</p>
+                </div>
+                <span
+                  class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20"
+                  >🎉 Feest-stemming</span
+                >
+              </div>
+              <div class="px-5 py-2">
+                <div
+                  class="py-3.5 border-b border-border flex justify-between items-center px-1"
+                >
+                  <span
+                    class="text-[0.7rem] font-medium uppercase tracking-widest text-muted"
+                    >Lid sinds</span
+                  >
+                  <span class="text-sm font-semibold text-light">Jan 2024</span>
+                </div>
+                <div
+                  class="py-3.5 border-b border-border flex justify-between items-center px-1"
+                >
+                  <span
+                    class="text-[0.7rem] font-medium uppercase tracking-widest text-muted"
+                    >Afspeellijsten</span
+                  >
+                  <span class="text-sm font-semibold text-green">12</span>
+                </div>
+                <div
+                  class="py-3.5 border-b border-border flex justify-between items-center px-1"
+                >
+                  <span
+                    class="text-[0.7rem] font-medium uppercase tracking-widest text-muted"
+                    >Favorieten</span
+                  >
+                  <span class="text-sm font-semibold text-green">84</span>
+                </div>
+                <div class="py-3.5 flex justify-between items-center px-1">
+                  <span
+                    class="text-[0.7rem] font-medium uppercase tracking-widest text-muted"
+                    >Abonnement</span
+                  >
+                  <span
+                    class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20"
+                    >Premium</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Persoonlijke gegevens -->
+            <div
+              class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40"
+            >
+              <div
+                class="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border"
+              >
+                <div>
+                  <h2 class="font-display text-lg font-semibold text-light">
+                    Persoonlijke gegevens
+                  </h2>
+                  <p class="text-xs text-muted mt-0.5">
+                    Beheer je naam, e-mail en gebruikersnaam
+                  </p>
+                </div>
+                <button
+                  class="text-xs text-violet-400 border border-accent/30 bg-accent/10 hover:bg-accent/20 px-3 py-1 rounded-full transition"
+                >
+                  Bewerken
+                </button>
+              </div>
+              <div class="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="naam"
+                    class="text-[0.7rem] font-medium uppercase tracking-widest text-muted"
+                    >Naam</label
+                  >
+                  <input
+                    id="naam"
+                    type="text"
+                    value="Saint"
+                    disabled
+                    class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                  />
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="email"
+                    class="text-[0.7rem] font-medium uppercase tracking-widest text-muted"
+                    >E-mail</label
+                  >
+                  <input
+                    id="email"
+                    type="email"
+                    value="saint@email.com"
+                    disabled
+                    class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                  />
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="gebruikersnaam"
+                    class="text-[0.7rem] font-medium uppercase tracking-widest text-muted"
+                    >Gebruikersnaam</label
+                  >
+                  <input
+                    id="gebruikersnaam"
+                    type="text"
+                    value="@saint_music"
+                    disabled
+                    class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                  />
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="taal"
+                    class="text-[0.7rem] font-medium uppercase tracking-widest text-muted"
+                    >Taal</label
+                  >
+                  <input
+                    id="taal"
+                    type="text"
+                    value="Nederlands"
+                    disabled
+                    class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /grid -->
+        </main>
+
+        <!-- FOOTER -->
+        <footer
+          class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0"
+        >
+          <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
+            <div
+              class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
+            >
+              🎵
+            </div>
+            <div>
+              <p class="text-white text-xs font-semibold">Last Last</p>
+              <p class="text-[#6B6B8A] text-[10px]">Burna Boy</p>
+            </div>
+          </div>
+
+          <div class="hidden md:flex flex-col items-center flex-1 gap-1">
+            <div class="flex items-center gap-4">
+              <button class="text-[#A0A0C0] hover:text-white text-sm">
+                ⏮
+              </button>
+              <button
+                class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black text-sm"
+              >
+                ▶
+              </button>
+              <button class="text-[#A0A0C0] hover:text-white text-sm">
+                ⏭
+              </button>
+            </div>
+            <div class="flex items-center gap-2 w-full max-w-md">
+              <span class="text-[#6B6B8A] text-[10px]">1:22</span>
+              <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full">
+                <div class="w-[40%] h-full bg-[#7B6BF5] rounded-full"></div>
+              </div>
+              <span class="text-[#6B6B8A] text-[10px]">4:08</span>
+            </div>
+          </div>
+
+          <button
+            class="md:hidden w-10 h-10 bg-white rounded-full flex items-center justify-center text-black text-sm shrink-0"
+          >
+            ▶
+          </button>
+
+          <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
+            <span class="text-[#6B6B8A] text-xs">🔊</span>
+            <div class="w-20 h-1 bg-[#1E1B3A] rounded-full">
+              <div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
   </body>
 </html>

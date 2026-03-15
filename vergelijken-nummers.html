@@ -103,215 +103,213 @@
         </div>
       </aside>
 
-      <!-- RIGHT COLUMN -->
-      <div class="flex flex-col w-full md:w-[80%]">
-        <main class="flex-1 p-4 md:p-6 overflow-y-auto">
-          <!-- Title -->
-          <div class="animate-fadeUp mb-4">
-            <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Vergelijken</h1>
-            <p class="mt-1 text-sm text-muted">Selecteer twee nummers om hun statistieken naast elkaar te zien</p>
-          </div>
-          <!-- Search -->
-          <div class="relative animate-fadeUp mb-6" style="animation-delay: 0.05s">
-            <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-            <input
-              type="search"
-              placeholder="Zoek een nummer…"
-              class="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-light placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition" />
-          </div>
-          <!-- Tabs -->
-          <div class="flex gap-2 mb-8 animate-fadeUp" style="animation-delay: 0.1s">
-            <a href="vergelijken-artiesten.html" class="px-4 py-1.5 rounded-full text-sm font-medium border border-border text-muted hover:text-light hover:border-teal-700 transition">Artiesten</a>
-            <a
-              href="vergelijken-nummers.html"
-              class="px-4 py-1.5 rounded-full text-sm font-medium bg-gradient-to-br from-teal-500 to-accent text-white shadow-lg shadow-accent/20 border border-transparent">
-              Nummers
-            </a>
-          </div>
-          <!-- Compare grid -->
-          <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-start animate-fadeUp" style="animation-delay: 0.15s">
-            <!-- ── Last Last ── -->
-            <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-teal-500/40">
-              <!-- Card header -->
-              <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
-                <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg" style="background: linear-gradient(135deg, #134e4a, #0d9488, #2dd4bf)">🎵</div>
-                <div class="text-center">
-                  <h2 class="font-display text-lg font-semibold text-light">Last Last</h2>
-                  <p class="text-xs text-muted mt-0.5">Burna Boy · 2022</p>
-                </div>
-              </div>
-              <!-- Stats -->
-              <div class="px-5 py-2">
-                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-                  <div class="flex justify-between items-center">
-                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Populariteit</span>
-                    <span class="text-sm font-semibold text-green">91</span>
-                  </div>
-                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                    <div class="h-full rounded-full bg-gradient-to-r from-teal-600 to-accent" style="width: 91%"></div>
-                  </div>
-                </div>
-                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-                  <div class="flex justify-between items-center">
-                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Streams</span>
-                    <span class="text-sm font-semibold text-green">580M</span>
-                  </div>
-                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                    <div class="h-full rounded-full bg-gradient-to-r from-teal-600 to-accent" style="width: 88%"></div>
-                  </div>
-                </div>
-                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-                  <div class="flex justify-between items-center">
-                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Duur</span>
-                    <span class="text-sm font-semibold text-light">3:35</span>
-                  </div>
-                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                    <div class="h-full rounded-full bg-gradient-to-r from-muted to-muted/50" style="width: 55%"></div>
-                  </div>
-                </div>
-                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-                  <div class="flex justify-between items-center">
-                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Spotify ranking</span>
-                    <span class="text-sm font-bold px-2 py-0.5 rounded-md bg-accent/10 text-accent border border-accent/25">#2</span>
-                  </div>
-                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                    <div class="h-full rounded-full bg-gradient-to-r from-teal-600 to-accent" style="width: 90%"></div>
-                  </div>
-                </div>
-                <div class="py-3.5 flex justify-between items-center px-1">
-                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Genre</span>
-                  <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">Afrobeats</span>
-                </div>
+      <!-- MAIN -->
+      <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+        <!-- Title -->
+        <div class="animate-fadeUp mb-4">
+          <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Vergelijken</h1>
+          <p class="mt-1 text-sm text-muted">Selecteer twee nummers om hun statistieken naast elkaar te zien</p>
+        </div>
+        <!-- Search -->
+        <div class="relative animate-fadeUp mb-6" style="animation-delay: 0.05s">
+          <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="search"
+            placeholder="Zoek een nummer…"
+            class="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-light placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition" />
+        </div>
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-8 animate-fadeUp" style="animation-delay: 0.1s">
+          <a href="vergelijken-artiesten.html" class="px-4 py-1.5 rounded-full text-sm font-medium border border-border text-muted hover:text-light hover:border-teal-700 transition">Artiesten</a>
+          <a
+            href="vergelijken-nummers.html"
+            class="px-4 py-1.5 rounded-full text-sm font-medium bg-gradient-to-br from-teal-500 to-accent text-white shadow-lg shadow-accent/20 border border-transparent">
+            Nummers
+          </a>
+        </div>
+        <!-- Compare grid -->
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-start animate-fadeUp" style="animation-delay: 0.15s">
+          <!-- ── Last Last ── -->
+          <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-teal-500/40">
+            <!-- Card header -->
+            <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
+              <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg" style="background: linear-gradient(135deg, #134e4a, #0d9488, #2dd4bf)">🎵</div>
+              <div class="text-center">
+                <h2 class="font-display text-lg font-semibold text-light">Last Last</h2>
+                <p class="text-xs text-muted mt-0.5">Burna Boy · 2022</p>
               </div>
             </div>
-            <!-- VS -->
-            <div class="flex items-center justify-center py-8 md:py-0 md:mt-28">
-              <div
-                class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold text-white tracking-widest"
-                style="
-                  background: linear-gradient(135deg, #5b3fe8, #7c6aff);
-                  box-shadow:
-                    0 0 0 3px rgba(124, 106, 255, 0.22),
-                    0 0 24px rgba(124, 106, 255, 0.18);
-                ">
-                VS
-              </div>
-            </div>
-            <!-- ── Essence ── -->
-            <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-teal-500/40">
-              <!-- Card header -->
-              <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
-                <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg" style="background: linear-gradient(135deg, #4c1d3b, #be185d, #fb7185)">🎵</div>
-                <div class="text-center">
-                  <h2 class="font-display text-lg font-semibold text-light">Essence</h2>
-                  <p class="text-xs text-muted mt-0.5">Wizkid ft. Tems · 2020</p>
+            <!-- Stats -->
+            <div class="px-5 py-2">
+              <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                <div class="flex justify-between items-center">
+                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Populariteit</span>
+                  <span class="text-sm font-semibold text-green">91</span>
+                </div>
+                <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                  <div class="h-full rounded-full bg-gradient-to-r from-teal-600 to-accent" style="width: 91%"></div>
                 </div>
               </div>
-              <!-- Stats -->
-              <div class="px-5 py-2">
-                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-                  <div class="flex justify-between items-center">
-                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Populariteit</span>
-                    <span class="text-sm font-semibold text-red">87</span>
-                  </div>
-                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                    <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 87%"></div>
-                  </div>
+              <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                <div class="flex justify-between items-center">
+                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Streams</span>
+                  <span class="text-sm font-semibold text-green">580M</span>
                 </div>
-                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-                  <div class="flex justify-between items-center">
-                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Streams</span>
-                    <span class="text-sm font-semibold text-red">490M</span>
-                  </div>
-                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                    <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 74%"></div>
-                  </div>
+                <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                  <div class="h-full rounded-full bg-gradient-to-r from-teal-600 to-accent" style="width: 88%"></div>
                 </div>
-                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-                  <div class="flex justify-between items-center">
-                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Duur</span>
-                    <span class="text-sm font-semibold text-light">4:04</span>
-                  </div>
-                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                    <div class="h-full rounded-full bg-gradient-to-r from-muted to-muted/50" style="width: 62%"></div>
-                  </div>
+              </div>
+              <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                <div class="flex justify-between items-center">
+                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Duur</span>
+                  <span class="text-sm font-semibold text-light">3:35</span>
                 </div>
-                <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
-                  <div class="flex justify-between items-center">
-                    <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Spotify ranking</span>
-                    <span class="text-sm font-bold px-2 py-0.5 rounded-md bg-red/10 text-red border border-red/25">#9</span>
-                  </div>
-                  <div class="mt-1.5 h-0.5 bg-border rounded-full">
-                    <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 50%"></div>
-                  </div>
+                <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                  <div class="h-full rounded-full bg-gradient-to-r from-muted to-muted/50" style="width: 55%"></div>
                 </div>
-                <div class="py-3.5 flex justify-between items-center px-1">
-                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Genre</span>
-                  <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">Afropop</span>
+              </div>
+              <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                <div class="flex justify-between items-center">
+                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Spotify ranking</span>
+                  <span class="text-sm font-bold px-2 py-0.5 rounded-md bg-accent/10 text-accent border border-accent/25">#2</span>
                 </div>
+                <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                  <div class="h-full rounded-full bg-gradient-to-r from-teal-600 to-accent" style="width: 90%"></div>
+                </div>
+              </div>
+              <div class="py-3.5 flex justify-between items-center px-1">
+                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Genre</span>
+                <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">Afrobeats</span>
               </div>
             </div>
           </div>
-          <!-- /grid -->
-          <!-- Summary -->
-          <div class="mt-6 flex flex-wrap items-center justify-between gap-3 border border-border bg-card/50 rounded-xl px-6 py-4 animate-fadeUp" style="animation-delay: 0.2s">
-            <p class="text-sm text-muted">
-              <span class="text-light font-semibold">Last Last</span>
-              wint op streams, populariteit en Spotify-ranking.
-              <span class="text-light font-semibold">Essence</span>
-              is langer van duur maar scoorde lager in de charts.
-            </p>
-            <div class="flex gap-4 shrink-0">
-              <span class="flex items-center gap-1.5 text-xs text-green font-medium">
-                <span class="w-2 h-2 rounded-full bg-green inline-block"></span>
-                Winnaar
-              </span>
-              <span class="flex items-center gap-1.5 text-xs text-red font-medium">
-                <span class="w-2 h-2 rounded-full bg-red inline-block"></span>
-                Lager
-              </span>
+          <!-- VS -->
+          <div class="flex items-center justify-center py-8 md:py-0 md:mt-28">
+            <div
+              class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold text-white tracking-widest"
+              style="
+                background: linear-gradient(135deg, #5b3fe8, #7c6aff);
+                box-shadow:
+                  0 0 0 3px rgba(124, 106, 255, 0.22),
+                  0 0 24px rgba(124, 106, 255, 0.18);
+              ">
+              VS
             </div>
           </div>
-        </main>
-
-        <!-- FOOTER -->
-        <footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
-          <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
-            <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
-            <div>
-              <p class="text-white text-xs font-semibold">Last Last</p>
-              <p class="text-[#6B6B8A] text-[10px]">Burna Boy</p>
-            </div>
-          </div>
-
-          <div class="hidden md:flex flex-col items-center flex-1 gap-1">
-            <div class="flex items-center gap-4">
-              <button class="text-[#A0A0C0] hover:text-white text-sm">⏮</button>
-              <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black text-sm">▶</button>
-              <button class="text-[#A0A0C0] hover:text-white text-sm">⏭</button>
-            </div>
-            <div class="flex items-center gap-2 w-full max-w-md">
-              <span class="text-[#6B6B8A] text-[10px]">1:22</span>
-              <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full">
-                <div class="w-[40%] h-full bg-[#7B6BF5] rounded-full"></div>
+          <!-- ── Essence ── -->
+          <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-teal-500/40">
+            <!-- Card header -->
+            <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
+              <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg" style="background: linear-gradient(135deg, #4c1d3b, #be185d, #fb7185)">🎵</div>
+              <div class="text-center">
+                <h2 class="font-display text-lg font-semibold text-light">Essence</h2>
+                <p class="text-xs text-muted mt-0.5">Wizkid ft. Tems · 2020</p>
               </div>
-              <span class="text-[#6B6B8A] text-[10px]">4:08</span>
+            </div>
+            <!-- Stats -->
+            <div class="px-5 py-2">
+              <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                <div class="flex justify-between items-center">
+                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Populariteit</span>
+                  <span class="text-sm font-semibold text-red">87</span>
+                </div>
+                <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                  <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 87%"></div>
+                </div>
+              </div>
+              <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                <div class="flex justify-between items-center">
+                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Streams</span>
+                  <span class="text-sm font-semibold text-red">490M</span>
+                </div>
+                <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                  <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 74%"></div>
+                </div>
+              </div>
+              <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                <div class="flex justify-between items-center">
+                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Duur</span>
+                  <span class="text-sm font-semibold text-light">4:04</span>
+                </div>
+                <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                  <div class="h-full rounded-full bg-gradient-to-r from-muted to-muted/50" style="width: 62%"></div>
+                </div>
+              </div>
+              <div class="py-3.5 border-b border-border hover:bg-accent/5 rounded-lg px-1 transition">
+                <div class="flex justify-between items-center">
+                  <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Spotify ranking</span>
+                  <span class="text-sm font-bold px-2 py-0.5 rounded-md bg-red/10 text-red border border-red/25">#9</span>
+                </div>
+                <div class="mt-1.5 h-0.5 bg-border rounded-full">
+                  <div class="h-full rounded-full bg-gradient-to-r from-red to-red/60" style="width: 50%"></div>
+                </div>
+              </div>
+              <div class="py-3.5 flex justify-between items-center px-1">
+                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Genre</span>
+                <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">Afropop</span>
+              </div>
             </div>
           </div>
-
-          <button class="md:hidden w-10 h-10 bg-white rounded-full flex items-center justify-center text-black text-sm shrink-0">▶</button>
-
-          <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
-            <span class="text-[#6B6B8A] text-xs">🔊</span>
-            <div class="w-20 h-1 bg-[#1E1B3A] rounded-full">
-              <div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
-            </div>
+        </div>
+        <!-- /grid -->
+        <!-- Summary -->
+        <div class="mt-6 flex flex-wrap items-center justify-between gap-3 border border-border bg-card/50 rounded-xl px-6 py-4 animate-fadeUp" style="animation-delay: 0.2s">
+          <p class="text-sm text-muted">
+            <span class="text-light font-semibold">Last Last</span>
+            wint op streams, populariteit en Spotify-ranking.
+            <span class="text-light font-semibold">Essence</span>
+            is langer van duur maar scoorde lager in de charts.
+          </p>
+          <div class="flex gap-4 shrink-0">
+            <span class="flex items-center gap-1.5 text-xs text-green font-medium">
+              <span class="w-2 h-2 rounded-full bg-green inline-block"></span>
+              Winnaar
+            </span>
+            <span class="flex items-center gap-1.5 text-xs text-red font-medium">
+              <span class="w-2 h-2 rounded-full bg-red inline-block"></span>
+              Lager
+            </span>
           </div>
-        </footer>
-      </div>
+        </div>
+      </main>
     </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
+      <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
+        <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+        <div>
+          <p class="text-white text-xs font-semibold">Last Last</p>
+          <p class="text-[#6B6B8A] text-[10px]">Burna Boy</p>
+        </div>
+      </div>
+
+      <div class="hidden md:flex flex-col items-center flex-1 gap-1">
+        <div class="flex items-center gap-4">
+          <button class="text-[#A0A0C0] hover:text-white text-sm">⏮</button>
+          <button class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black text-sm">▶</button>
+          <button class="text-[#A0A0C0] hover:text-white text-sm">⏭</button>
+        </div>
+        <div class="flex items-center gap-2 w-full max-w-md">
+          <span class="text-[#6B6B8A] text-[10px]">1:22</span>
+          <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full">
+            <div class="w-[40%] h-full bg-[#7B6BF5] rounded-full"></div>
+          </div>
+          <span class="text-[#6B6B8A] text-[10px]">4:08</span>
+        </div>
+      </div>
+
+      <button class="md:hidden w-10 h-10 bg-white rounded-full flex items-center justify-center text-black text-sm shrink-0">▶</button>
+
+      <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
+        <span class="text-[#6B6B8A] text-xs">🔊</span>
+        <div class="w-20 h-1 bg-[#1E1B3A] rounded-full">
+          <div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
