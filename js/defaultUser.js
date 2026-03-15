@@ -9,3 +9,5 @@ function saveUser() {
 
     localStorage.setItem("user", JSON.stringify(user));
 }
+
+saveUser();
