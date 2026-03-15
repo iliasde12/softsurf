@@ -8,9 +8,5 @@ console.log(user);
 
 //de data showen en de nodige containers selecteren
 const userData = JSON.parse(localStorage.getItem("LoggedinUser"));
-const usernameContainer = document.getElementById("username");
-const imgContainer = document.getElementById("profiel-picutre");
-
-//de nodige data in de containers zetten
-usernameContainer.textContent = userData.username;
-imgContainer.src = userData.img;
+document.getElementById("username").innerText = userData.username;
+document.getElementById("profiel-picutre").src = userData.img;
