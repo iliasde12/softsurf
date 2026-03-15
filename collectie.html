@@ -1,9 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
+    <script src="js/userData.js" async></script>
     <title>Collectie</title>
 
     <!-- Tailwind CDN -->
@@ -143,15 +144,21 @@
 
         <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
           <a href="./account.html">
-            <div
+            <!--<div
               class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold"
             >
               S
-            </div>
+            </div>-->
+            <img
+              id="profiel-picutre"
+              alt="Profiel Foto"
+              width="35"
+              height="35"
+            />
           </a>
           <div class="flex items-center justify-between flex-1">
             <div>
-              <p class="text-white text-sm font-semibold">Saint</p>
+              <p class="text-white text-sm font-semibold" id="username"></p>
               <p class="text-[#7B6BF5] text-xs">● Feest-stemming</p>
             </div>
 
