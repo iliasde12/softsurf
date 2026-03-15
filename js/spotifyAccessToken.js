@@ -21,8 +21,9 @@ export async function getSpotifyAccessToken() {
 
         const data = await response.json();
         const token = data.access_token;
+        console.log("Spotify Access Token:", token);
         localStorage.setItem("access_token_spotify", token);
-        return token;
+        //return token;
 
     } catch (error) {
         console.error("Error getting Spotify token:", error);
