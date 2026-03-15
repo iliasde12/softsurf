@@ -10,3 +10,9 @@ console.log(user);
 const userData = JSON.parse(localStorage.getItem("LoggedinUser"));
 document.getElementById("username").innerText = userData.username;
 document.getElementById("profiel-picutre").src = userData.img;
+
+document.getElementById("uitloggen").addEventListener("click", () => {
+    localStorage.removeItem("LoggedinUser");
+    localStorage.removeItem("access_token_spotify");
+    window.location.href = "/login.html";
+});
