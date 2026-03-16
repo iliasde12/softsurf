@@ -18,3 +18,20 @@ const EmailInput = document.getElementById("email");
 nameInput.value = user.username;
 UsernameInput.value = user.username;
 EmailInput.value = user.email;
+
+document.getElementById("bewerkenButton").addEventListener("click",()=>{
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
+
+    const newUser = {
+        id: user.id,
+        username: UsernameInput.value,
+        email: EmailInput.value,
+        wachtwoord: user.wachtwoord,
+        avatar:user.avatar,
+    }
+
+    localStorage.setItem("user",JSON.stringify(newUser));
+    localStorage.removeItem("LoggedinUser");
+    localStorage.removeItem("acces_token_spotify");
+});
