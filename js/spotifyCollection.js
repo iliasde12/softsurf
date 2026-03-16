@@ -17,15 +17,9 @@ async function GetSpotifySongs() {
         const data = await response.json();
         //console.log(data);
         //console.log("Playlist:", data.items);
-        //data is alles
-        //items is de tracks in de playlist
-        //items.items is de array van tracks in de playlist
-        console.log("Playlist tracks::", data.tracks.items);
+        console.log("Playlist tracks:", data.tracks.items);
 
         displaySongs(data.items.items);
-
-
-
 
     } catch (error) {
         console.error("Error fetching Spotify playlist:", error);
