@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
     <script src="js/userData.js" defer></script>
+    <script src="js/searchSpotfiy.js" defer></script>
     <title>Collectie</title>
 
     <!-- Tailwind CDN -->
@@ -220,12 +221,19 @@
           <div class="relative flex-1 md:max-w-xs">
             <span
               class="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B8A] text-sm"
-              >🔍</span
+              >
+               <img
+                class="w-5"
+                src="./img/magnifying-glass-solid-full (2).svg"
+                alt=""
+              />
+              </span
             >
             <input
               type="text"
               placeholder="Zoeken..."
               class="w-full bg-[#1E1B3A] text-white text-sm pl-8 pr-4 py-2 rounded-full outline-none placeholder-[#6B6B8A]"
+              id="searchData"
             />
           </div>
         </div>
