@@ -35,11 +35,8 @@
 }*/
 
 export function TestToken() {
-  const accessToken = "BQCAMvcTvDDPWFGXMr-iUqHf29zUHpX1xZOnsBuNTZvKgdAdTLNORyg7e0sumQ0H0G0IkyR82EDtLDwdMjXoGqC7hpfJlbYMXu_sAoVPEqcz4FmzSEdaplTGsBeg-9VDYO-m59PE6O1s6kCj9Nq89M4LckPUNkzISMbq-BweLT6ghXwULKRohtNHAXwxi6J3UbjhJb8njFWoM_XnYM6z9QRvchU3obut2O_9L2KgqVU4O4eGORIC48-t32G9u1Y10p1N9XK59rmsfZXgGXpwWnHjuuCggq4rq_qHi4mGYGhELeghqdSaCxSjeFTv_W7X3B2F5ZqUAPY7r4tAw51cwI83jFSMGfyLYHY6MA5WBTMV9tt6y4SgS5PuLV7SrbirOwkU6aUaSKuVO1BEzm77hmNnuebABiE";
-    if (!localStorage.getItem("access_token_spotify")) {
-        localStorage.setItem("access_token_spotify", accessToken);
-    }
-
+    const accessToken = "BQBak-xrp2RU4_BpkQ9K8OVSiLJFlrJr-jaPUdkVwb-O7_SUR9RmxZS7ln1B98GU23mCJ4hYdst7KsywzfdsNIylqWJAkuAulyqb3R3ZoPGDKoK7nk6PJgRTM7x-urVa0vznAoPrdtm-b5I3m6G6qJCyJQ-ZL8CtXmeOAQcSzcJYqPMExiHSjlbTth9IDyrn3T-PBfaiwwt2_ZHAI6PX9N0xzoxw2d1AthZ9oeuXBYYDJuRcVYvv7nKgDrp5F41s2TKEdroNsNPYlcAMPi0H1_EStAtPXUZvc3D5f0ChU-BwfSi9BgFyhYmL15bwVzqxt_5So5_qfre2iy0RHU7L3sYGp2piO3pIU5tXWxySuFErKU-d9eDiIIJzy9oVy4P3JFT-Zpaaemb0NhI_cALycXdAQJoI9Eo";
+    localStorage.setItem("access_token_spotify", accessToken);
 }
 
 

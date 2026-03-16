@@ -6,7 +6,7 @@
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
     <script src="js/userData.js" defer></script>
     <script src="js/searchSpotfiy.js" defer></script>
-    <title>Collectie</title>
+    <title>Zoeken</title>
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -239,15 +239,17 @@
         </div>
 
         <!-- Tracks -->
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1" id="containerSongs">
+
           <!-- js een grote for loop-->
-          <!-- Track 1 -->
+          <!-- Track 1 
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
           >
             <span
               ><img class="w-5 mx-auto" src="./img/plus-solid-full.svg" alt=""
             /></span>
+
             <div class="flex items-center gap-3">
               <div
                 class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
@@ -270,7 +272,7 @@
             <span class="text-[#E91E8C] text-sm">♥</span>
           </div>
 
-          <!-- Track 2 -->
+         Track 2 
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
           >
@@ -297,89 +299,7 @@
             <span class="hidden md:block text-[#6B6B8A] text-xs">12 jan</span>
             <span class="hidden md:block text-[#A0A0C0] text-xs">89</span>
             <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          <!-- Track 3 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span
-              ><img class="w-5 mx-auto" src="./img/plus-solid-full.svg" alt=""
-            /></span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Peru</p>
-                <p class="text-[#6B6B8A] text-xs">Fireboy DML</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full"
-                >Favorieten</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">10 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">87</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          <!-- Track 4 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span
-              ><img class="w-5 mx-auto" src="./img/plus-solid-full.svg" alt=""
-            /></span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1B3A2A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Calm Down</p>
-                <p class="text-[#6B6B8A] text-xs">Rema</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#1B2A4A] border border-[#2A3A7B] text-[#60A5FA] text-[10px] px-2 py-1 rounded-full"
-                >Workout</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">8 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">94</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          <!-- Track 5 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span
-              ><img class="w-5 mx-auto" src="./img/plus-solid-full.svg" alt=""
-            /></span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1E1B3A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Kilometre</p>
-                <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
-              </div>
-            </div>
-            <span class="hidden md:block text-[#6B6B8A] text-xs">—</span>
-            <span class="hidden md:block text-[#6B6B8A] text-xs">—</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">78</span>
-            <span class="text-[#6B6B8A] text-sm">♡</span>
-          </div>
+          </div>-->
         </div>
       </main>
     </div>
