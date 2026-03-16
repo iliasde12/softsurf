@@ -1,4 +1,4 @@
-import { getSpotifyAccessToken } from "./spotifyAccessToken.js";
+import { TestToken } from "./spotifyAccessToken.js";
 
 document.getElementById("form").addEventListener("submit", (e) => {
     e.preventDefault();
@@ -9,7 +9,8 @@ document.getElementById("form").addEventListener("submit", (e) => {
 
     if (!error) {
         LoggedinUser(user.id, user.username, user.email, user.wachtwoord, user.avatar);
-        getSpotifyAccessToken();
+        //getSpotifyAccessToken();
+        TestToken();
         window.location.href = "/collectie.html";
     } else {
         const errorMessageContainer = document.querySelector(".container-message");
