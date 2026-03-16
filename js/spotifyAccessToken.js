@@ -35,8 +35,7 @@
 }*/
 
 export function TestToken() {
-    const accessToken = "BQCwWnzizArjEMUlf070VVLvVQIAH0-n9wS2-6Xb51gWWX8QE0kEDhMA5x-KvUUmXEJgwY-9YGOUXYYZe5miRvwLNh4_C1gDEI2i0PLshbIN2AMmYXCiSyuvxWlKKJGsHgy4q0rr2KxZPP7N--ESu43fkmFR_6nID4BtM8xn7JWo6bav2YI57cbfGL0BDYFwpdOCvQT-IspqK2Ngfx7h8JDR5bOJkRmDVK-M_lEK9rhRyhg79tqclGJ760uM4IvnTBs9z-JQSTe_FQDmV1KikwG5slN2UZrTydDpd3k11jtUTvfe__R0UVMtaSpzA_sgIcdMXXmuUcboQHu0Q2LDKuqUbslXpzre9g_iK2x4uDaPru2p4jcqZxQk2OVNk45pK0W8iM1tw1o8y9nfvUr7HuKHGEk-3X4";
-
+    const accessToken = "BQBXiZrIXog6hEqa3bb-38emzk4RhmIKwwOtrCDHQKvenY266hoIx3HEbnd7zuHDWHin9uGeYTBBFadcNAdLh4VQnTK0HBP_JWh8U_0TJBUJ-eud2_Dd4-unaqDHbMJE8zEydnxvpvm1MX0IlUpP-OUEkSGvhYd20LVKE37Ya62FwFn-Zz04-EMVAlXBc448iKNRFSukKTDArVDfz7lFtIb0jEbJhb_HWOUbGXEGvO_Cy4K-54EcopNQTMN_-tYlpw92Cv9tp8aMYUFloNJCbxGRcSnI0pMSw_I8UQ_Pg7TMw5OwORPxvKZkM1Mw_BIv1_1xhGliLfD6Ds1pgj4n_qcFPsyCKEJ26HX9GjNCh3-MB4PLMWU59tEF8v3faHoYlj0U0nM9Qbria01OUvBImEXZP5H5gsI";
     if (!localStorage.getItem("access_token_spotify")) {
         localStorage.setItem("access_token_spotify", accessToken);
     }
