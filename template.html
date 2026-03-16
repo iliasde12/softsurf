@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
-    <title>Collectie</title>
+    <script src="js/userData.js" async></script>
+    <title>Playlist</title>
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -78,7 +79,7 @@
           <nav class="flex flex-col gap-1 mb-6">
             <a
               href="/search.html"
-              class="flex items-center gap-2 text-white text-sm py-1 px-2 rounded-lg bg-[#7B6BF5] transition"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
             >
               <img
                 class="w-5"
@@ -118,7 +119,7 @@
             </a>
             <a
               href="/playlist.html"
-              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              class="flex items-center gap-2 text-white text-sm py-1 px-2 rounded-lg bg-[#7B6BF5] transition"
             >
               <img class="w-5" src="./img/music-solid-full.svg" alt="" />
               <span>Afspeellijsten</span>
@@ -143,38 +144,45 @@
 
         <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
           <a href="./account.html">
-            <div
+            <!--<div
               class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold"
             >
               S
-            </div>
+            </div>-->
+            <img
+              id="profiel-picutre"
+              alt="Profiel Foto"
+              width="35"
+              height="35"
+            />
           </a>
           <div class="flex items-center justify-between flex-1">
             <div>
-              <p class="text-white text-sm font-semibold">Saint</p>
+              <p class="text-white text-sm font-semibold" id="username"></p>
               <p class="text-[#7B6BF5] text-xs">● Feest-stemming</p>
             </div>
 
-            <a href="/login.html">
-              <button
-                class="group flex items-center justify-start w-[30px] h-[30px] rounded-full cursor-pointer relative overflow-hidden bg-[#ff4141] hover:w-[32px] hover:h-[32px]"
+            <!--<a href="/login.html">-->
+            <button
+              id="uitloggen"
+              class="group flex items-center justify-start w-[30px] h-[30px] rounded-full cursor-pointer relative overflow-hidden bg-[#ff4141] hover:w-[32px] hover:h-[32px]"
+            >
+              <div
+                class="w-full transition-all duration-300 flex items-center justify-center"
               >
-                <div
-                  class="w-full transition-all duration-300 flex items-center justify-center"
-                >
-                  <svg class="w-[17px]" viewBox="0 0 512 512">
-                    <path
-                      class="fill-white"
-                      d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
-                    />
-                  </svg>
-                </div>
-                <span
-                  class="right-0 w-0 opacity-0 text-white text-[1em] font-semibold"
-                >
-                </span>
-              </button>
-            </a>
+                <svg class="w-[17px]" viewBox="0 0 512 512">
+                  <path
+                    class="fill-white"
+                    d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+                  />
+                </svg>
+              </div>
+              <span
+                class="right-0 w-0 opacity-0 text-white text-[1em] font-semibold"
+              >
+              </span>
+            </button>
+            <!-- </a>-->
           </div>
         </div>
       </aside>
@@ -184,9 +192,14 @@
         <!-- Title + view toggle -->
         <div class="flex items-start justify-between mb-1">
           <div>
-            <h1 class="text-xl md:text-2xl font-bold">Zoeken</h1>
+            <h1
+              class="font-display text-3xl font-semibold tracking-tight text-light"
+            >
+              Mijn afspeellijsten
+            </h1>
             <p class="text-[#6B6B8A] text-xs md:text-sm mb-4">
-              Vind artiesten, nummers en albums via MusicMatch
+              Genereer een afspeellijst op basis van je stemming en gelikete
+              nummers
             </p>
           </div>
           <div class="flex gap-2 mt-1">
@@ -204,18 +217,66 @@
         </div>
 
         <!-- Search + filters -->
-        <div class="flex flex-col md:flex-row gap-3 mb-6">
-          <div class="relative flex-1 md:max-w-xs">
-            <span
-              class="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B8A] text-sm"
-              >🔍</span
+
+        <!-- hier komt generate -->
+        <section
+          class="flex items-center justify-between bg-[#2A2650] mb-6 w-full px-6 py-4 rounded-2xl gap-6"
+        >
+          <!-- Stats -->
+          <div class="flex gap-4">
+            <div
+              class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]"
             >
-            <input
-              type="text"
-              placeholder="Zoeken..."
-              class="w-full bg-[#1E1B3A] text-white text-sm pl-8 pr-4 py-2 rounded-full outline-none placeholder-[#6B6B8A]"
-            />
+              <span class="text-zinc-400 text-[11px] uppercase tracking-widest"
+                >Stemming</span
+              >
+              <span class="text-white text-sm font-semibold">Feest</span>
+            </div>
+            <div
+              class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]"
+            >
+              <span class="text-zinc-400 text-[11px] uppercase tracking-widest"
+                >Gelikte nummers</span
+              >
+              <span class="text-white text-sm font-semibold">4 nummers</span>
+            </div>
+            <div
+              class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]"
+            >
+              <span class="text-zinc-400 text-[11px] uppercase tracking-widest"
+                >Mix type</span
+              >
+              <span class="text-white text-sm font-semibold"
+                >Populair + ontdekking</span
+              >
+            </div>
           </div>
+          <!-- Button -->
+          <button
+            class="bg-[#934c99] hover:brightness-110 transition text-white text-sm font-semibold px-6 py-3 rounded-xl shadow-[0_4px_15px_#934c9966] whitespace-nowrap cursor-pointer"
+          >
+            ✦ Genereer afspeellijst
+          </button>
+        </section>
+        <section class="flex flex-row justify-between mb-4">
+          <h2>Gegenereerde Afspeellijst - 12 Nummers</h2>
+          <p
+            class="mr-5 pr-2.5 pl-2.5 pt-1 pb-1 rounded-[40px] border-[3px] border-[#7B6BF5] hover:bg-[#7B6BF5]"
+          >
+            Alles Opslaan
+          </p>
+        </section>
+
+        <!-- Table header (hidden on mobile) -->
+        <div
+          class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-xs uppercase tracking-widest mb-2 px-2"
+        >
+          <span>#</span>
+          <span>Titel</span>
+          <span>Label</span>
+          <span>Datum</span>
+          <span>Pop</span>
+          <span></span>
         </div>
 
         <!-- Tracks -->
@@ -225,9 +286,7 @@
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
           >
-            <span
-              ><img class="w-5 mx-auto" src="./img/plus-solid-full.svg" alt=""
-            /></span>
+            <span class="text-[#6B6B8A] text-sm text-center">1</span>
             <div class="flex items-center gap-3">
               <div
                 class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
@@ -254,9 +313,7 @@
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
           >
-            <span
-              ><img class="w-5 mx-auto" src="./img/plus-solid-full.svg" alt=""
-            /></span>
+            <span class="text-[#6B6B8A] text-sm text-center">2</span>
             <div class="flex items-center gap-3">
               <div
                 class="w-9 h-9 bg-[#1B2A3A] rounded-lg flex items-center justify-center text-sm shrink-0"
@@ -283,9 +340,7 @@
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
           >
-            <span
-              ><img class="w-5 mx-auto" src="./img/plus-solid-full.svg" alt=""
-            /></span>
+            <span class="text-[#6B6B8A] text-sm text-center">3</span>
             <div class="flex items-center gap-3">
               <div
                 class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
@@ -312,9 +367,7 @@
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
           >
-            <span
-              ><img class="w-5 mx-auto" src="./img/plus-solid-full.svg" alt=""
-            /></span>
+            <span class="text-[#6B6B8A] text-sm text-center">4</span>
             <div class="flex items-center gap-3">
               <div
                 class="w-9 h-9 bg-[#1B3A2A] rounded-lg flex items-center justify-center text-sm shrink-0"
@@ -341,9 +394,7 @@
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
           >
-            <span
-              ><img class="w-5 mx-auto" src="./img/plus-solid-full.svg" alt=""
-            /></span>
+            <span class="text-[#6B6B8A] text-sm text-center">5</span>
             <div class="flex items-center gap-3">
               <div
                 class="w-9 h-9 bg-[#1E1B3A] rounded-lg flex items-center justify-center text-sm shrink-0"
