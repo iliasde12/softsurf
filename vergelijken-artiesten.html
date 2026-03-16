@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vergelijken – Artiesten</title>
+    <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
+    <title>Vergelijken-artiesten</title>
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -48,9 +49,9 @@
     >
       <button class="md:hidden text-white text-xl">☰</button>
       <img
-        src="/assets/images/softsurf_logo.png"
+        src="/img/softsurf_logo.svg"
         alt="softsurf_logo"
-        class="w-28 md:w-36 mx-auto md:mx-0"
+        class="w-28 md:w-30 mx-auto md:mx-0"
       />
       <div class="md:hidden w-6"></div>
     </header>
@@ -88,7 +89,7 @@
             </a>
             <a
               href="/vergelijken-artiesten.html"
-              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
+              class="flex items-center gap-2 text-white text-sm py-1 px-2 rounded-lg bg-[#7B6BF5] transition"
             >
               <img class="w-5" src="./img/square.svg" alt="" />
               <span>Vergelijken</span>
@@ -110,7 +111,7 @@
           <nav class="flex flex-col gap-1 mb-6">
             <a
               href="/collectie.html"
-              class="flex items-center gap-2 text-white text-sm py-1 px-2 rounded-lg bg-[#7B6BF5] transition"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
             >
               <img class="w-5" src="./img/withart.svg" alt="" />
               <span>Mijn Collectie</span>
@@ -131,7 +132,7 @@
           </p>
           <nav class="flex flex-col gap-1">
             <a
-              href="/guessthesong.html"
+              href="/guesthesong.html"
               class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
             >
               <img class="w-5" src="./img/question-solid-full.svg" alt="" />
@@ -141,11 +142,13 @@
         </div>
 
         <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
-          <div
-            class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold"
-          >
-            S
-          </div>
+          <a href="./account.html">
+            <div
+              class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold"
+            >
+              S
+            </div>
+          </a>
           <div class="flex items-center justify-between flex-1">
             <div>
               <p class="text-white text-sm font-semibold">Saint</p>
@@ -159,8 +162,6 @@
                 <div
                   class="w-full transition-all duration-300 flex items-center justify-center"
                 >
-              <button class="group flex items-center justify-start w-[30px] h-[30px] rounded-full cursor-pointer relative overflow-hidden shadow-[2px_2px_10px_rgba(0,0,0,0.199)] bg-[#ff4141]">
-                <div class="w-full transition-all duration-300 flex items-center justify-center">
                   <svg class="w-[17px]" viewBox="0 0 512 512">
                     <path
                       class="fill-white"
@@ -187,7 +188,7 @@
           >
             Vergelijken
           </h1>
-          <p class="mt-1 text-sm text-muted">
+          <p class="mt-1 text-base text-muted">
             Selecteer twee artiesten om hun statistieken naast elkaar te zien
           </p>
         </div>
@@ -269,7 +270,7 @@
               >
                 <div class="flex justify-between items-center">
                   <span
-                    class="text-[0.7rem] font-medium uppercase tracking-widest text-muted"
+                    class="text-base font-medium uppercase tracking-widest text-white/75"
                     >Populariteit</span
                   >
                   <span class="text-sm font-semibold text-green">88</span>
