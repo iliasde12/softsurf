@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
+    <script src="js/userData.js" defer></script>
     <title>Vergelijken – Artiesten</title>
 
     <!-- Tailwind CDN -->
@@ -141,40 +142,47 @@
           </nav>
         </div>
 
-        <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
+         <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
           <a href="./account.html">
-            <div
+            <!--<div
               class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold"
             >
               S
-            </div>
+            </div>-->
+            <img
+              id="profiel-picutre"
+              alt="Profiel Foto"
+              width="35"
+              height="35"
+            />
           </a>
           <div class="flex items-center justify-between flex-1">
             <div>
-              <p class="text-white text-sm font-semibold">Saint</p>
+              <p class="text-white text-sm font-semibold" id="username"></p>
               <p class="text-[#7B6BF5] text-xs">● Feest-stemming</p>
             </div>
 
-            <a href="/login.html">
-              <button
-                class="group flex items-center justify-start w-[30px] h-[30px] rounded-full cursor-pointer relative overflow-hidden bg-[#ff4141] hover:w-[32px] hover:h-[32px]"
+            <!--<a href="/login.html">-->
+            <button
+              id="uitloggen"
+              class="group flex items-center justify-start w-[30px] h-[30px] rounded-full cursor-pointer relative overflow-hidden bg-[#ff4141] hover:w-[32px] hover:h-[32px]"
+            >
+              <div
+                class="w-full transition-all duration-300 flex items-center justify-center"
               >
-                <div
-                  class="w-full transition-all duration-300 flex items-center justify-center"
-                >
-                  <svg class="w-[17px]" viewBox="0 0 512 512">
-                    <path
-                      class="fill-white"
-                      d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
-                    />
-                  </svg>
-                </div>
-                <span
-                  class="right-0 w-0 opacity-0 text-white text-[1em] font-semibold"
-                >
-                </span>
-              </button>
-            </a>
+                <svg class="w-[17px]" viewBox="0 0 512 512">
+                  <path
+                    class="fill-white"
+                    d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+                  />
+                </svg>
+              </div>
+              <span
+                class="right-0 w-0 opacity-0 text-white text-[1em] font-semibold"
+              >
+              </span>
+            </button>
+            <!-- </a>-->
           </div>
         </div>
       </aside>
