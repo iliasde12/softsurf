@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
     <script src="js/userData.js" async></script>
+    <script src="js/spotifyCollection.js" async></script>
     <title>Collectie</title>
 
     <!-- Tailwind CDN -->
@@ -218,10 +219,15 @@
         <!-- Search + filters -->
         <div class="flex flex-col md:flex-row gap-3 mb-6">
           <div class="relative flex-1 md:max-w-xs">
-            <span
+            <div
               class="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B8A] text-sm"
-              >🔍</span
             >
+              <img
+                class="w-5"
+                src="./img/magnifying-glass-solid-full (2).svg"
+                alt=""
+              />
+            </div>
             <input
               type="text"
               placeholder="Collectie filteren..."
@@ -240,12 +246,12 @@
               Favorieten
             </button>
             <button
-              class="bg-[#1E1B3A] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#2A2650] transition"
+              class="bg-[#2A5A3A] text-white text-xs px-3 py-1 rounded-full hover:bg-[#2A2650] transition"
             >
               Chill
             </button>
             <button
-              class="bg-[#1E1B3A] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#2A2650] transition"
+              class="bg-[#1E3A5A] text-white text-xs px-3 py-1 rounded-full hover:bg-[#2A2650] transition"
             >
               Workout
             </button>
@@ -265,9 +271,9 @@
         </div>
 
         <!-- Tracks -->
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1" id="tracksContainer">
           <!-- js een grote for loop-->
-          <!-- Track 1 -->
+          <!-- Track 1 
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
           >
@@ -293,8 +299,7 @@
             <span class="hidden md:block text-[#A0A0C0] text-xs">92</span>
             <span class="text-[#E91E8C] text-sm">♥</span>
           </div>
-
-          <!-- Track 2 -->
+          Track 2
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
           >
@@ -319,83 +324,7 @@
             <span class="hidden md:block text-[#6B6B8A] text-xs">12 jan</span>
             <span class="hidden md:block text-[#A0A0C0] text-xs">89</span>
             <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          <!-- Track 3 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">3</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Peru</p>
-                <p class="text-[#6B6B8A] text-xs">Fireboy DML</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full"
-                >Favorieten</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">10 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">87</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          <!-- Track 4 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">4</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1B3A2A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Calm Down</p>
-                <p class="text-[#6B6B8A] text-xs">Rema</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#1B2A4A] border border-[#2A3A7B] text-[#60A5FA] text-[10px] px-2 py-1 rounded-full"
-                >Workout</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">8 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">94</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          <!-- Track 5 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">5</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1E1B3A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Kilometre</p>
-                <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
-              </div>
-            </div>
-            <span class="hidden md:block text-[#6B6B8A] text-xs">—</span>
-            <span class="hidden md:block text-[#6B6B8A] text-xs">—</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">78</span>
-            <span class="text-[#6B6B8A] text-sm">♡</span>
-          </div>
+          </div>   -->
         </div>
       </main>
     </div>
