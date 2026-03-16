@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
     <script src="js/userData.js" defer></script>
+    <script src="js/profielPaginaData.js" defer></script>
     <title>Vergelijken – Artiesten</title>
 
     <!-- Tailwind CDN -->
@@ -213,24 +214,13 @@
             <div
               class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border"
             >
-              <div
-                class="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-lg"
-                style="
-                  background: linear-gradient(
-                    135deg,
-                    #3b1f6b,
-                    #6d28d9,
-                    #a78bfa
-                  );
-                "
-              >
-                S
+              <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-lg">
+                <img id="profiel-avatar" />
               </div>
               <div class="text-center">
-                <h2 class="font-display text-lg font-semibold text-light">
-                  Saint
+                <h2 class="font-display text-lg font-semibold text-light gebruikersnaamcontainer" >
                 </h2>
-                <p class="text-xs text-muted mt-0.5">saint@email.com</p>
+                <p class="text-xs text-muted mt-0.5 emailcontainer">saint@email.com</p>
               </div>
               <span
                 class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20"
@@ -309,8 +299,6 @@
                 <input
                   id="naam"
                   type="text"
-                  value="Saint"
-                  disabled
                   class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed"
                 />
               </div>
@@ -323,8 +311,7 @@
                 <input
                   id="email"
                   type="email"
-                  value="saint@email.com"
-                  disabled
+                
                   class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed"
                 />
               </div>
@@ -337,8 +324,7 @@
                 <input
                   id="gebruikersnaam"
                   type="text"
-                  value="@saint_music"
-                  disabled
+               
                   class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed"
                 />
               </div>

@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+
  const userData = JSON.parse(localStorage.getItem("LoggedinUser"));
     //tijdelijk zien wie er is ingelogd
     /*if (!user) {
@@ -22,5 +22,3 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem("access_token_spotify");
         window.location.href = "/login.html";
     });
-
-});
