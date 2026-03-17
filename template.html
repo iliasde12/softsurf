@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
-    <script src="js/userData.js" async></script>
-    <title>Playlist</title>
+    <link rel="stylesheet" href="./css/detail.css" />
+    <script src="js/userData.js" defer></script>
+    <script src="js/artisten.js" defer></script>
+    <title>Raad-het-nummer</title>
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -119,7 +121,7 @@
             </a>
             <a
               href="/playlist.html"
-              class="flex items-center gap-2 text-white text-sm py-1 px-2 rounded-lg bg-[#7B6BF5] transition"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
             >
               <img class="w-5" src="./img/music-solid-full.svg" alt="" />
               <span>Afspeellijsten</span>
@@ -188,230 +190,66 @@
       </aside>
 
       <!-- MAIN -->
-      <main class="flex-1 p-4 md:p-6 overflow-y-auto">
-        <!-- Title + view toggle -->
-        <div class="flex items-start justify-between mb-1">
-          <div>
-            <h1
-              class="font-display text-3xl font-semibold tracking-tight text-light"
-            >
-              Mijn afspeellijsten
-            </h1>
-            <p class="text-[#6B6B8A] text-xs md:text-sm mb-4">
-              Genereer een afspeellijst op basis van je stemming en gelikete
-              nummers
+      <main class="flex flex-1 p-4 md:p-6 overflow-y-auto">
+        <section class="detail-card">
+          <h1
+            class="font-display text-3xl font-semibold tracking-tight text-light"
+          >
+            Nummer details
+          </h1>
+          <figure></figure>
+        </section>
+        <section class="detail-info">
+          <section>
+            <h2>Last Last</h2>
+            <h3>Burna Boy</h3>
+            <p id="time">Love, Damini - 2022 - 4:28</p>
+            <section class="flex gap-1 mt-5 mb-5">
+              <p id="clicked-button" class="element-song">Preview afspelen</p>
+              <p class="element-song">Label toevoegen</p>
+              <p class="element-song">Vergelijken</p>
+            </section>
+          </section>
+          <h3 id="audio">Audio Kenmerken</h3>
+          <section class="grid grid-cols-3 gap-3 mt-2">
+            <p class="kenmerk-element">
+              Energie <br />
+              <span id="number1">78</span>
+              <br />
+              <span>---------</span>
             </p>
-          </div>
-          <div class="flex gap-2 mt-1">
-            <button
-              class="bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full"
-            >
-              Lijst
-            </button>
-            <button
-              class="border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition"
-            >
-              Raster
-            </button>
-          </div>
-        </div>
-
-        <!-- Search + filters -->
-
-        <!-- hier komt generate -->
-        <section
-          class="flex items-center justify-between bg-[#2A2650] mb-6 w-full px-6 py-4 rounded-2xl gap-6"
-        >
-          <!-- Stats -->
-          <div class="flex gap-4">
-            <div
-              class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]"
-            >
-              <span class="text-zinc-400 text-[11px] uppercase tracking-widest"
-                >Stemming</span
-              >
-              <span class="text-white text-sm font-semibold">Feest</span>
-            </div>
-            <div
-              class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]"
-            >
-              <span class="text-zinc-400 text-[11px] uppercase tracking-widest"
-                >Gelikte nummers</span
-              >
-              <span class="text-white text-sm font-semibold">4 nummers</span>
-            </div>
-            <div
-              class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]"
-            >
-              <span class="text-zinc-400 text-[11px] uppercase tracking-widest"
-                >Mix type</span
-              >
-              <span class="text-white text-sm font-semibold"
-                >Populair + ontdekking</span
-              >
-            </div>
-          </div>
-          <!-- Button -->
-          <button
-            class="bg-[#934c99] hover:brightness-110 transition text-white text-sm font-semibold px-6 py-3 rounded-xl shadow-[0_4px_15px_#934c9966] whitespace-nowrap cursor-pointer"
-          >
-            ✦ Genereer afspeellijst
-          </button>
+            <p class="kenmerk-element">
+              Dansbaarheid <br />
+              <span id="number2">82</span>
+              <br />
+              <span>---------</span>
+            </p>
+            <p class="kenmerk-element">
+              Tempo <br />
+              <span id="number3">117</span>
+              <br />
+              <span>---------</span>
+            </p>
+            <p class="kenmerk-element">
+              Populariteit <br />
+              <span id="number4">64</span>
+              <br />
+              <span>---------</span>
+            </p>
+            <p class="kenmerk-element">
+              Akoestisch <br />
+              <span id="number5">92</span>
+              <br />
+              <span>---------</span>
+            </p>
+            <p class="kenmerk-element">
+              Downloads <br />
+              <span id="number6">12</span>
+              <br />
+              <span>---------</span>
+            </p>
+          </section>
         </section>
-        <section class="flex flex-row justify-between mb-4">
-          <h2>Gegenereerde Afspeellijst - 12 Nummers</h2>
-          <p
-            class="mr-5 pr-2.5 pl-2.5 pt-1 pb-1 rounded-[40px] border-[3px] border-[#7B6BF5] hover:bg-[#7B6BF5]"
-          >
-            Alles Opslaan
-          </p>
-        </section>
-
-        <!-- Table header (hidden on mobile) -->
-        <div
-          class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-xs uppercase tracking-widest mb-2 px-2"
-        >
-          <span>#</span>
-          <span>Titel</span>
-          <span>Label</span>
-          <span>Datum</span>
-          <span>Pop</span>
-          <span></span>
-        </div>
-
-        <!-- Tracks -->
-        <div class="flex flex-col gap-1">
-          <!-- js een grote for loop-->
-          <!-- Track 1 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">1</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Last Last</p>
-                <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full"
-                >Favorieten</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">15 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">92</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          <!-- Track 2 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">2</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1B2A3A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Essence</p>
-                <p class="text-[#6B6B8A] text-xs">Wizkid ft. Tems</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#1E3A2A] border border-[#2A5A3A] text-[#4ADE80] text-[10px] px-2 py-1 rounded-full"
-                >Chill</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">12 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">89</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          <!-- Track 3 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">3</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Peru</p>
-                <p class="text-[#6B6B8A] text-xs">Fireboy DML</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full"
-                >Favorieten</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">10 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">87</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          <!-- Track 4 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">4</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1B3A2A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Calm Down</p>
-                <p class="text-[#6B6B8A] text-xs">Rema</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#1B2A4A] border border-[#2A3A7B] text-[#60A5FA] text-[10px] px-2 py-1 rounded-full"
-                >Workout</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">8 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">94</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          <!-- Track 5 -->
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">5</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1E1B3A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Kilometre</p>
-                <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
-              </div>
-            </div>
-            <span class="hidden md:block text-[#6B6B8A] text-xs">—</span>
-            <span class="hidden md:block text-[#6B6B8A] text-xs">—</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">78</span>
-            <span class="text-[#6B6B8A] text-sm">♡</span>
-          </div>
-        </div>
       </main>
     </div>
 
