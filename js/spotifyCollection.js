@@ -22,7 +22,7 @@ async function GetSpotifySongs() {
         displaySongs(data.items.items);
 
     } catch (error) {
-        console.error("Error fetching Spotify playlist:", error);
+         throw new Error("Error fetching Spotify playlist:", error);
     }
 
 }
