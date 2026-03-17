@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nl">
   <head>
     <meta charset="UTF-8" />
@@ -9,8 +9,8 @@
     <title>Vergelijken – Artiesten</title>
 
     <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com" defer ></script>
-    <script defer>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
       tailwind.config = {
         theme: {
           extend: {
@@ -143,7 +143,7 @@
           </nav>
         </div>
 
-         <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
+        <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
           <a href="./account.html">
             <!--<div
               class="w-8 h-8 rounded-full bg-[#7B6BF5] flex items-center justify-center text-xs font-bold"
@@ -214,13 +214,18 @@
             <div
               class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border"
             >
-              <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-lg">
+              <div
+                class="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-lg"
+              >
                 <img id="profiel-avatar" />
               </div>
               <div class="text-center">
-                <h2 class="font-display text-lg font-semibold text-light gebruikersnaamcontainer" >
-                </h2>
-                <p class="text-xs text-muted mt-0.5 emailcontainer">saint@email.com</p>
+                <h2
+                  class="font-display text-lg font-semibold text-light gebruikersnaamcontainer"
+                ></h2>
+                <p class="text-xs text-muted mt-0.5 emailcontainer">
+                  saint@email.com
+                </p>
               </div>
               <span
                 class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20"
@@ -312,7 +317,6 @@
                 <input
                   id="email"
                   type="email"
-                
                   class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed"
                 />
               </div>
@@ -325,7 +329,6 @@
                 <input
                   id="gebruikersnaam"
                   type="text"
-               
                   class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed"
                 />
               </div>
