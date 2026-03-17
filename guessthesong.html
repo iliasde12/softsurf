@@ -129,36 +129,110 @@
       </aside>
 
       <!-- MAIN -->
-      <main class="flex-1 p-4 md:p-6 overflow-y-auto">
-        <!-- Title -->
-        <div class="animate-fadeUp mb-4">
-          <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Zoek het nummer</h1>
-          <p class="mt-1 text-base text-muted">Luister naar een korte preview en raad welk nummer het is.</p>
-        </div>
-        <div class="animate-fadeUp" style="animation-delay: 0.15s">
-          <!-- ── Burna Boy ── -->
-          <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40">
-            <!-- Card header -->
-            <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
-              <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg">
-                <img id="profiel-pic-eerste-artist" class="rounded-xl" />
-              </div>
-              <div class="text-center">
-                <h2 class="font-display text-lg font-semibold text-light" id="naam-eerste-artist"></h2>
-                <p class="text-xs text-muted mt-0.5">Artiest?</p>
-              </div>
+      <main class="flex-1 p-4 md:p-8 overflow-y-auto">
+        <div class="flex flex-col items-center max-w-xl mx-auto">
+          <!-- Titel -->
+          <h1 class="font-extrabold tracking-tight mb-2 text-center" style="font-size: 2rem">Raad het Nummer</h1>
+          <p class="mb-8 text-center" style="font-size: 1rem; color: #7b7a9a">Luister naar een preview en raad welk nummer het is</p>
+
+          <!-- Stats -->
+          <div class="flex gap-10 mb-8">
+            <div class="text-center">
+              <p class="font-extrabold" style="font-size: 2.25rem; color: #5efca0; line-height: 1">7</p>
+              <p style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #5b5a7a; margin-top: 0.35rem; font-weight: 500">Goed</p>
+            </div>
+            <div class="text-center">
+              <p class="font-extrabold" style="font-size: 2.25rem; color: #a79bfa; line-height: 1">12</p>
+              <p style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #5b5a7a; margin-top: 0.35rem; font-weight: 500">Totaal</p>
+            </div>
+            <div class="text-center">
+              <p class="font-extrabold" style="font-size: 2.25rem; color: #ff6b8a; line-height: 1">3</p>
+              <p style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #5b5a7a; margin-top: 0.35rem; font-weight: 500">Reeks</p>
             </div>
           </div>
-        </div>
-        <div class="relative animate-fadeUp mt-6" style="animation-delay: 0.05s">
-          <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
-          <input
-            type="search"
-            placeholder="Zoek een artiest…"
-            class="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-light placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition" />
+
+          <!-- Vinyl Card -->
+          <div class="w-full rounded-2xl flex flex-col items-center px-8 py-8 mb-4" style="background: #1a1730; border: 1px solid #2a2648">
+            <!-- Vinyl disc -->
+            <div class="relative mb-6" style="width: 10rem; height: 10rem">
+              <div id="vinylDisc" class="rounded-full flex items-center justify-center relative" style="width: 10rem; height: 10rem; background: #f07090">
+                <div class="absolute inset-0 rounded-full pointer-events-none" style="border: 6px solid #e0607f; opacity: 0.3"></div>
+                <div class="absolute rounded-full pointer-events-none" style="inset: 1rem; border: 4px solid #e0607f; opacity: 0.2"></div>
+                <div class="rounded-full" style="width: 2.5rem; height: 2.5rem; background: #0d0b1e"></div>
+              </div>
+
+              <!-- Play / Pause knop -->
+              <button
+                id="playBtn"
+                class="absolute rounded-full flex items-center justify-center z-10"
+                style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 2.75rem; height: 2.75rem; background: rgba(255, 255, 255, 0.92); border: none; cursor: pointer">
+                <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#0D0B1E">
+                  <polygon points="5,3 19,12 5,21" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Hint dots -->
+            <div class="flex gap-2 mb-2">
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #7b6bf5"></div>
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #7b6bf5"></div>
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #7b6bf5"></div>
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #2e2b4e"></div>
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #2e2b4e"></div>
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #2e2b4e"></div>
+            </div>
+
+            <p class="mb-5" style="font-size: 1rem; color: #5b5a7a">Artiest verborgen</p>
+
+            <!-- Progress bar -->
+            <div class="w-full rounded-full overflow-hidden" style="height: 3px; background: #2a2648">
+              <div id="progressBar" class="progress-fill rounded-full" style="height: 100%; width: 34%; transition: width 0.2s"></div>
+            </div>
+          </div>
+
+          <!-- Input + indienen -->
+          <div class="flex gap-3 w-full mb-3">
+            <input
+              id="guessInput"
+              type="text"
+              placeholder="Typ een nummer..."
+              class="flex-1 rounded-full px-5 py-3 transition-colors"
+              style="font-size: 1rem; background: #1a1730; border: 1px solid #2e2b4e; color: #fff" />
+            <button class="rounded-full px-6 py-3 font-semibold whitespace-nowrap" style="font-size: 1rem; background: #7b6bf5; border: none; color: #fff; cursor: pointer">Indienen</button>
+          </div>
+
+          <!-- Suggesties -->
+          <div class="w-full rounded-2xl overflow-hidden" style="background: #1a1730; border: 1px solid #2a2648">
+            <div class="suggestion-row flex items-center gap-4 px-5 py-4" style="border-bottom: 1px solid #1f1d38">
+              <div class="rounded-lg flex-shrink-0 flex items-center justify-center" style="width: 2.5rem; height: 2.5rem; background: #2a2648">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#5B5A7A"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3z" /></svg>
+              </div>
+              <span style="font-size: 1rem">
+                <span style="font-weight: 600; color: #e2e0ff">Last Last</span>
+                <span style="color: #5b5a7a">· Burna Boy</span>
+              </span>
+            </div>
+
+            <div class="suggestion-row flex items-center gap-4 px-5 py-4" style="border-bottom: 1px solid #1f1d38">
+              <div class="rounded-lg flex-shrink-0 flex items-center justify-center" style="width: 2.5rem; height: 2.5rem; background: #2a2648">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#5B5A7A"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3z" /></svg>
+              </div>
+              <span style="font-size: 1rem">
+                <span style="font-weight: 600; color: #e2e0ff">Last Lap</span>
+                <span style="color: #5b5a7a">· Burna Boy</span>
+              </span>
+            </div>
+
+            <div class="suggestion-row flex items-center gap-4 px-5 py-4">
+              <div class="rounded-lg flex-shrink-0 flex items-center justify-center" style="width: 2.5rem; height: 2.5rem; background: #2a2648">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#5B5A7A"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3z" /></svg>
+              </div>
+              <span style="font-size: 1rem">
+                <span style="font-weight: 600; color: #e2e0ff">Last Time</span>
+                <span style="color: #5b5a7a">· Giveon</span>
+              </span>
+            </div>
+          </div>
         </div>
       </main>
     </div>

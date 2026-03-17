@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="nl-BE">
   <head>
     <meta charset="UTF-8" />
@@ -12,12 +12,11 @@
     <script src="js/login.js" type="module" async></script>
   </head>
   <body>
-    <header class="bg-[#100E22] h-16 flex items-center overflow-hidden">
-      <img
-        src="/img/softsurf_logo.svg"
-        alt="softsurf_logo"
-        class="w-28 md:w-30 mx-auto md:mx-0"
-      />
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-50 flex items-center px-6 py-2 border-b border-white/[0.07] bg-[#0b0c1e]/85 backdrop-blur-md animate-slide-down">
+      <a href="/">
+        <img src="/img/softsurf_logo.svg" alt="softsurf_logo" class="w-28 md:w-30 mx-auto md:mx-0" />
+      </a>
     </header>
 
     <main>
@@ -31,9 +30,7 @@
 
         <div class="container-text">
           <h2>Welkom terug</h2>
-          <p>
-            Log in om toegang te krijgen tot je collectie, afspeellijsten en
-          </p>
+          <p>Log in om toegang te krijgen tot je collectie, afspeellijsten en</p>
           <p>spelscores</p>
         </div>
 
@@ -45,11 +42,7 @@
 
           <div class="form-input">
             <label for="wachtwoord">WACHTWOORD</label>
-            <input
-              type="password"
-              id="wachtwoord"
-              placeholder="Voer je wachtwoord in"
-            />
+            <input type="password" id="wachtwoord" placeholder="Voer je wachtwoord in" />
           </div>
 
           <div class="container-text-ww-vergeten">
