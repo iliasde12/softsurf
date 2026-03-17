@@ -6,6 +6,7 @@
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
     <script src="js/userData.js" defer></script>
     <script src="js/tracks.js" defer></script>
+    <script src="js/spotifyCollection.js" defer></script>
     <title>Playlist</title>
 
     <!-- Tailwind CDN -->
@@ -260,7 +261,7 @@
           </button>
         </section>
         <section class="flex flex-row justify-between mb-4">
-          <h2>Gegenereerde Afspeellijst - 12 Nummers</h2>
+          <h2>Gegenereerde Afspeellijst - 6 Nummers</h2>
           <p
             class="mr-5 pr-2.5 pl-2.5 pt-1 pb-1 rounded-[40px] border-[3px] border-[#7B6BF5] hover:bg-[#7B6BF5]"
           >
@@ -270,20 +271,20 @@
 
         <!-- Table header (hidden on mobile) -->
         <div
-          class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-xs uppercase tracking-widest mb-2 px-2"
+          class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-base uppercase tracking-widest mb-2 px-2"
         >
-          <span>#</span>
-          <span>Titel</span>
-          <span>Label</span>
-          <span>Datum</span>
-          <span>Pop</span>
-          <span></span>
+          <span class="text-white">#</span>
+          <span class="text-white">Titel</span>
+          <span class="text-white">Label</span>
+          <span class="text-white">Datum</span>
+          <span class="text-white">Pop</span>
+          <span class="text-white"></span>
         </div>
 
         <!-- Tracks -->
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1" id="tracksContainer">
           <!-- js een grote for loop-->
-          <!-- Track 1 -->
+          <!-- Track 1 
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
           >
@@ -310,7 +311,7 @@
             <span class="text-[#E91E8C] text-sm">♥</span>
           </div>
 
-          <!-- Track 2 -->
+          Track 2 
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
           >
@@ -337,7 +338,7 @@
             <span class="text-[#E91E8C] text-sm">♥</span>
           </div>
 
-          <!-- Track 3 -->
+          Track 3
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
           >
@@ -364,7 +365,7 @@
             <span class="text-[#E91E8C] text-sm">♥</span>
           </div>
 
-          <!-- Track 4 -->
+          Track 4
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
           >
@@ -391,7 +392,7 @@
             <span class="text-[#E91E8C] text-sm">♥</span>
           </div>
 
-          <!-- Track 5 -->
+          Track 5
           <div
             class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
           >
@@ -412,6 +413,7 @@
             <span class="hidden md:block text-[#A0A0C0] text-xs">78</span>
             <span class="text-[#6B6B8A] text-sm">♡</span>
           </div>
+          -->
         </div>
       </main>
     </div>
