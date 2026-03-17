@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
+    <link rel="stylesheet" href="./css/detail.css" />
     <script src="js/userData.js" defer></script>
     <script src="js/artisten.js" defer></script>
     <title>Raad-het-nummer</title>
@@ -135,7 +136,7 @@
           <nav class="flex flex-col gap-1">
             <a
               href="/guesthesong.html"
-              class="flex items-center gap-2 text-white text-sm py-1 px-2 rounded-lg bg-[#7B6BF5] transition"
+              class="flex items-center gap-2 text-[#A0A0C0] hover:text-white text-sm py-1 px-2 rounded-lg hover:bg-[#1E1B3A] transition"
             >
               <img class="w-5" src="./img/question-solid-full.svg" alt="" />
               <span>Raad het Nummer</span>
@@ -189,62 +190,66 @@
       </aside>
 
       <!-- MAIN -->
-      <main class="flex-1 p-4 md:p-6 overflow-y-auto">
-        <!-- Title -->
-        <div class="animate-fadeUp mb-4">
+      <main class="flex flex-1 p-4 md:p-6 overflow-y-auto">
+        <section class="detail-card">
           <h1
             class="font-display text-3xl font-semibold tracking-tight text-light"
           >
-            Zoek het nummer
+            Nummer details
           </h1>
-          <p class="mt-1 text-base text-muted">
-            Luister naar een korte preview en raad welk nummer het is.
-          </p>
-        </div>
-        <div class="animate-fadeUp" style="animation-delay: 0.15s">
-          <!-- ── Burna Boy ── -->
-          <div
-            class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40"
-          >
-            <!-- Card header -->
-            <div
-              class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border"
-            >
-              <div
-                class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-lg"
-              >
-                <img id="profiel-pic-eerste-artist" class="rounded-xl" />
-              </div>
-              <div class="text-center">
-                <h2
-                  class="font-display text-lg font-semibold text-light"
-                  id="naam-eerste-artist"
-                ></h2>
-                <p class="text-xs text-muted mt-0.5">Artiest?</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="relative animate-fadeUp mt-6"
-          style="animation-delay: 0.05s"
-        >
-          <svg
-            class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
-          <input
-            type="search"
-            placeholder="Zoek een artiest…"
-            class="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-light placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition"
-          />
-        </div>
+          <figure></figure>
+        </section>
+        <section class="detail-info">
+          <section>
+            <h2>Last Last</h2>
+            <h3>Burna Boy</h3>
+            <p id="time">Love, Damini - 2022 - 4:28</p>
+            <section class="flex gap-1 mt-5 mb-5">
+              <p id="clicked-button" class="element-song">Preview afspelen</p>
+              <p class="element-song">Label toevoegen</p>
+              <p class="element-song">Vergelijken</p>
+            </section>
+          </section>
+          <h3 id="audio">Audio Kenmerken</h3>
+          <section class="grid grid-cols-3 gap-3 mt-2">
+            <p class="kenmerk-element">
+              Energie <br />
+              <span id="number1">78</span>
+              <br />
+              <span>---------</span>
+            </p>
+            <p class="kenmerk-element">
+              Dansbaarheid <br />
+              <span id="number2">82</span>
+              <br />
+              <span>---------</span>
+            </p>
+            <p class="kenmerk-element">
+              Tempo <br />
+              <span id="number3">117</span>
+              <br />
+              <span>---------</span>
+            </p>
+            <p class="kenmerk-element">
+              Populariteit <br />
+              <span id="number4">64</span>
+              <br />
+              <span>---------</span>
+            </p>
+            <p class="kenmerk-element">
+              Akoestisch <br />
+              <span id="number5">92</span>
+              <br />
+              <span>---------</span>
+            </p>
+            <p class="kenmerk-element">
+              Downloads <br />
+              <span id="number6">12</span>
+              <br />
+              <span>---------</span>
+            </p>
+          </section>
+        </section>
       </main>
     </div>
 
