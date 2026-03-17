@@ -1,7 +1,7 @@
 async function GetSpotifyTraks() {
     const token = localStorage.getItem("access_token_spotify");
     //console.log("token", token);
-    const spotifySongsIds = ["id1","id2"];
+    const spotifySongsIds = ["5YbPxJwPfrj7uswNwoF1pJ", "5FG7Tl93LdH117jEKYl3Cm"];
     console.log(spotifySongsIds);
 
     try {
@@ -21,15 +21,25 @@ async function GetSpotifyTraks() {
         const data = await response.json();
         //console.log(data);
         //console.log("Playlist:", data.items);
-        console.log("Playlist tracks:", data.tracks.items);
+        console.log("tracks:", data);
 
-        displaySongs(data.items.items);
+        domElement("eerste", data.tracks[0]);
+        domElement("tweede", data.tracks[1]);
 
     } catch (error) {
-         throw new Error("Error fetching Spotify playlist:", error);
+        throw new Error("Error fetching Spotify playlist:", error);
     }
 
 }
 
 
 GetSpotifyTraks();
+
+
+function domElement(nummer, artist) {
+
+    document.getElementById(`muziek-pic-${nummer}-song`).src = song.images[0].url;
+    document.getElementById(`naam-${nummer}-artist`).textContent = artist.name;
+    document.getElementById(`pop-${nummer}-artist`).textContent = artist.popularity;
+    document.getElementById(`followers-${nummer}-artist`).textContent = artist.followers.total.toLocaleString();
+}
