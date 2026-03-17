@@ -42,7 +42,7 @@ function displaySongs(songs) {
     trackContainer.className = `grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center ${index % 2 === 0 ? "bg-[#1E1B3A]" : ""} hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition`;
 
     const number = document.createElement("span");
-    number.className = "text-white text-base text-center";
+    number.className = "text-white text-[1rem] text-center";
     number.textContent = index + 1;
 
     const infoWrapper = document.createElement("div");
