@@ -60,7 +60,7 @@ function displaySongs(songs) {
     trackName.textContent = song.item.name;
 
     const artistName = document.createElement("p");
-    artistName.className = "text-white/60 text-sm";
+    artistName.className = "text-white/60 text-[1rem]";
     artistName.textContent = song.item.artists[0].name;
 
     textDiv.append(trackName, artistName);
