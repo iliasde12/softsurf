@@ -56,7 +56,7 @@ function displaySongs(songs) {
     const textDiv = document.createElement("div");
 
     const trackName = document.createElement("p");
-    trackName.className = "text-white text-base font-semibold";
+    trackName.className = "text-white text-[1rem] font-semibold";
     trackName.textContent = song.item.name;
 
     const artistName = document.createElement("p");
