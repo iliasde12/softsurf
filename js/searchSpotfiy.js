@@ -20,7 +20,7 @@ const fetchSongs = async (query) => {
         showSongs(data.tracks.items);
 
     } catch (error) {
-        console.error("Error fetching Spotify playlist:", error);
+         throw new Error("Error fetching Spotify playlist:", error);
     }
 };
 
