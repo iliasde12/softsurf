@@ -19,8 +19,10 @@ app.set("views", path.join(__dirname, "views"));
 
 app.set("port", process.env.PORT || 3000);
 
+//import routes
 const testRoutes = require("./routes/test");
 
+//routes voegen
 app.use("/", testRoutes);
 
 /*app.get("/", (req, res) => {
