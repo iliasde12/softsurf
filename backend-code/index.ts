@@ -7,7 +7,7 @@ dotenv.config();
 
 const app: Express = express();
 const URI: string =
-  "mongodb+srv://SoftSurfUser:<db_password>@softsurf.pxq1kmm.mongodb.net/?appName=SoftSurf";
+  "mongodb+srv://SoftSurfUser:softsurf990304@softsurf.pxq1kmm.mongodb.net/?appName=SoftSurf";
 const client: MongoClient = new MongoClient(URI);
 
 app.set("view engine", "ejs");
