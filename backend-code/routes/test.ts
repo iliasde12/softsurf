@@ -8,3 +8,5 @@ router.get("/", (req, res) => {
     message: "Hello World",
   });
 });
+
+module.exports = router;
