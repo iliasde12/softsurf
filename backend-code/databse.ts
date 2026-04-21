@@ -1,49 +1,80 @@
-import { MongoClient } from "mongodb";
-import dotenv from "dotenv";
-import bcrypt from "bcrypt-ts";
+import bcrypt from "bcrypt";
+import { Db, MongoClient, ObjectId } from "mongodb";
+import { User } from "./interfaces/index";
 
-dotenv.config();
-
-//later moet dit naar env voor securty
+// Connection config MongoDB
 const URI: string =
   "mongodb+srv://SoftSurfUser:softsurf990304@softsurf.pxq1kmm.mongodb.net/?appName=SoftSurf";
 const client: MongoClient = new MongoClient(URI);
+let connectionPromise: Promise<Db> | null = null;
 
-/*async function main() {
-  try {
-    await client.connect();
-
-   
-  } catch (e) {
-    console.error(e);
-  } finally {
-    await client.close();
+export function connectDB(): Promise<Db> {
+  if (!connectionPromise) {
+    connectionPromise = client.connect().then(() => client.db("softsurf"));
   }
-}*/
-let isConnected = false;
-
-export async function connectDB() {
-  if (!isConnected) {
-    await client.connect();
-    isConnected = true;
-  }
-  return client.db("softsurf");
+  return connectionPromise;
 }
 
-//create user
-export async function CreateUser(
+// Users functions
+
+// Create
+export async function createUser(
   username: string,
   email: string,
   password: string,
+  image: string = "",
 ) {
   const db = await connectDB();
-  const users = db.collection("users");
+  const users = db.collection<User>("users");
 
+  const existing = await users.findOne({ $or: [{ email }, { username }] });
+  if (existing) throw new Error("E-mail of gebruikersnaam is al in gebruik");
+
+  const now = new Date();
   return await users.insertOne({
     username,
     email,
-    password,
+    password: await bcrypt.hash(password, 12),
+    image,
+    createdAt: now,
+    updatedAt: now,
   });
 }
 
-//update user
+// Update
+export async function updateUser(
+  id: string,
+  data: Partial<Omit<User, "createdAt">>,
+) {
+  const db = await connectDB();
+  const users = db.collection<User>("users");
+
+  if (data.password) {
+    data.password = await bcrypt.hash(data.password, 12);
+  }
+
+  return await users.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: { ...data, updatedAt: new Date() } },
+  );
+}
+
+// FindByEmail
+export async function findUserByEmail(email: string) {
+  const db = await connectDB();
+  return await db.collection<User>("users").findOne({ email });
+}
+
+// FindByUsername
+export async function findUserByUsername(username: string) {
+  const db = await connectDB();
+  return await db.collection<User>("users").findOne({ username });
+}
+
+// Delete User
+export async function deleteUser(id: string) {
+  const db = await connectDB();
+  return await db
+    .collection<User>("users")
+    .deleteOne({ _id: new ObjectId(id) });
+}

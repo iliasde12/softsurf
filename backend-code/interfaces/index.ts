@@ -1,3 +1,5 @@
+//import { ObjectId } from "mongodb";
+
 export interface SpotifyExternalUrls {
   spotify: string;
 }
@@ -8,7 +10,15 @@ export interface SpotifyImage {
   width: number;
 }
 
-export interface User {}
+export interface User {
+  //_id?: ObjectId;
+  username: string;
+  email: string;
+  password: string;
+  image: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export interface SpotifyArtist {
   external_urls: SpotifyExternalUrls;
