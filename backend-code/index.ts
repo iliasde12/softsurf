@@ -17,14 +17,14 @@ app.set("port", process.env.PORT || 3000);
 const mainRoutes = require("./routes/main");
 
 //routes voegen
-app.use("/", mainRoutes);
+//app.use("/", mainRoutes);
 
-/*app.get("/", (req, res) => {
-  res.render("index", {
+app.get("/", (req, res) => {
+  res.render("playlist", {
     title: "Hello World",
     message: "Hello World",
   });
-});*/
+});
 
 app.listen(app.get("port"), () => {
   console.log("Server started on http://localhost:" + app.get("port"));
