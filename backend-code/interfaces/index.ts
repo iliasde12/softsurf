@@ -70,3 +70,10 @@ export interface SpotifyTrack {
   uri: string;
   is_local: boolean;
 }
+
+
+export interface Song extends SpotifyTrack {
+  //_id?: ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}

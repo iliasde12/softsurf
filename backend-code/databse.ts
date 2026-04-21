@@ -1,6 +1,15 @@
 import bcrypt from "bcrypt";
 import { Db, MongoClient, ObjectId } from "mongodb";
-import { User } from "./interfaces/index";
+import {
+  SpotifyTrack,
+  Song,
+  SpotifyExternalUrls,
+  SpotifyArtist,
+  SpotifyAlbum,
+  SpotifyExternalIds,
+  SpotifyImage,
+  User
+} from"./interfaces/index";
 
 // Connection config MongoDB
 const URI: string =
@@ -78,3 +87,75 @@ export async function deleteUser(id: string) {
     .collection<User>("users")
     .deleteOne({ _id: new ObjectId(id) });
 }
+
+
+// Songs function 
+
+// Create
+export async function createSong(track: SpotifyTrack) {
+  const db = await connectDB();
+  const songs = db.collection<Song>("songs");
+
+  const existing = await songs.findOne({ id: track.id });
+  if (existing) throw new Error("Song bestaat al in de database");
+
+  const now = new Date();
+  return await songs.insertOne({
+    ...track,
+    createdAt: now,
+    updatedAt: now,
+  });
+}
+
+
+// SongById
+export async function findSongBySpotifyId(spotifyId: string) {
+  const db = await connectDB();
+  const song = await db.collection<Song>("songs").findOne({ id: spotifyId });
+  if (!song) throw new Error("Song niet gevonden");
+  return song;
+}
+
+
+// SongByArtist
+export async function findSongsByArtist(artistName: string) {
+  const db = await connectDB();
+  return await db
+    .collection<Song>("songs")
+    .find({ "artists.name": artistName })
+    .toArray();
+}
+
+// findBySongs
+export async function findAllSongs() {
+  const db = await connectDB();
+  return await db.collection<Song>("songs").find().toArray();
+}
+
+// Update Song
+export async function updateSong(
+  id: string,
+  data: Partial<Omit<Song, "createdAt" | "_id">>,
+) {
+  const db = await connectDB();
+  return await db
+    .collection<Song>("songs")
+    .updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { ...data, updatedAt: new Date() } },
+    );
+}
+
+// Delete Song
+export async function deleteSong(id: string) {
+  const db = await connectDB();
+  return await db
+    .collection<Song>("songs")
+    .deleteOne({ _id: new ObjectId(id) });
+}
+
+
+
+
+
+
