@@ -1,16 +1,10 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
-import { MongoClient } from "mongodb";
 
 dotenv.config();
 
 const app: Express = express();
-//later moet dit naar env voor securty
-const URI: string =
-  "mongodb+srv://SoftSurfUser:softsurf990304@softsurf.pxq1kmm.mongodb.net/?appName=SoftSurf";
-const client: MongoClient = new MongoClient(URI);
-
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
