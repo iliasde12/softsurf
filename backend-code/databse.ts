@@ -10,8 +10,6 @@ const URI: string =
 const client: MongoClient = new MongoClient(URI);
 
 //create user
-export async function CreateUser(username: string, email: string, password: string) {
-    
-}
+export async function CreateUser(username: string,email: string,password: string,) {}
 
 //update user
