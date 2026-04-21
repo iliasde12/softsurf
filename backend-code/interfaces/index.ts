@@ -8,7 +8,13 @@ export interface SpotifyImage {
   width: number;
 }
 
-export interface User {}
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  image: string;
+}
 
 export interface SpotifyArtist {
   external_urls: SpotifyExternalUrls;
