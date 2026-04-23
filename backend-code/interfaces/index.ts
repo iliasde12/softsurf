@@ -11,13 +11,20 @@ export interface SpotifyImage {
 }
 
 export interface User {
+<<<<<<< HEAD
   //_id?: ObjectId;
+=======
+  id: number;
+>>>>>>> partials
   username: string;
   email: string;
   password: string;
   image: string;
+<<<<<<< HEAD
   createdAt: Date;
   updatedAt: Date;
+=======
+>>>>>>> partials
 }
 
 export interface SpotifyArtist {

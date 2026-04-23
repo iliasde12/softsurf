@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="css/register.css" />
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="icon" type="image/x-icon" href="/img/softsurf_logo.svg" />
+    <title>SoftSurf</title>
+    <script src="js/spotifyAccessToken.js" type="module" async></script>
+    <script src="js/login.js" type="module" async></script>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header
+      class="sticky top-0 z-50 flex items-center px-6 py-2 border-b border-white/[0.07] bg-[#0b0c1e]/85 backdrop-blur-md animate-slide-down"
+    >
+      <a href="/">
+        <img
+          src="/img/softsurf_logo.svg"
+          alt="softsurf_logo"
+          class="w-28 md:w-30 mx-auto md:mx-0"
+        />
+      </a>
+    </header>
+
+    <main>
+      <div class="container-box">
+        <div class="container-buttons">
+          <button><a href="/login.html">Inloggen</a></button>
+          <button><a href="/Register.html">Registreren</a></button>
+        </div>
+
+        <div class="container-message" style="display: none"></div>
+
+        <div class="container-text">
+          <h2>Welkom terug</h2>
+          <p>
+            Log in om toegang te krijgen tot je collectie, afspeellijsten en
+          </p>
+          <p>spelscores</p>
+        </div>
+
+        <form id="form">
+          <div class="form-input">
+            <label for="email">E-MAILADRES</label>
+            <input type="email" id="email" placeholder="jouw@email.be" />
+          </div>
+
+          <div class="form-input">
+            <label for="wachtwoord">WACHTWOORD</label>
+            <input
+              type="password"
+              id="wachtwoord"
+              placeholder="Voer je wachtwoord in"
+            />
+          </div>
+
+          <div class="container-text-ww-vergeten">
+            <span>wachtwoord vergeten?</span>
+          </div>
+
+          <input type="submit" value="Inloggen" />
+        </form>
+      </div>
+    </main>
+    <aside></aside>
+    <footer></footer>
+  </body>
+</html>
