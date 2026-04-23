@@ -1,5 +1,33 @@
 //ilias moet dit nog nakijken om zeker te zijn
+//interfaces zijn niet 100%
+//sommige waardes mogen null zijn hangt er van af wat doel nog is
 import { ObjectId } from "mongodb";
+
+//enum in verband met de mood in de songs kan geupdate worden naar een eigen collection in mongodb
+export type Mood = "happy" | "sad" | "energetic" | "chill" | "angry" | "romantic";
+
+//user interface
+export interface User {
+  _id?: ObjectId;
+  username: string;
+  email: string;
+  password: string;
+  image: string; //avatar 
+  createdAt:Date;
+  updatedAt:Date;
+}
+
+//spotify token interface om te connecten met user
+//belangrkijk voor connectie met spotify api 
+export interface SpotifySession {
+  _id?: ObjectId;
+  userId: ObjectId;           
+  accessToken: string;  // 1 uur geldig na 1 uur wordt geudate
+  refreshToken: string; // onbeperkt en wordt soms ook geupdate
+  expiresAt: Date;            
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export interface SpotifyExternalUrls {
   spotify: string;
@@ -7,19 +35,12 @@ export interface SpotifyExternalUrls {
 
 export interface SpotifyImage {
   url: string;
-  height: number;
-  width: number;
+  // height en width zijn niet perse nodig was gewoon om de api na tebootsen
+  //height: number;
+  //width: number;
 }
 
-export interface User {
-  _id?: ObjectId;
-  username: string;
-  email: string;
-  password: string;
-  image: string;
-  createdAt:Date;
-  updatedAt:Date;
-}
+
 
 export interface SpotifyArtist {
   external_urls: SpotifyExternalUrls;
@@ -72,9 +93,10 @@ export interface SpotifyTrack {
   is_local: boolean;
 }
 
-
+//neemt alle fields van de spotify track maar voegt er een mongodb aan toe en mood zodat het lokaal kan werken
 export interface Song extends SpotifyTrack {
   _id?: ObjectId;
+  mood: Mood;
   createdAt: Date;
   updatedAt: Date;
 }
