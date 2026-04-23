@@ -96,7 +96,7 @@ export interface SpotifyTrack {
 //neemt alle fields van de spotify track maar voegt er een mongodb aan toe en mood zodat het lokaal kan werken
 export interface Song extends SpotifyTrack {
   _id?: ObjectId;
-  mood: Mood;
+  mood: Mood | null;
   createdAt: Date;
   updatedAt: Date;
 }
