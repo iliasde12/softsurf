@@ -46,7 +46,7 @@ export async function createUser(
     password: await bcrypt.hash(password, 12),
     image,
     createdAt: now,
-    updatedAt: now,
+    updatedAt:now,
   });
 }
 
