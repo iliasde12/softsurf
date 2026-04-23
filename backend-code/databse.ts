@@ -102,6 +102,8 @@ export async function createSong(track: SpotifyTrack) {
   const now = new Date();
   return await songs.insertOne({
     ...track,
+    //null is test maar moet later geupdate worden door een mood 
+    mood: null,
     createdAt: now,
     updatedAt: now,
   });
