@@ -1,12 +1,6 @@
 {
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "bcrypt-ts": "^8.0.1"
-<<<<<<< HEAD
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^6.0.0"
-=======
->>>>>>> 6a499d59d0e198a96c09949f349dd0e8f069bf3a
+    "ejs": "^5.0.2"
   }
 }
