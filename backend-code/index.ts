@@ -15,16 +15,18 @@ app.set("port", process.env.PORT || 3000);
 
 //import routes
 const mainRoutes = require("./routes/main");
+const protectedRoutes = require("./routes/protected");
 
 //routes voegen
-//app.use("/", mainRoutes);
+app.use("/", mainRoutes);
+app.use("/", protectedRoutes);
 
-app.get("/", (req, res) => {
+/*app.get("/", (req, res) => {
   res.render("playlist", {
     title: "Hello World",
     message: "Hello World",
   });
-});
+});*/
 
 app.listen(app.get("port"), () => {
   console.log("Server started on http://localhost:" + app.get("port"));

@@ -17,6 +17,8 @@ export interface User {
   email: string;
   password: string;
   image: string;
+  createdAt:Date;
+  updatedAt:Date;
 }
 
 export interface SpotifyArtist {

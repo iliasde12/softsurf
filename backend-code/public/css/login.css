@@ -1,0 +1,30 @@
+.container-buttons button:nth-child(1){
+    color: white;
+    background:
+        linear-gradient(to bottom, rgba(232, 67, 147, 0.25), transparent 60%),
+        linear-gradient(90deg, #7B6BF5, #E84393);
+}
+
+.container-buttons button:nth-child(2){
+    color: unset;
+    background: unset;
+    background-color: #0A0714;
+}
+
+main{
+  margin-top: 100px;
+}
+
+
+.container-text-ww-vergeten{
+    display: flex;
+    justify-content: right;
+}
+
+.container-text-ww-vergeten{
+    margin-top: 10px;
+}
+
+input[type=submit] {
+    margin-top: 30px;
+}
