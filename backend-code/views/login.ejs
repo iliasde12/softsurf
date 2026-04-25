@@ -42,10 +42,10 @@
           <p>spelscores</p>
         </div>
 
-        <form id="form">
+        <form method="post" action="/login">
           <div class="form-input">
             <label for="email">E-MAILADRES</label>
-            <input type="email" id="email" placeholder="jouw@email.be" />
+            <input type="email" id="email" placeholder="jouw@email.be" name="email" />
           </div>
 
           <div class="form-input">
@@ -54,6 +54,7 @@
               type="password"
               id="wachtwoord"
               placeholder="Voer je wachtwoord in"
+              name="password"
             />
           </div>
 
