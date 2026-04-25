@@ -55,7 +55,7 @@ export async function login(email: string, password: string) {
     if (email === "" || password === "") {
         throw new Error("Email and password required");
     }
-    
+
     let user : User | null = await userCollection.findOne<User>({email: email});
 
     if (user) {
