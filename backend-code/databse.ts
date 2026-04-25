@@ -27,33 +27,6 @@ export function connectDB(): Promise<Db> {
 //user functions
 export const userCollection = client.db("login-express").collection<User>("users");
 
-// Create
-export async function createUser(
-  username: string,
-  email: string,
-  password: string,
-  image: string = "",
-) {
-  const db = await connectDB();
-  const users = db.collection<User>("users");
-
-  const existing = await users.findOne({ $or: [{ email }, { username }] });
-  if (existing) throw new Error("E-mail of gebruikersnaam is al in gebruik");
-
-  const now = new Date();
-  return await users.insertOne({
-    username,
-    email,
-    password: await bcrypt.hash(password, 12),
-    image,
-    createdAt: now,
-    updatedAt:now,
-  });
-}
-
-// Songs function 
-
-
 
 
 
