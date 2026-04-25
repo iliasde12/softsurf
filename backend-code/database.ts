@@ -18,7 +18,7 @@ const now : Date = new Date();
 export const MONGODB_URI : string = "mongodb+srv://SoftSurfUser:softsurf990304@softsurf.pxq1kmm.mongodb.net/?appName=SoftSurf";
 const client: MongoClient = new MongoClient(MONGODB_URI);
 
-//connect en exit function
+//exit function
 async function exit() {
     try {
         await client.close();
@@ -29,6 +29,7 @@ async function exit() {
     process.exit(0);
 }
 
+//connect function
 export async function connect() {
     await client.connect();
     console.log("Connected to database");
