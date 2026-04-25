@@ -5,6 +5,7 @@
     "ejs": "^5.0.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/connect-mongodb-session": "^2.4.8"
   }
 }
