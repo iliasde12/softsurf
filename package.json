@@ -1,6 +1,10 @@
 {
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "connect-mongodb-session": "^5.0.0",
     "ejs": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/connect-mongodb-session": "^2.4.8"
   }
 }

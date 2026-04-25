@@ -1,6 +1,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
+import { connect } from "./database";
 
 dotenv.config();
 
@@ -18,16 +19,17 @@ const mainRoutes = require("./routes/main");
 const protectedRoutes = require("./routes/protected");
 
 //routes voegen
-app.use("/", mainRoutes);
-app.use("/", protectedRoutes);
+app.use(mainRoutes);
+app.use(protectedRoutes);
 
-/*app.get("/", (req, res) => {
-  res.render("playlist", {
-    title: "Hello World",
-    message: "Hello World",
-  });
-});*/
 
-app.listen(app.get("port"), () => {
-  console.log("Server started on http://localhost:" + app.get("port"));
+
+app.listen(app.get("port"), async () => {
+   try {
+        await connect();
+        console.log("Server started on http://localhost:" + app.get('port'));
+    } catch (e) {
+        console.log(e);
+        process.exit(1); 
+    }
 });
