@@ -24,7 +24,8 @@ export function connectDB(): Promise<Db> {
   return connectionPromise;
 }
 
-// Users functions
+//user functions
+export const userCollection = client.db("login-express").collection<User>("users");
 
 // Create
 export async function createUser(
@@ -50,111 +51,8 @@ export async function createUser(
   });
 }
 
-// Update
-export async function updateUser(
-  id: string,
-  data: Partial<Omit<User, "createdAt">>,
-) {
-  const db = await connectDB();
-  const users = db.collection<User>("users");
-
-  if (data.password) {
-    data.password = await bcrypt.hash(data.password, 12);
-  }
-
-  return await users.updateOne(
-    { _id: new ObjectId(id) },
-    { $set: { ...data, updatedAt: new Date() } },
-  );
-}
-
-// FindByEmail
-export async function findUserByEmail(email: string) {
-  const db = await connectDB();
-  return await db.collection<User>("users").findOne({ email });
-}
-
-// FindByUsername
-export async function findUserByUsername(username: string) {
-  const db = await connectDB();
-  return await db.collection<User>("users").findOne({ username });
-}
-
-// Delete User
-export async function deleteUser(id: string) {
-  const db = await connectDB();
-  return await db
-    .collection<User>("users")
-    .deleteOne({ _id: new ObjectId(id) });
-}
-
-
 // Songs function 
 
-// Create
-export async function createSong(track: SpotifyTrack) {
-  const db = await connectDB();
-  const songs = db.collection<Song>("songs");
-
-  const existing = await songs.findOne({ id: track.id });
-  if (existing) throw new Error("Song bestaat al in de database");
-
-  const now = new Date();
-  return await songs.insertOne({
-    ...track,
-    //null is test maar moet later geupdate worden door een mood 
-    mood: null,
-    createdAt: now,
-    updatedAt: now,
-  });
-}
-
-
-// SongById
-export async function findSongBySpotifyId(spotifyId: string) {
-  const db = await connectDB();
-  const song = await db.collection<Song>("songs").findOne({ id: spotifyId });
-  if (!song) throw new Error("Song niet gevonden");
-  return song;
-}
-
-
-// SongByArtist
-export async function findSongsByArtist(artistName: string) {
-  const db = await connectDB();
-  return await db
-    .collection<Song>("songs")
-    .find({ "artists.name": artistName })
-    .toArray();
-}
-
-// findBySongs
-export async function findAllSongs() {
-  const db = await connectDB();
-  return await db.collection<Song>("songs").find().toArray();
-}
-
-// Update Song
-export async function updateSong(
-  id: string,
-  data: Partial<Omit<Song, "createdAt" | "_id">>,
-) {
-  const db = await connectDB();
-  return await db
-    .collection<Song>("songs")
-    .updateOne(
-      { _id: new ObjectId(id) },
-      { $set: { ...data, updatedAt: new Date() } },
-    );
-}
-
-// Delete Song
-export async function deleteSong(id: string) {
-  const db = await connectDB();
-  return await db
-    .collection<Song>("songs")
-    .deleteOne({ _id: new ObjectId(id) });
-}
 
 
 
