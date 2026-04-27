@@ -12,7 +12,7 @@ export interface User {
   username: string;
   email: string;
   password: string;
-  avatar: string; //avatar 
+  avatar: { url: string; alt: string };
   createdAt:Date;
   updatedAt:Date;
 }

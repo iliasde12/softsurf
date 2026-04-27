@@ -1,4 +1,5 @@
 import express, { Router } from "express";
+import { secureMiddleware } from "../secureMiddleware";
 
 const router: Router = express.Router();
 
@@ -6,8 +7,8 @@ const router: Router = express.Router();
   res.render("index");
 });*/
 
-router.get("/playlist", (req, res) => {
-  res.render("playlist");
+router.get("/playlist",secureMiddleware, (req, res) => {
+  res.render("playlist", { user: req.session.user });
 });
 
 

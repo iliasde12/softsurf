@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import { User } from "../interfaces"
 import { login } from "../database"
+import { avatars } from "../interfaces/avatars";
  
 
 const router: Router = express.Router();
@@ -11,7 +12,7 @@ router.get("/", (req, res) => {
 
 
 router.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login",{error : ""});
 });
 
 router.post("/login", async(req, res) => {
@@ -20,18 +21,28 @@ router.post("/login", async(req, res) => {
     try {
       //returnd een user
         let user : User = await login(email, password);
-        //delete de password uit de object
-        delete user.password; 
-        //zet de rest in de session 
+        // @ts-ignore
+        delete user.password;
         req.session.user = user;
-        res.redirect("/")
+        res.redirect("/playlist")
     } catch (e : any) {
-        res.redirect("/login");
+        res.render("login",{error : "email or password incorrect"});
     }
 });
 
+router.post("/logout", async(req, res) => {
+    req.session.destroy(() => {
+        res.redirect("/login");
+    });
+});
+
 router.get("/register", (req, res) => {
-  res.render("register");
+  res.render("register",{avatars});
+});
+
+
+router.post("/register", (req, res) => {
+  res.render("register",{avatars});
 });
 
 
