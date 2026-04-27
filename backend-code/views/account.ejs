@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
+    
+    <title>Vergelijken – Artiesten</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['"halyard-display"', "sans-serif"],
+              body: ['"halyard-text"', "sans-serif"],
+            },
+            colors: {
+              base: "#0f0e17",
+              surface: "#1a1828",
+              card: "#221f33",
+              border: "#2e2b42",
+              accent: "#7c6aff",
+              green: "#4ade80",
+              red: "#f87171",
+              muted: "#6b6889",
+              light: "#e8e6f0",
+            },
+            keyframes: {
+              fadeUp: {
+                "0%": { opacity: "0", transform: "translateY(14px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+            animation: {
+              fadeUp: "fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
+    <!-- HEADER -->
+    <header class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start">
+      <button class="md:hidden text-white text-xl">☰</button>
+      <img src="/img/softsurf_logo.svg" alt="softsurf_logo" class="w-28 md:w-30 mx-auto md:mx-0" />
+      <div class="md:hidden w-6"></div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+     <%- include('partials/aside') %>
+
+      <!-- MAIN -->
+      <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+        <!-- Title -->
+        <div class="animate-fadeUp mb-6">
+          <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Mijn Account</h1>
+          <p class="mt-1 text-sm text-muted">Beheer je profiel en persoonlijke gegevens</p>
+        </div>
+
+        <!-- Cards grid -->
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start animate-fadeUp" style="animation-delay: 0.05s">
+          <!-- Profielkaart -->
+          <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40">
+            <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
+              <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-lg">
+                   <img src="<%= user.avatar.url %>" alt="<%= user.avatar.alt %>" width="35" height="35" />
+              </div>
+              <div class="text-center">
+                <h2 class="font-display text-lg font-semibold text-light gebruikersnaamcontainer"></h2>
+                <p class="text-xs text-muted mt-0.5 emailcontainer"><%= user.email %></p>
+              </div>
+              <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20">🎉 Feest-stemming</span>
+            </div>
+            <div class="px-5 py-2">
+              <div class="py-3.5 border-b border-border flex justify-between items-center px-1">
+                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Lid sinds</span>
+                <span class="text-sm font-semibold text-light"><%= new Date(user.createdAt).toLocaleDateString("nl-BE", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }) %></span>
+              </div>
+              <div class="py-3.5 border-b border-border flex justify-between items-center px-1">
+                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Afspeellijsten</span>
+                <span class="text-sm font-semibold text-green">12</span>
+              </div>
+              <div class="py-3.5 border-b border-border flex justify-between items-center px-1">
+                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Favorieten</span>
+                <span class="text-sm font-semibold text-green">84</span>
+              </div>
+              <div class="py-3.5 flex justify-between items-center px-1">
+                <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Abonnement</span>
+                <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20">Premium</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Persoonlijke gegevens -->
+          <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40">
+            <div class="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border">
+              <div>
+                <h2 class="font-display text-lg font-semibold text-light">Persoonlijke gegevens</h2>
+                <p class="text-xs text-muted mt-0.5">Beheer je naam, e-mail en gebruikersnaam</p>
+              </div>
+              <button class="text-xs text-violet-400 border border-accent/30 bg-accent/10 hover:bg-accent/20 px-3 py-1 rounded-full transition" id="bewerkenButton">Bewerken</button>
+            </div>
+            <div class="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+               <!--
+              <div class="flex flex-col gap-1.5">
+                <label for="naam" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Naam</label>
+                <input
+                  id="naam"
+                  type="text"
+                  class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed" />
+              </div>
+              -->
+              <div class="flex flex-col gap-1.5">
+                <label for="email" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">E-mail</label>
+                <input
+                  value="<%= user.email %>"
+                  id="email"
+                  type="email"
+                  class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed" />
+              </div>
+             <div class="flex flex-col gap-1.5">
+                <label for="gebruikersnaam" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Gebruikersnaam</label>
+                <input
+                value="<%= user.username %>"
+                  id="gebruikersnaam"
+                  type="text"
+                  class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed" />
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label for="taal" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Taal</label>
+                <input
+                  id="taal"
+                  type="text"
+                  value="Nederlands"
+                  disabled
+                  class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /grid -->
+      </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
+      <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
+        <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+        <div>
+          <p class="text-white text-[1rem] font-semibold">Last Last</p>
+          <p class="text-white/75 text-[15px]">Burna Boy</p>
+        </div>
+      </div>
+
+      <div class="hidden md:flex flex-col items-center flex-1 gap-1">
+        <div class="flex items-center gap-4">
+          <button class="text-[#A0A0C0] hover:text-white text-sm">
+            <img class="w-6" src="img/left.svg" alt="" />
+          </button>
+          <button class="flex items-center justify-center text-black text-[1rem]">
+            <img class="w-6" src="img/pause.svg" alt="" />
+          </button>
+          <button class="text-[#A0A0C0] hover:text-white text-[1rem]">
+            <img class="w-6" src="img/right.svg" alt="" />
+          </button>
+        </div>
+        <div class="flex items-center gap-2 w-full max-w-md">
+          <span class="text-[#6B6B8A] text-[1rem]">1:22</span>
+          <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full">
+            <div class="w-[40%] h-full bg-[#7B6BF5] rounded-full"></div>
+          </div>
+          <span class="text-[#6B6B8A] text-[1rem]">4:08</span>
+        </div>
+      </div>
+
+      <button class="md:hidden flex items-center justify-center text-black text-[1rem] shrink-0">
+        <img class="w-6" src="img/pause.svg" alt="" />
+      </button>
+
+      <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
+        <span class="text-[#6B6B8A] text-[1rem]"><img class="w-6" src="img/volume-solid-full.svg" alt="" /></span>
+        <div class="w-20 h-1 bg-[#1E1B3A] rounded-full">
+          <div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

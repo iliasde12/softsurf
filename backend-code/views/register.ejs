@@ -31,47 +31,47 @@
         <p>en playlists te genereren.</p>
       </div>
 
-    <form action="/register" method="POST" id="form">
-        <div class="form-input">
-          <label for="weergavenaam">GEBRUIKERSNAAM</label>
-          <input type="text" id="weergavenaam" placeholder="Hoe wil je genoemd worden?" />
-        </div>
+   <form method="post" action="/register" id="form">
+    <div class="form-input">
+        <label for="weergavenaam">GEBRUIKERSNAAM</label>
+        <input type="text" id="weergavenaam" name="username" placeholder="Hoe wil je genoemd worden?" />
+    </div>
 
-        <div class="form-input">
-          <label for="email">E-MAILADRES</label>
-          <input type="email" id="email" placeholder="jouw@email.be" />
-        </div>
+    <div class="form-input">
+        <label for="email">E-MAILADRES</label>
+        <input type="email" id="email" name="email" placeholder="jouw@email.be" />
+    </div>
 
-        <div class="form-input">
-          <label for="wachtwoord">WACHTWOORD</label>
-          <input type="password" id="wachtwoord" placeholder="Minimaal 8 tekens" />
-          <div class="container-bar">
+    <div class="form-input">
+        <label for="wachtwoord">WACHTWOORD</label>
+        <input type="password" id="wachtwoord" name="password" placeholder="Minimaal 8 tekens" />
+        <div class="container-bar">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
-          </div>
-          <span class="text">Wachtwoordsterkte</span>
         </div>
+        <span class="text">Wachtwoordsterkte</span>
+    </div>
 
-        <div class="form-input">
-          <label for="wachtwoord2">BEVESTIG WACHTWOORD</label>
-          <input type="password" id="wachtwoord2" placeholder="Minimaal 8 tekens" />
+    <div class="form-input">
+        <label for="wachtwoord2">BEVESTIG WACHTWOORD</label>
+        <input type="password" id="wachtwoord2" name="password2" placeholder="Minimaal 8 tekens" />
+    </div>
+
+    <div>
+        <label>KIES JE AVATAR</label>
+        <div class="container-avatars-icon">
+            <% avatars.forEach((avatar, index) => { %>
+                <span class="circkel-img <%= index === 0 ? 'circkel-active' : '' %>">
+                    <img src="<%= avatar.url %>" alt="<%= avatar.alt %>" />
+                </span>
+            <% }) %>
         </div>
-
-        <div>
-          <label>KIES JE AVATAR</label>
-          <div class="container-avatars-icon">
-            <% avatars.forEach((avatar, index)=> { %>
-              <span class="circkel-img <%= index === 0 ? 'circkel-active' : '' %>">
-                <img src="<%= avatar.url %>" alt="<%= avatar.alt %>" />
-              </span>
-              <% }) %>
-          </div>
-          <input type="hidden" name="avatar" id="avatar-input" value="<%= avatars[0].url %>" />
-
-          <input type="submit" value="Account Aanmaken" />
-      </form>
+        <input type="hidden" name="avatar" id="avatar-input" value="<%= avatars[0].url %>" />
+        <input type="submit" value="Account Aanmaken" />
+    </div>
+</form>
     </div>
   </main>
   <aside></aside>

@@ -2,17 +2,17 @@
 //interfaces zijn niet 100%
 //sommige waardes mogen null zijn hangt er van af wat doel nog is
 import { ObjectId } from "mongodb";
-
-//enum in verband met de mood in de songs kan geupdate worden naar een eigen collection in mongodb
-export type Mood = "happy" | "sad" | "energetic" | "chill" | "angry" | "romantic";
+import { Mood } from "./mood"
 
 //user interface
+//bespreking morgen voor stemming
 export interface User {
   _id?: ObjectId;
   username: string;
   email: string;
   password: string;
   avatar: { url: string; alt: string };
+  //mood?: Mood;
   createdAt:Date;
   updatedAt:Date;
 }

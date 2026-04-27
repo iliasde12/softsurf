@@ -17,18 +17,21 @@ router.get("/login", (req, res) => {
   res.render("login",{error : ""});
 });
 
-router.post("/login", async(req, res) => {
-    const email : string = req.body.email;
-    const password : string = req.body.password;
+router.post("/login", async (req, res) => {
+    const email: string = req.body.email;
+    const password: string = req.body.password;
+
+    if (!email || !password) {
+        return res.render("login", { error: "Vul alle velden in" });
+    }
+
     try {
-      //returnd een user
-        let user : User = await login(email, password);
-        // @ts-ignore
-        delete user.password;
+        let user: User = await login(email, password);
+        delete (user as any).password; // netter dan @ts-ignore
         req.session.user = user;
-        res.redirect("/playlist")
-    } catch (e : any) {
-        res.render("login",{error : "email or password incorrect"});
+        res.redirect("/playlist");
+    } catch (e: any) {
+        res.render("login", { error: "Email of wachtwoord incorrect" });
     }
 });
 
@@ -69,7 +72,7 @@ router.post("/register", async (req, res) => {
 
     try {
         await createUser(username, email, password, validAvatar);
-        return res.render("/login", {error: "account aangemaakt je kan nu inloggen"});
+        return res.redirect("/login");
     } catch (e: any) {
         res.render("register", { avatars, error: e });
     }
