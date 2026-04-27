@@ -47,9 +47,7 @@ export async function createUser(
   password: string,
   avatar: { url: string; alt: string },
 ) {
-    //checks
 
-    //insert data
   try {
     await userCollection.insertOne({
       username: username,
@@ -65,20 +63,21 @@ export async function createUser(
 }
 
 // login user
-export async function login(email: string, password: string) {
-  if (email === "" || password === "") {
-    throw new Error("Email and password required");
-  }
-
-  let user: User | null = await userCollection.findOne<User>({ email: email });
-
-  if (user) {
-    if (await bcrypt.compare(password, user.password!)) {
-      return user;
-    } else {
-      throw new Error("Password incorrect");
+export async function login(email: string, password: string): Promise<User> {
+    if (email === "" || password === "") {
+        throw new Error("Email and password required");
     }
-  } else {
-    throw new Error("User not found");
-  }
+
+    const user = await userCollection.findOne<User>({ email });
+
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password!);
+    if (!passwordMatch) {
+        throw new Error("Password incorrect");
+    }
+
+    return user;
 }
