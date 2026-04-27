@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <link rel="icon" type="image/x-icon" href="/assets/images/softsurf_logo.png" />
+    <link rel="icon" type="image/x-icon" href="/img/softsurf_logo.svg" />
   <link rel="stylesheet" href="css/register.css" />
   <title>SoftSurf</title>
   <script src="js/register.js" async></script>
@@ -19,8 +19,8 @@
   <main>
     <div class="container-box">
       <div class="container-buttons">
-        <button><a href="/login.html">Inloggen</a></button>
-        <button><a href="/Register.html">Registreren</a></button>
+        <button><a href="/login">Inloggen</a></button>
+        <button><a href="/Register">Registreren</a></button>
       </div>
 
       <div class="container-message" style="display: none"></div>
@@ -31,7 +31,7 @@
         <p>en playlists te genereren.</p>
       </div>
 
-      <form id="form">
+    <form action="/register" method="POST" id="form">
         <div class="form-input">
           <label for="weergavenaam">GEBRUIKERSNAAM</label>
           <input type="text" id="weergavenaam" placeholder="Hoe wil je genoemd worden?" />
@@ -68,6 +68,7 @@
               </span>
               <% }) %>
           </div>
+          <input type="hidden" name="avatar" id="avatar-input" value="<%= avatars[0].url %>" />
 
           <input type="submit" value="Account Aanmaken" />
       </form>
