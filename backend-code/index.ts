@@ -2,6 +2,9 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
 import { connect } from "./database";
+import session from "./session";
+
+
 
 dotenv.config();
 
@@ -11,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
-
+app.use(session);
 app.set("port", process.env.PORT || 3000);
 
 //import routes

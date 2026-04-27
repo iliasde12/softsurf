@@ -39,9 +39,8 @@ export async function connect() {
 //users
 export const userCollection = client.db("softsurf").collection<User>("users");
 
-
-export async function createUser(username:string,email:string,password:string,avatar:string) {
-
+// create users
+export async function createUser(username:string,email:string,password:string,avatar:{ url: string; alt: string }) {
     await userCollection.insertOne({
         username:username,
         email: email,
@@ -52,6 +51,7 @@ export async function createUser(username:string,email:string,password:string,av
     });
 }
 
+// login user
 export async function login(email: string, password: string) {
     if (email === "" || password === "") {
         throw new Error("Email and password required");
