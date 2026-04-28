@@ -7,6 +7,7 @@ import {
   SpotifyAlbum,
   SpotifyExternalIds,
   SpotifyImage,
+  SpotifySession
   User,
 } from "./interfaces/index";
 
@@ -42,6 +43,7 @@ export async function connect() {
 
 //users
 export const userCollection = db.collection<User>("users");
+export const spotifyTokenColletion = db.collection<SpotifySession>("SpotifySession");
 
 // create users
 export async function createUser(
@@ -76,7 +78,12 @@ export async function editUser(
   email: string,
   password: string,
   avatar: { url: string; alt: string },
-) {}
+) {
+  try {
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 // login user
 export async function login(email: string, password: string): Promise<User> {
@@ -96,4 +103,28 @@ export async function login(email: string, password: string): Promise<User> {
   }
 
   return user;
+}
+
+// create spotify token
+export async function CreateSpotifyToken(userId: ObjectId,accesToken: string,refreshToken:string,expiresAt:Date) {
+
+  try{
+    const token = spotifyTokenColletion.insertOne({
+      userId: userId,
+      accessToken:accesToken,
+      refreshToken:refreshToken,
+      expiresAt:expiresAt,
+      createdAt: now,
+      updatedAt:now,
+    });
+
+
+  }catch(e){
+    console.log(e);
+  }
+
+  // get spotify token
+  export async function GetSpotifToken(){
+    const token = spotifyTokenColletion.find({});
+  }
 }

@@ -6,10 +6,8 @@ import session from "./session";
 
 dotenv.config();
 
-
 const app: Express = express();
 app.set("view engine", "ejs");
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,14 +24,12 @@ const protectedRoutes = require("./routes/protected");
 app.use(mainRoutes);
 app.use(protectedRoutes);
 
-
-
 app.listen(app.get("port"), async () => {
-   try {
-        await connect();
-        console.log("Server started on http://localhost:" + app.get('port'));
-    } catch (e) {
-        console.log(e);
-        process.exit(1); 
-    }
+  try {
+    await connect();
+    console.log("Server started on http://localhost:" + app.get("port"));
+  } catch (e) {
+    console.log(e);
+    process.exit(1);
+  }
 });
