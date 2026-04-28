@@ -21,7 +21,7 @@ export interface User {
 //belangrkijk voor connectie met spotify api
 export interface SpotifySession {
   _id?: ObjectId;
-  userId: ObjectId;
+  userId: ObjectId | undefined;
   accessToken: string; // 1 uur geldig na 1 uur wordt geudate
   refreshToken: string; // onbeperkt en wordt soms ook geupdate
   expiresAt: Date;
@@ -47,6 +47,8 @@ export interface SpotifyArtist {
   name: string;
   type: "artist";
   uri: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface SpotifyAlbum {
@@ -63,6 +65,8 @@ export interface SpotifyAlbum {
   type: "album";
   uri: string;
   artists: SpotifyArtist[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 /*export interface SpotifyExternalIds {

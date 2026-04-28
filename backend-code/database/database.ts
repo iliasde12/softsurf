@@ -7,7 +7,7 @@ import {
   SpotifyImage,
   SpotifySession,
   User,
-} from "./interfaces/index";
+} from "../interfaces/index";
 
 import bcrypt from "bcrypt";
 const saltRounds: number = 10;
@@ -110,63 +110,123 @@ export async function login(email: string, password: string): Promise<User> {
 }
 
 // create spotify token
+
 export async function CreateSpotifyToken(
-  userId: ObjectId,
-  accesToken: string,
+  userId: ObjectId | undefined,
+  accessToken: string,
   refreshToken: string,
   expiresAt: Date,
-) {
+): Promise<ObjectId | null> {
+
+  if(userId == undefined){
+     throw new Error("error er is geen userId");
+  }
+  
   try {
-    const tokens = spotifyTokenColletion.insertOne({
+    const result = await spotifyTokenColletion.insertOne({ 
       userId: userId,
-      accessToken: accesToken,
+      accessToken: accessToken, 
       refreshToken: refreshToken,
       expiresAt: expiresAt,
       createdAt: now,
       updatedAt: now,
     });
+
+    return result.insertedId;
   } catch (e) {
-    console.log(e);
+    console.error(e); 
+    return null;
   }
 }
 
 // get spotify token
-export async function GetSpotifyToken(userId: ObjectId) {
+export async function GetSpotifyToken(userId: ObjectId | undefined) {
+  if(userId == undefined){
+     throw new Error("error er is geen userId");
+  }
   try {
-    //data
-    const tokens = await spotifyTokenColletion.findOne({ userId: userId });
-    //accestoken en refreshtoken
-    const accestoken = tokens?.accessToken;
-    const refreshToken = tokens?.refreshToken;
-    //return tokens
-    return { accestoken, refreshToken };
+    const tokens = await spotifyTokenColletion.findOne({ userId: userId }); 
+
+    if (!tokens) return null; 
+
+    return tokens;
   } catch (e) {
-    console.log(e);
+    console.error(e);
+    return null;
   }
 }
 
 // create song
-export async function CreateSong() {
+export async function CreateSong(songData: Omit<Song, "_id">): Promise<ObjectId | null> {
   try {
-    const song = await spotifySongCollection.insertOne({});
+
+    for (const artist of songData.artists) {
+      await CreateArtist(artist);
+    }
+    await CreateAlbum(songData.album);
+
+    // Check eerst of song al bestaat
+    const existing = await spotifySongCollection.findOne({ id: songData.id });
+
+    if (existing) {
+      return existing._id!;
+    }
+
+    // Bestaat niet, insert
+    const result = await spotifySongCollection.insertOne({
+      ...songData,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    return result.insertedId;
   } catch (e) {
-    console.log(e);
+    console.error("CreateSong error:", e);
+    return null;
   }
 }
 
 // create album
-export async function CreateAlbum() {
+export async function CreateAlbum(albumData: SpotifyAlbum): Promise<ObjectId | null> {
   try {
-    const album = await spotifyAlbumCollection.insertOne({});
+    const existing = await spotifyAlbumCollection.findOne({ id: albumData.id });
+
+    if (existing) {
+      return existing._id!;
+    }
+
+    const result = await spotifyAlbumCollection.insertOne({
+      ...albumData,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    return result.insertedId;
   } catch (e) {
-    console.log(e);
+    console.error("CreateAlbum error:", e);
+    return null;
   }
 }
-// create artiest
-export async function CreateArtist() {
+
+// create artist
+export async function CreateArtist(artistData: SpotifyArtist): Promise<ObjectId | null> {
   try {
-    const album = await spotifyArtistCollection.insertOne({});
+  
+    const existing = await spotifyArtistCollection.findOne({ id: artistData.id });
+
+    if (existing) {
+      return existing._id!;
+    }
+
+    const result = await spotifyArtistCollection.insertOne({
+      ...artistData,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    return result.insertedId;
   } catch (e) {
-    console.log(e);
+    console.error("CreateArtist error:", e);
+    return null;
   }
 }

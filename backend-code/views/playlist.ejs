@@ -99,138 +99,44 @@
 
         <!-- Tracks -->
         <div class="flex flex-col gap-1" id="tracksContainer">
-          <!-- js een grote for loop-->
-          <!-- Track 1 
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">1</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Last Last</p>
-                <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full"
-                >Favorieten</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">15 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">92</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
+  <% const moodType = ["favorieten", "chill", "workout"] %>
+  <% const moodColor = ["#E91E8C", "#2A5A3A", "#1E3A5A"] %>
 
-          Track 2 
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">2</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1B2A3A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Essence</p>
-                <p class="text-[#6B6B8A] text-xs">Wizkid ft. Tems</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#1E3A2A] border border-[#2A5A3A] text-[#4ADE80] text-[10px] px-2 py-1 rounded-full"
-                >Chill</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">12 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">89</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
+  <% songs.forEach((song, index) => { %>
+    <div  class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center <%= index % 2 === 0 ? 'bg-[#1E1B3A]' : '' %> hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition" >
+      
+      <span class="text-white text-[1rem] text-center"><%= index + 1 %></span>
 
-          Track 3
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">3</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Peru</p>
-                <p class="text-[#6B6B8A] text-xs">Fireboy DML</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full"
-                >Favorieten</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">10 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">87</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          Track 4
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">4</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1B3A2A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Calm Down</p>
-                <p class="text-[#6B6B8A] text-xs">Rema</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#1B2A4A] border border-[#2A3A7B] text-[#60A5FA] text-[10px] px-2 py-1 rounded-full"
-                >Workout</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">8 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">94</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-
-          Track 5
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">5</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1E1B3A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Kilometre</p>
-                <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
-              </div>
-            </div>
-            <span class="hidden md:block text-[#6B6B8A] text-xs">—</span>
-            <span class="hidden md:block text-[#6B6B8A] text-xs">—</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">78</span>
-            <span class="text-[#6B6B8A] text-sm">♡</span>
-          </div>
-          -->
+      <div class="flex items-center gap-3">
+        <img 
+          src="<%= song.item.album.images[2].url %>" 
+          alt="<%= song.item.name %>" 
+          class="w-9 h-9 rounded-lg object-cover shrink-0" 
+        />
+        <div>
+          <p class="text-white text-[1rem] font-semibold"><%= song.item.name %></p>
+          <p class="text-white/60 text-[1rem]"><%= song.item.artists[0].name %></p>
         </div>
+      </div>
+
+      <span class="hidden md:block">
+        <span class="text-white text-sm px-2 py-1 rounded-full" style="background-color: <%= moodColor[index % moodColor.length] %>">
+          <%= moodType[index % moodType.length] %>
+        </span>
+      </span>
+
+      <span class="hidden md:block text-white/60 text-sm">
+        <%= new Date(song.added_at).toLocaleDateString("nl-NL", { day: "numeric", month: "short" }) %>
+      </span>
+
+      <span class="hidden md:block text-[#A0A0C0] text-sm"><%= song.item.popularity %></span>
+
+      <span class="text-[#E91E8C] text-sm">♥</span>
+    </div>
+  <% }) %>
+</div>
+
+
       </main>
     </div>
 
