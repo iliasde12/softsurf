@@ -15,7 +15,9 @@ export default session({
         mongoUrl: MONGODB_URI,
         dbName: "softsurf",
         collectionName: "sessions",
-    }),
+        //is het geen json string maar een object
+        stringify: false,
+        }),
     resave: false,
     saveUninitialized: false,
     cookie: {
