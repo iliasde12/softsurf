@@ -48,6 +48,12 @@ export async function createUser(
   avatar: { url: string; alt: string },
 ) {
 
+  //als de email al bestaat
+  const existingUser = await userCollection.findOne({ email });
+  if (existingUser) {
+    throw new Error("Email is al in gebruik");
+  }
+
   try {
     await userCollection.insertOne({
       username: username,
@@ -60,6 +66,18 @@ export async function createUser(
   } catch (e) {
       throw new Error("error: " + e);
   }
+}
+
+// update users
+export async function editUser(
+  username: string,
+  email: string,
+  password: string,
+  avatar: { url: string; alt: string }){
+
+    
+
+
 }
 
 // login user
