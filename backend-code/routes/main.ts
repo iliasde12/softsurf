@@ -1,8 +1,8 @@
 import express, { Router } from "express";
 import { User } from "../interfaces"
-import { login } from "../database"
+import { login } from "../database/database"
 import { avatars } from "../interfaces/avatars";
-import { createUser } from "../database"
+import { createUser } from "../database/database"
 
  
 
@@ -80,4 +80,4 @@ router.post("/register", async (req, res) => {
 
 
 
-module.exports = router;
+export default router;

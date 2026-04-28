@@ -1,8 +1,10 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
-import { connect } from "./database";
-import session from "./session";
+import { connect } from "./database/database";
+import session from "./sessions/session";
+import mainRoutes from "./routes/main";
+import protectedRoutes from "./routes/protected";
 
 dotenv.config();
 
@@ -15,10 +17,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.use(session);
 app.set("port", process.env.PORT || 3000);
-
-//import routes
-const mainRoutes = require("./routes/main");
-const protectedRoutes = require("./routes/protected");
 
 //routes voegen
 app.use(mainRoutes);

@@ -1,7 +1,7 @@
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import { MONGODB_URI } from "./database";
-import { User } from "./interfaces";
+import { MONGODB_URI } from "../database/database";
+import { User } from "../interfaces";
 
 declare module "express-session" {
   interface SessionData {
