@@ -2,12 +2,10 @@ import { Db, MongoClient, ObjectId } from "mongodb";
 import {
   SpotifyTrack,
   Song,
-  SpotifyExternalUrls,
   SpotifyArtist,
   SpotifyAlbum,
-  SpotifyExternalIds,
   SpotifyImage,
-  SpotifySession
+  SpotifySession,
   User,
 } from "./interfaces/index";
 
@@ -43,7 +41,13 @@ export async function connect() {
 
 //users
 export const userCollection = db.collection<User>("users");
-export const spotifyTokenColletion = db.collection<SpotifySession>("SpotifySession");
+export const spotifyTokenColletion =
+  db.collection<SpotifySession>("SpotifySession");
+
+// songs
+export const spotifySongCollection = db.collection<Song>("songs");
+export const spotifyAlbumCollection = db.collection<SpotifyAlbum>("ablums");
+export const spotifyArtistCollection = db.collection<SpotifyArtist>("artisten");
 
 // create users
 export async function createUser(
@@ -106,25 +110,63 @@ export async function login(email: string, password: string): Promise<User> {
 }
 
 // create spotify token
-export async function CreateSpotifyToken(userId: ObjectId,accesToken: string,refreshToken:string,expiresAt:Date) {
-
-  try{
-    const token = spotifyTokenColletion.insertOne({
+export async function CreateSpotifyToken(
+  userId: ObjectId,
+  accesToken: string,
+  refreshToken: string,
+  expiresAt: Date,
+) {
+  try {
+    const tokens = spotifyTokenColletion.insertOne({
       userId: userId,
-      accessToken:accesToken,
-      refreshToken:refreshToken,
-      expiresAt:expiresAt,
+      accessToken: accesToken,
+      refreshToken: refreshToken,
+      expiresAt: expiresAt,
       createdAt: now,
-      updatedAt:now,
+      updatedAt: now,
     });
-
-
-  }catch(e){
+  } catch (e) {
     console.log(e);
   }
+}
 
-  // get spotify token
-  export async function GetSpotifToken(){
-    const token = spotifyTokenColletion.find({});
+// get spotify token
+export async function GetSpotifyToken(userId: ObjectId) {
+  try {
+    //data
+    const tokens = await spotifyTokenColletion.findOne({ userId: userId });
+    //accestoken en refreshtoken
+    const accestoken = tokens?.accessToken;
+    const refreshToken = tokens?.refreshToken;
+    //return tokens
+    return { accestoken, refreshToken };
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+// create song
+export async function CreateSong() {
+  try {
+    const song = await spotifySongCollection.insertOne({});
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+// create album
+export async function CreateAlbum() {
+  try {
+    const album = await spotifyAlbumCollection.insertOne({});
+  } catch (e) {
+    console.log(e);
+  }
+}
+// create artiest
+export async function CreateArtist() {
+  try {
+    const album = await spotifyArtistCollection.insertOne({});
+  } catch (e) {
+    console.log(e);
   }
 }
