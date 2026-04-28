@@ -2,7 +2,7 @@
 //interfaces zijn niet 100%
 //sommige waardes mogen null zijn hangt er van af wat doel nog is
 import { ObjectId } from "mongodb";
-import { Mood } from "./mood"
+import { Mood } from "./mood";
 
 //user interface
 //bespreking morgen voor stemming
@@ -13,18 +13,18 @@ export interface User {
   password: string;
   avatar: { url: string; alt: string };
   //mood?: Mood;
-  createdAt:Date;
-  updatedAt:Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 //spotify token interface om te connecten met user
-//belangrkijk voor connectie met spotify api 
+//belangrkijk voor connectie met spotify api
 export interface SpotifySession {
   _id?: ObjectId;
-  userId: ObjectId;           
-  accessToken: string;  // 1 uur geldig na 1 uur wordt geudate
+  userId: ObjectId;
+  accessToken: string; // 1 uur geldig na 1 uur wordt geudate
   refreshToken: string; // onbeperkt en wordt soms ook geupdate
-  expiresAt: Date;            
+  expiresAt: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -39,8 +39,6 @@ export interface SpotifyImage {
   //height: number;
   //width: number;
 }
-
-
 
 export interface SpotifyArtist {
   external_urls: SpotifyExternalUrls;
