@@ -29,9 +29,9 @@ export interface SpotifySession {
   updatedAt: Date;
 }
 
-export interface SpotifyExternalUrls {
+/*export interface SpotifyExternalUrls {
   spotify: string;
-}
+}*/
 
 export interface SpotifyImage {
   url: string;
@@ -41,7 +41,7 @@ export interface SpotifyImage {
 }
 
 export interface SpotifyArtist {
-  external_urls: SpotifyExternalUrls;
+  //external_urls: SpotifyExternalUrls;
   href: string;
   id: string;
   name: string;
@@ -52,8 +52,8 @@ export interface SpotifyArtist {
 export interface SpotifyAlbum {
   album_type: "single" | "album" | "compilation";
   total_tracks: number;
-  available_markets: string[];
-  external_urls: SpotifyExternalUrls;
+  //available_markets: string[];
+  //external_urls: SpotifyExternalUrls;
   href: string;
   id: string;
   images: SpotifyImage[];
@@ -65,21 +65,21 @@ export interface SpotifyAlbum {
   artists: SpotifyArtist[];
 }
 
-export interface SpotifyExternalIds {
+/*export interface SpotifyExternalIds {
   isrc?: string;
   ean?: string;
   upc?: string;
-}
+}*/
 
 export interface SpotifyTrack {
   album: SpotifyAlbum;
   artists: SpotifyArtist[];
-  available_markets: string[];
+  //available_markets: string[];
   disc_number: number;
   duration_ms: number;
   explicit: boolean;
-  external_ids: SpotifyExternalIds;
-  external_urls: SpotifyExternalUrls;
+  //external_ids: SpotifyExternalIds;
+  //external_urls: SpotifyExternalUrls;
   href: string;
   id: string;
   name: string;
@@ -88,7 +88,7 @@ export interface SpotifyTrack {
   track_number: number;
   type: "track";
   uri: string;
-  is_local: boolean;
+  //is_local: boolean;
 }
 
 //neemt alle fields van de spotify track maar voegt er een mongodb aan toe en mood zodat het lokaal kan werken
