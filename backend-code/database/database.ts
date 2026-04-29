@@ -46,7 +46,7 @@ export const spotifyTokenColletion =
 
 // songs
 export const spotifySongCollection = db.collection<Song>("songs");
-export const spotifyAlbumCollection = db.collection<SpotifyAlbum>("ablums");
+export const spotifyAlbumCollection = db.collection<SpotifyAlbum>("albums");
 export const spotifyArtistCollection = db.collection<SpotifyArtist>("artisten");
 
 // create users
@@ -110,7 +110,6 @@ export async function login(email: string, password: string): Promise<User> {
 }
 
 // create spotify token
-
 export async function CreateSpotifyToken(
   userId: ObjectId | undefined,
   accessToken: string,
@@ -157,24 +156,25 @@ export async function GetSpotifyToken(userId: ObjectId | undefined) {
 }
 
 // create song
-export async function CreateSong(songData: Omit<Song, "_id">): Promise<ObjectId | null> {
+export async function CreateSong(songData: SpotifyTrack): Promise<ObjectId | null> {
   try {
+    const [artistIds, albumId] = await Promise.all([
+      Promise.all(songData.artists.map(artist => CreateArtist(artist))),
+      CreateAlbum(songData.album),
+    ]);
 
-    for (const artist of songData.artists) {
-      await CreateArtist(artist);
-    }
-    await CreateAlbum(songData.album);
-
-    // Check eerst of song al bestaat
     const existing = await spotifySongCollection.findOne({ id: songData.id });
-
     if (existing) {
       return existing._id!;
     }
 
-    // Bestaat niet, insert
+    const { album, artists, ...trackData } = songData; //album en artists eruit
+
     const result = await spotifySongCollection.insertOne({
-      ...songData,
+      ...trackData,
+      album_id: albumId ?? undefined,
+      artist_ids: artistIds.filter((id): id is ObjectId => id !== null),
+      mood: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -229,4 +229,30 @@ export async function CreateArtist(artistData: SpotifyArtist): Promise<ObjectId 
     console.error("CreateArtist error:", e);
     return null;
   }
+}
+
+
+// get Songs uit mongb collection songs
+export async function GetSongs(): Promise<any[]> {
+  return await spotifySongCollection.aggregate([
+    {
+      $lookup: {
+        from: "artists",
+        localField: "artist_ids",
+        foreignField: "_id",
+        as: "artists",
+      },
+    },
+    {
+      $lookup: {
+        from: "albums",
+        localField: "album_id",
+        foreignField: "_id",
+        as: "album",
+      },
+    },
+    {
+     $unwind: { path: "$album", preserveNullAndEmptyArrays: true },
+    },
+  ]).toArray();
 }

@@ -82,8 +82,6 @@ export interface SpotifyTrack {
   disc_number: number;
   duration_ms: number;
   explicit: boolean;
-  //external_ids: SpotifyExternalIds;
-  //external_urls: SpotifyExternalUrls;
   href: string;
   id: string;
   name: string;
@@ -96,9 +94,32 @@ export interface SpotifyTrack {
 }
 
 //neemt alle fields van de spotify track maar voegt er een mongodb aan toe en mood zodat het lokaal kan werken
-export interface Song extends SpotifyTrack {
+export interface Song {
   _id?: ObjectId;
+  album_id?: ObjectId;      // referentie naar album collection
+  artist_ids?: ObjectId[];  // referentie naar artists collection
+  id: string;
+  name: string;
+  duration_ms: number;
+  explicit: boolean;
+  popularity: number;
+  preview_url: string | null;
+  track_number: number;
+  disc_number: number;
+  href: string;
+  uri: string;
+  type: "track";
   mood: Mood | null;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface SpotifyPlaylist {
+  id: string;
+  name: string;
+  description: string;
+  images: { url: string }[];
+  tracks: { total: number };
+  owner: { display_name: string };
+  external_urls: { spotify: string };
 }

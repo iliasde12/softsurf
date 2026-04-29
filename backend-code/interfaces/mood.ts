@@ -3,7 +3,7 @@ export interface Mood {
     name: string;
     description: string;
     emoji: string;
-    color: string; // achtergrondkleur van de kaart
+    color: string; 
 }
 
 export const moods: Mood[] = [
