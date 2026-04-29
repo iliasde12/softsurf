@@ -1,0 +1,74 @@
+<%- include('partials/head') %>
+<body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
+
+<%- include('partials/header') %>
+<div class="flex flex-1 overflow-hidden">
+    <%- include('partials/aside') %>
+
+    <!-- MAIN -->
+    <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+        <!-- Title -->
+        <div class="flex items-start justify-between mb-1">
+            <div>
+                <h1 class="font-display text-3xl font-semibold tracking-tight text-light">
+                    <%= playlist.name %>
+                </h1>
+                <p class="text-[#6B6B8A] text-xs md:text-sm mb-4">
+                     <%= playlist.owner.display_name %> • <%= songs.length %> nummers
+                </p>
+            </div>
+            <div class="flex gap-2 mt-1">
+                <a href="/playlists" class="border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition">
+                    ← Terug
+                </a>
+            </div>
+        </div>
+
+        <section class="flex flex-row justify-between mb-4">
+            <h2><%= songs.length %> nummers</h2>
+        </section>
+
+        <!-- Songs cards -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+            <% songs.forEach((song) => { %>
+                <div class="bg-[#1E1B3A] hover:bg-[#2A2750] rounded-xl p-4 cursor-pointer transition flex flex-col gap-3">
+
+                    <!-- Cover -->
+                    <% if (song.item && song.item.album && song.item.album.images.length > 0) { %>
+                        <img
+                                src="<%= song.item.album.images[0].url %>"
+                                alt="<%= song.item.name %>"
+                                class="w-full aspect-square rounded-lg object-cover"
+                        />
+                    <% } else { %>
+                        <div class="w-full aspect-square rounded-lg bg-[#2A2750] flex items-center justify-center text-4xl">
+                            🎵
+                        </div>
+                    <% } %>
+
+                    <!-- Info -->
+                    <div class="flex flex-col gap-1">
+                        <p class="text-white font-semibold text-sm truncate"><%= song.item.name %></p>
+                        <p class="text-white/60 text-xs truncate"><%= song.item.artists[0].name %></p>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="flex items-center justify-between mt-auto">
+                <span class="text-white/40 text-xs">
+                  <%= new Date(song.added_at).toLocaleDateString("nl-NL", { day: "numeric", month: "short" }) %>
+                </span>
+                        <span class="text-[#E91E8C] text-sm">♥</span>
+                    </div>
+
+                </div>
+            <% }) %>
+
+        </div>
+
+    </main>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

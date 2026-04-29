@@ -54,7 +54,7 @@
               class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]"
             >
               <span class="text-zinc-400 text-[11px] uppercase tracking-widest"
-                >Gelikte nummers</span
+                >aantal nummers</span
               >
               <span class="text-white text-sm font-semibold">4 nummers</span>
             </div>
@@ -77,64 +77,63 @@
           </button>
         </section>
         <section class="flex flex-row justify-between mb-4">
-          <h2>Gegenereerde Afspeellijst - 6 Nummers</h2>
-          <p
-            class="mr-5 pr-2.5 pl-2.5 pt-1 pb-1 rounded-[40px] border-[3px] border-[#7B6BF5] hover:bg-[#7B6BF5]"
-          >
-            Alles Opslaan
-          </p>
-        </section>
+          <h2> <!--Gegenereerde Afspeellijst  - --> <%= playlists.length %> afspeelijsten</h2>
+          <!-- <p
+             class="mr-5 pr-2.5 pl-2.5 pt-1 pb-1 rounded-[40px] border-[3px] border-[#7B6BF5] hover:bg-[#7B6BF5]"
+           >
+             Alles Opslaan
+           </p>-->
+         </section>
 
-        <!-- Table header (hidden on mobile) -->
-        <div
-          class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-base uppercase tracking-widest mb-2 px-2"
-        >
-          <span class="text-white">#</span>
-          <span class="text-white">Titel</span>
-          <span class="text-white">Label</span>
-          <span class="text-white">Datum</span>
-          <span class="text-white">Pop</span>
-          <span class="text-white"></span>
+         <!-- Table header (hidden on mobile)
+         <div
+           class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-base uppercase tracking-widest mb-2 px-2"
+         >
+           <span class="text-white">#</span>
+           <span class="text-white">Titel</span>
+           <span class="text-white">Label</span>
+           <span class="text-white">Datum</span>
+           <span class="text-white">Pop</span>
+           <span class="text-white"></span>
+         </div>-->
+
+        <!-- Playlists -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="playlistsContainer">
+
+          <% playlists.forEach((playlist) => { %>
+          <a href="/playlist/songs/<%= playlist.id %>">
+            <div class="bg-[#1E1B3A] hover:bg-[#2A2750] rounded-xl p-4 cursor-pointer transition flex flex-col gap-3">
+
+              <!-- Cover -->
+              <% if (playlist.images && playlist.images.length > 0) { %>
+                <img
+                        src="<%= playlist.images[0].url %>"
+                        alt="<%= playlist.name %>"
+                        class="w-full aspect-square rounded-lg object-cover"
+                />
+              <% } else { %>
+                <div class="w-full aspect-square rounded-lg bg-[#2A2750] flex items-center justify-center text-4xl">
+                  🎵
+                </div>
+              <% } %>
+
+              <!-- Info -->
+              <div class="flex flex-col gap-1">
+                <p class="text-white font-semibold text-sm truncate"><%= playlist.name %></p>
+                <p class="text-white/60 text-xs truncate"><%= playlist.owner.display_name %></p>
+              </div>
+
+              <!-- Footer -->
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-white/40 text-xs"><%= playlist.items.total %> nummers</span>
+                <span class="text-[#E91E8C] text-sm">♥</span>
+              </div>
+
+            </div>
+          </a>
+          <% }) %>
+
         </div>
-
-        <!-- Tracks -->
-        <div class="flex flex-col gap-1" id="tracksContainer">
-  <% const moodType = ["favorieten", "chill", "workout"] %>
-  <% const moodColor = ["#E91E8C", "#2A5A3A", "#1E3A5A"] %>
-
-  <% songs.forEach((song, index) => { %>
-    <div  class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center <%= index % 2 === 0 ? 'bg-[#1E1B3A]' : '' %> hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition" >
-      
-      <span class="text-white text-[1rem] text-center"><%= index + 1 %></span>
-
-      <div class="flex items-center gap-3">
-        <img 
-          src="<%= song.item.album.images[2].url %>" 
-          alt="<%= song.item.name %>" 
-          class="w-9 h-9 rounded-lg object-cover shrink-0" 
-        />
-        <div>
-          <p class="text-white text-[1rem] font-semibold"><%= song.item.name %></p>
-          <p class="text-white/60 text-[1rem]"><%= song.item.artists[0].name %></p>
-        </div>
-      </div>
-
-      <span class="hidden md:block">
-        <span class="text-white text-sm px-2 py-1 rounded-full" style="background-color: <%= moodColor[index % moodColor.length] %>">
-          <%= moodType[index % moodType.length] %>
-        </span>
-      </span>
-
-      <span class="hidden md:block text-white/60 text-sm">
-        <%= new Date(song.added_at).toLocaleDateString("nl-NL", { day: "numeric", month: "short" }) %>
-      </span>
-
-      <span class="hidden md:block text-[#A0A0C0] text-sm"><%= song.item.popularity %></span>
-
-      <span class="text-[#E91E8C] text-sm">♥</span>
-    </div>
-  <% }) %>
-</div>
 
 
       </main>

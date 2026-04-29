@@ -97,61 +97,46 @@
         </div>
 
         <!-- Tracks -->
-        <div class="flex flex-col gap-1" id="tracksContainer">
-          <!-- js een grote for loop-->
-          <!-- Track 1 
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center bg-[#1E1B3A] hover:bg-[#2A2650] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">1</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Last Last</p>
-                <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full"
-                >Favorieten</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">15 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">92</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>
-          Track 2
-          <div
-            class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition"
-          >
-            <span class="text-[#6B6B8A] text-sm text-center">2</span>
-            <div class="flex items-center gap-3">
-              <div
-                class="w-9 h-9 bg-[#1B2A3A] rounded-lg flex items-center justify-center text-sm shrink-0"
-              >
-                🎵
-              </div>
-              <div>
-                <p class="text-white text-sm font-semibold">Essence</p>
-                <p class="text-[#6B6B8A] text-xs">Wizkid ft. Tems</p>
-              </div>
-            </div>
-            <span class="hidden md:block"
-              ><span
-                class="bg-[#1E3A2A] border border-[#2A5A3A] text-[#4ADE80] text-[10px] px-2 py-1 rounded-full"
-                >Chill</span
-              ></span
-            >
-            <span class="hidden md:block text-[#6B6B8A] text-xs">12 jan</span>
-            <span class="hidden md:block text-[#A0A0C0] text-xs">89</span>
-            <span class="text-[#E91E8C] text-sm">♥</span>
-          </div>   -->
+     <div class="flex flex-col gap-1" id="tracksContainer">
+  <% songs.forEach((song, index) => { %>
+    <div class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center <%= index % 2 === 0 ? 'bg-[#1E1B3A]' : '' %> hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition">
+      
+      <span class="text-[#6B6B8A] text-sm text-center"><%= index + 1 %></span>
+
+      <div class="flex items-center gap-3">
+    <% if (song.album && song.album.images && song.album.images.length > 0) { %>
+  <img 
+    src="<%= song.album.images[1].url %>" 
+    alt="<%= song.name %>"
+    class="w-9 h-9 rounded-lg object-cover shrink-0"
+  />
+<% } else { %>
+  <div class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">
+    🎵
+  </div>
+<% } %>
+        <div>
+          <p class="text-white text-sm font-semibold"><%= song.name %></p>
+          <p class="text-[#6B6B8A] text-xs"><%= song.artists[0]?.name ?? 'Onbekend' %></p>
         </div>
+      </div>
+
+      <span class="hidden md:block">
+        <span class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full">
+          <%= song.mood ?? 'geen' %>
+        </span>
+      </span>
+
+      <span class="hidden md:block text-[#6B6B8A] text-xs">
+        <%= new Date(song.createdAt).toLocaleDateString("nl-NL", { day: "numeric", month: "short" }) %>
+      </span>
+
+      <span class="hidden md:block text-[#A0A0C0] text-xs"><%= song.popularity %></span>
+
+      <span class="text-[#E91E8C] text-sm">♥</span>
+    </div>
+  <% }) %>
+</div>
       </main>
     </div>
 

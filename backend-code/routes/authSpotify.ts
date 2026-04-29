@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { CreateSpotifyToken } from "../database/database";
+import { CreateSpotifyToken  } from "../database/database";
 import { ObjectId } from "mongodb";
 
 
@@ -76,6 +76,7 @@ router.get("/spotify/callback", async (req, res) => {
     res.redirect("/account");
   }
 });
+
 
 
 
