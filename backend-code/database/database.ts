@@ -1,10 +1,10 @@
-import { Db, MongoClient, ObjectId } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import {
   SpotifyTrack,
   Song,
   SpotifyArtist,
   SpotifyAlbum,
-  SpotifyImage,
+  UserSong,
   SpotifySession,
   User,
 } from "../interfaces/index";
@@ -43,7 +43,7 @@ export async function connect() {
 export const userCollection = db.collection<User>("users");
 export const spotifyTokenColletion =
   db.collection<SpotifySession>("SpotifySession");
-
+export const userSongCollection = db.collection<UserSong>("userSongs");
 // songs
 export const spotifySongCollection = db.collection<Song>("songs");
 export const spotifyAlbumCollection = db.collection<SpotifyAlbum>("albums");
@@ -174,7 +174,6 @@ export async function CreateSong(songData: SpotifyTrack): Promise<ObjectId | nul
       ...trackData,
       album_id: albumId ?? undefined,
       artist_ids: artistIds.filter((id): id is ObjectId => id !== null),
-      mood: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -233,7 +232,7 @@ export async function CreateArtist(artistData: SpotifyArtist): Promise<ObjectId 
 
 
 // get Songs uit mongb collection songs
-export async function GetSongs(): Promise<any[]> {
+export async function GetSongs(userId: ObjectId | undefined): Promise<any[]> {
   return await spotifySongCollection.aggregate([
     {
       $lookup: {
@@ -252,7 +251,83 @@ export async function GetSongs(): Promise<any[]> {
       },
     },
     {
-     $unwind: { path: "$album", preserveNullAndEmptyArrays: true },
+      $unwind: { path: "$album", preserveNullAndEmptyArrays: true },
+    },
+    {
+      $lookup: {
+        from: "userSongs",
+        let: { songId: "$_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ["$songId", "$$songId"] },
+                  { $eq: ["$userId", new ObjectId(userId)] }, // ← ObjectId hier
+                ],
+              },
+            },
+          },
+        ],
+        as: "userSong",
+      },
+    },
+    {
+      $unwind: { path: "$userSong", preserveNullAndEmptyArrays: true },
     },
   ]).toArray();
+}
+
+// update mood  voor elke user is her anders 
+export async function UpdateSongMood(userId: ObjectId | undefined, songId: string, mood: number | null): Promise<boolean> {
+  try {
+    const result = await userSongCollection.updateOne(
+      { userId: userId, songId: new ObjectId(songId) },
+      { $set: { mood, updatedAt: new Date() } },
+      { upsert: true }
+    );
+    return result.modifiedCount === 1 || result.upsertedCount === 1;
+  } catch (e) {
+    console.error("UpdateSongMood error:", e);
+    return false;
+  }
+}
+
+// zoek songs aan de hand van moods
+export async function GetSongsByMood(userId: ObjectId | undefined): Promise<any> {
+  const userSongs = await userSongCollection.find({ 
+    userId: userId
+  }).toArray();
+
+  const result: Record<number, any[]> = {};
+
+  for (const userSong of userSongs) {
+    if (userSong.mood === null) continue;
+
+    const song = await spotifySongCollection.aggregate([
+      { $match: { _id: userSong.songId } },
+      {
+        $lookup: {
+          from: "artists",
+          localField: "artist_ids",
+          foreignField: "_id",
+          as: "artists",
+        },
+      },
+      {
+        $lookup: {
+          from: "albums",
+          localField: "album_id",
+          foreignField: "_id",
+          as: "album",
+        },
+      },
+      { $unwind: { path: "$album", preserveNullAndEmptyArrays: true } },
+    ]).toArray();
+
+    if (!result[userSong.mood]) result[userSong.mood] = [];
+    result[userSong.mood].push(song[0]);
+  }
+
+  return result;
 }

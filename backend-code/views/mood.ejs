@@ -41,6 +41,19 @@
         },
       };
     </script>
+    <script>
+function showMood(moodId) {
+  // verberg alle secties
+  document.querySelectorAll('.mood-section').forEach(s => s.classList.add('hidden'));
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('border-2', 'border-[#7B6BF5]'));
+
+  // toon geselecteerde
+  document.getElementById(`songs-${moodId}`).classList.remove('hidden');
+  document.getElementById(`mood-${moodId}`).classList.add('border-2', 'border-[#7B6BF5]');
+}
+</script>
+
+
   </head>
 
   <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
@@ -55,74 +68,60 @@
        <%- include('partials/aside') %>
 
       <!-- MAIN -->
-      <main class="flex-1 p-4 md:p-6 overflow-y-auto">
-        <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Stel Je Stemming In</h1>
-        <p class="text-[#6B6B8A] text-xs md:text-sm mb-6">Je huidige stemming beïnvloedt aanbevelingen en de playlist generator</p>
+    <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+      <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Stel Je Stemming In</h1>
+      <p class="text-[#6B6B8A] text-xs md:text-sm mb-6">Je huidige stemming beïnvloedt aanbevelingen en de playlist generator</p>
 
-        <!-- Mood knoppen: 2 cols mobile, 6 cols desktop -->
-        <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
-          <div class="bg-[#1E1B3A] rounded-xl p-4 text-center hover:bg-[#2A2650] cursor-pointer transition">
-            <div class="text-2xl mb-2">😊</div>
-            <p class="text-white text-xs font-semibold">Chill</p>
-            <p class="text-[#6B6B8A] text-[10px]">Ontspannen & rustig</p>
+      <!-- Mood knoppen -->
+      <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
+        <% moods.forEach(mood => { %>
+          <div
+            onclick="showMood(<%= mood.id %>)"
+            id="mood-<%= mood.id %>"
+            class="mood-btn rounded-xl p-4 text-center cursor-pointer transition border-2 border-transparent"
+            style="background-color: <%= mood.color %>"
+          >
+            <div class="text-2xl mb-2"><%= mood.emoji %></div>
+            <p class="text-white text-xs font-semibold"><%= mood.name %></p>
+            <p class="text-[#6B6B8A] text-[10px]"><%= mood.description %></p>
           </div>
-          <div class="bg-[#1B3A2A] rounded-xl p-4 text-center hover:bg-[#1E4A33] cursor-pointer transition">
-            <div class="text-2xl mb-2">🎯</div>
-            <p class="text-white text-xs font-semibold">Focus</p>
-            <p class="text-[#6B6B8A] text-[10px]">Diepe concentratie</p>
+        <% }) %>
+      </div>
+
+      <!-- Songs per mood -->
+      <% moods.forEach(mood => { %>
+        <div id="songs-<%= mood.id %>" class="mood-section hidden">
+          <div class="flex justify-between items-center mb-4">
+          <h2 class="text-base md:text-lg font-bold text-white">
+  <%= mood.emoji %> Aanbevolen voor <%= mood.name %>
+</h2>
+
           </div>
-          <div class="bg-[#3A1B2A] rounded-xl p-4 text-center border-2 border-[#7B6BF5] cursor-pointer transition">
-            <div class="text-2xl mb-2">🎉</div>
-            <p class="text-white text-xs font-semibold">Feest</p>
-            <p class="text-[#6B6B8A] text-[10px]">Hoge energie brengen</p>
-          </div>
-          <div class="bg-[#1E1B3A] rounded-xl p-4 text-center hover:bg-[#2A2650] cursor-pointer transition">
-            <div class="text-2xl mb-2">🌧️</div>
-            <p class="text-white text-xs font-semibold">Verdrietig</p>
-            <p class="text-[#6B6B8A] text-[10px]">Melancholisch & reflectief</p>
-          </div>
-          <div class="bg-[#1E1B3A] rounded-xl p-4 text-center hover:bg-[#2A2650] cursor-pointer transition">
-            <div class="text-2xl mb-2">💪</div>
-            <p class="text-white text-xs font-semibold">Workout</p>
-            <p class="text-[#6B6B8A] text-[10px]">Opzwepende nummers</p>
-          </div>
-          <div class="bg-[#1E1B3A] rounded-xl p-4 text-center hover:bg-[#2A2650] cursor-pointer transition">
-            <div class="text-2xl mb-2">✨</div>
-            <p class="text-white text-xs font-semibold">Aangepast</p>
-            <p class="text-[#6B6B8A] text-[10px]">Maak je eigen stemming</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <% if (songs[mood.id] && songs[mood.id].length > 0) { %>
+              <% songs[mood.id].forEach(song => { %>
+                <div class="bg-gradient-to-br from-[#2A1B4A] to-[#1B1B3A] rounded-xl p-3 hover:scale-105 transition cursor-pointer">
+                  <% if (song.album && song.album.images && song.album.images.length > 0) { %>
+                    <img
+                      src="<%= song.album.images[1].url %>"
+                      alt="<%= song.name %>"
+                      class="w-full h-24 md:h-28 rounded-lg mb-3 object-cover"
+                    />
+                  <% } else { %>
+                    <div class="w-full h-24 md:h-28 bg-[#2A1B4A] rounded-lg mb-3 flex items-center justify-center text-2xl">🎵</div>
+                  <% } %>
+                  <p class="text-white text-sm font-semibold truncate"><%= song.name %></p>
+                  <p class="text-[#6B6B8A] text-xs"><%= song.artists?.[0]?.name ?? 'Onbekend' %></p>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <p class="text-[#6B6B8A] text-sm col-span-4">Geen nummers voor deze stemming.</p>
+            <% } %>
           </div>
         </div>
+      <% }) %>
 
-        <!-- Aanbevolen -->
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-base md:text-lg font-bold">Aanbevolen voor Feest</h2>
-          <button class="border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition">Alles Bekijken</button>
-        </div>
-
-        <!-- 2 cols mobile, 4 cols desktop -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="bg-gradient-to-br from-[#2A1B4A] to-[#1B1B3A] rounded-xl p-3 hover:scale-105 transition cursor-pointer">
-            <div class="w-full h-24 md:h-28 bg-gradient-to-br from-[#3A2A5A] to-[#2A1B4A] rounded-lg mb-3 flex items-center justify-center text-2xl">🎵</div>
-            <p class="text-white text-sm font-semibold">Ye</p>
-            <p class="text-[#6B6B8A] text-xs">Burna Boy</p>
-          </div>
-          <div class="bg-gradient-to-br from-[#4A1B4A] to-[#2A1B3A] rounded-xl p-3 hover:scale-105 transition cursor-pointer">
-            <div class="w-full h-24 md:h-28 bg-gradient-to-br from-[#7B2A7B] to-[#4A1B5A] rounded-lg mb-3 flex items-center justify-center text-2xl">🎵</div>
-            <p class="text-white text-sm font-semibold">Mood</p>
-            <p class="text-[#6B6B8A] text-xs">24kGoldn ft. Iann Dior</p>
-          </div>
-          <div class="bg-gradient-to-br from-[#4A1B2A] to-[#2A1B3A] rounded-xl p-3 hover:scale-105 transition cursor-pointer">
-            <div class="w-full h-24 md:h-28 bg-gradient-to-br from-[#7B2A3A] to-[#4A1B2A] rounded-lg mb-3 flex items-center justify-center text-2xl">🎵</div>
-            <p class="text-white text-sm font-semibold">Calm Down</p>
-            <p class="text-[#6B6B8A] text-xs">Rema</p>
-          </div>
-          <div class="bg-gradient-to-br from-[#1B2A4A] to-[#1B1B3A] rounded-xl p-3 hover:scale-105 transition cursor-pointer">
-            <div class="w-full h-24 md:h-28 bg-gradient-to-br from-[#2A3A7B] to-[#1B2A5A] rounded-lg mb-3 flex items-center justify-center text-2xl">🎵</div>
-            <p class="text-white text-sm font-semibold">Rush</p>
-            <p class="text-[#6B6B8A] text-xs">Ayra Starr</p>
-          </div>
-        </div>
-      </main>
+    </main>
     </div>
 
     <!-- FOOTER -->

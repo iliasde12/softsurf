@@ -3,7 +3,8 @@ import { secureMiddleware } from "../middleware/secureMiddleware";
 import authSpotifyRouter from "./authSpotify";
 import { spotifyMiddleware } from "../middleware/spotifyMiddleware";
 import {GetPlaylists,GetPlaylist,GetPlaylistSongs,GetCurrentUser,savePlaylistSongs} from "../helpers/spotify"
-import { GetSongs } from "../database/database";
+import { GetSongs,UpdateSongMood ,GetSongsByMood } from "../database/database";
+import { moods } from '../interfaces/mood';
 
 
 const router: Router = express.Router();
@@ -51,12 +52,15 @@ router.get("/account", async (req, res) => {
 });
 
 router.get("/collectie", async (req, res) => {
-  const songs = await GetSongs();
-  res.render("collectie", { user: req.session.user,songs:songs });
+   const userId = req.session.user?._id;
+  const songs = await GetSongs(userId);
+  res.render("collectie", { user: req.session.user,songs:songs, moods:moods });
 });
 
-router.get("/mood", (req, res) => {
-  res.render("mood");
+router.get("/mood", async(req, res) => {
+   const userId = req.session.user?._id;
+  const songs = await GetSongsByMood(userId);
+  res.render("mood",{ songs : songs, moods: moods });
 });
 
 router.get("/vergelijken-artiesten", (req, res) => {
@@ -76,6 +80,7 @@ router.get("/search", (req, res) => {
 });
 
 //tijdelijke router om songs van api op teslagen in mongodb
+//je moet gewoon id meegeven van een playlist waar wij aan kunnen
 router.get('/playlist/:id/save', async (req, res) => {
   const accessToken = res.locals.spotifyToken;
   const playlistId = req.params.id;
@@ -83,6 +88,15 @@ router.get('/playlist/:id/save', async (req, res) => {
   const tracks = songs.map((s: any) => s.item);
   await savePlaylistSongs(tracks);
   res.redirect(`/playlist/songs/${req.params.id}`);
+});
+
+// kan de user de mood aanpassen in de song
+router.post('/song/:id/mood', async (req, res) => {
+  const mood = parseInt(req.body.mood);
+  const userId = req.session.user?._id;
+  const songId = req.params.id;
+  await UpdateSongMood(userId, songId, mood);
+  res.json({ success: true });
 });
 
 
