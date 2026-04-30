@@ -109,7 +109,16 @@ export interface Song {
   href: string;
   uri: string;
   type: "track";
-  mood: Mood | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+//inverband met user kan die eigen mood voegen aan de song en niet dat elke user elke mood veranderd
+export interface UserSong {
+  _id?: ObjectId ;
+  userId: ObjectId;
+  songId: ObjectId ;
+  mood: number | null;
   createdAt: Date;
   updatedAt: Date;
 }
