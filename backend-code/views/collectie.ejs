@@ -85,12 +85,33 @@
 
         <!-- Search + filters -->
         <div class="flex flex-col md:flex-row gap-3 mb-6">
-          <div class="relative flex-1 md:max-w-xs">
-            <div class="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B8A] text-sm">
+          <div class="relative flex-1 md:max-w-full">
+            <div
+          class="relative animate-fadeUp "
+          style="animation-delay: 0.05s"
+        >
+          <svg
+            class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="search"
+            placeholder="Zoek een artiest…"
+            class="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-light placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition"
+          />
+        </div>
+            <!-- <div class="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B6B8A] text-sm">
               <img class="w-5" src="./img/magnifying-glass-solid-full (2).svg" alt="" />
             </div>
-            <input type="text" placeholder="Collectie filteren..." class="w-full bg-[#1E1B3A] text-white text-sm pl-8 pr-4 py-2 rounded-full outline-none placeholder-[#6B6B8A]" />
+            <input type="text" placeholder="Collectie filteren..." class="w-full bg-[#1E1B3A] text-white text-sm pl-8 pr-4 py-2 rounded-full outline-none placeholder-[#6B6B8A]" /> -->
           </div>
+          
           <div class="flex gap-2 flex-wrap">
             <button class="bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full">Alles</button>
             <button class="bg-[#E91E8C] text-white text-xs px-3 py-1 rounded-full">Favorieten</button>
