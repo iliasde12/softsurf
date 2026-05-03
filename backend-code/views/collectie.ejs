@@ -130,10 +130,10 @@
 <% } %>
         <div>
           <p class="text-white text-sm font-semibold"><%= song.name %></p>
-          <p class="text-[#6B6B8A] text-xs"> <%= song.album?.artists?.[0]?.name ?? 'Onbekend' %> <pre><%= JSON.stringify(song, null, 2) %></pre></p>
+          <p class="text-[#6B6B8A] text-xs"> <%= song.album?.artists?.[0]?.name ?? 'Onbekend' %></p>
         </div>
       </div>
-
+<!-- <pre><%= JSON.stringify(song, null, 2) %></pre> -->
       <!--<span class="hidden md:block">
         <span class="bg-[#E91E8C] text-white text-[10px] px-2 py-1 rounded-full">
           <%= song.mood ?? 'geen' %>
