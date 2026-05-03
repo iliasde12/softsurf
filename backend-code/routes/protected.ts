@@ -2,10 +2,15 @@ import express, { Router } from "express";
 import { secureMiddleware } from "../middleware/secureMiddleware";
 import authSpotifyRouter from "./authSpotify";
 import { spotifyMiddleware } from "../middleware/spotifyMiddleware";
-import {GetPlaylists,GetPlaylist,GetPlaylistSongs,GetCurrentUser,savePlaylistSongs} from "../helpers/spotify"
-import { GetSongs,UpdateSongMood ,GetSongsByMood } from "../database/database";
-import { moods } from '../interfaces/mood';
-
+import {
+  GetPlaylists,
+  GetPlaylist,
+  GetPlaylistSongs,
+  GetCurrentUser,
+  savePlaylistSongs,
+} from "../helpers/spotify";
+import { GetSongs, UpdateSongMood, GetSongsByMood } from "../database/database";
+import { moods } from "../interfaces/mood";
 
 const router: Router = express.Router();
 
@@ -13,9 +18,9 @@ router.use(secureMiddleware);
 //wordt alleen gebruikt als user spotify acc heeft
 router.use(spotifyMiddleware);
 
-router.get("/playlists",async (req, res) => {
+router.get("/playlists", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
-  
+
   //promise all zodat zei beide tergelijker tijd worden opgroepen en samen worden uitegevoerd
   const [data, user] = await Promise.all([
     GetPlaylists(accessToken),
@@ -23,44 +28,45 @@ router.get("/playlists",async (req, res) => {
   ]);
 
   //kijkt naar owner uit spotify en returnd alleen playlisten die door de user zijn gemaakt en niet de rest als je bij paar anderen ben geabonneerd
-  const myPlaylists = data.filter((p: { owner: { id: any; }; }) => p.owner.id === user.id);
-
+  const myPlaylists = (data ?? []).filter(
+    (p: { owner: { id: any } }) => p.owner.id === user.id,
+  );
   //console.log(playlists);
-  res.render("playlist", { 
+  res.render("playlist", {
     user: req.session.user,
     playlists: myPlaylists,
   });
 });
 
-
-router.get('/playlist/songs/:id', async (req, res) => {
+router.get("/playlist/songs/:id", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
   const playlistId = req.params.id;
   const songs = await GetPlaylistSongs(accessToken, playlistId);
   const playlist = await GetPlaylist(accessToken, playlistId);
 
-  res.render('playlistsongs', { songs: songs,playlist:playlist });
+  res.render("playlistsongs", { songs: songs, playlist: playlist });
 });
 
-
 router.get("/account", async (req, res) => {
- 
-  res.render("account", { 
+  res.render("account", {
     user: req.session.user,
-
   });
 });
 
 router.get("/collectie", async (req, res) => {
-   const userId = req.session.user?._id;
+  const userId = req.session.user?._id;
   const songs = await GetSongs(userId);
-  res.render("collectie", { user: req.session.user,songs:songs, moods:moods });
+  res.render("collectie", {
+    user: req.session.user,
+    songs: songs,
+    moods: moods,
+  });
 });
 
-router.get("/mood", async(req, res) => {
-   const userId = req.session.user?._id;
+router.get("/mood", async (req, res) => {
+  const userId = req.session.user?._id;
   const songs = await GetSongsByMood(userId);
-  res.render("mood",{ songs : songs, moods: moods });
+  res.render("mood", { songs: songs, moods: moods });
 });
 
 router.get("/vergelijken-artiesten", (req, res) => {
@@ -81,7 +87,7 @@ router.get("/search", (req, res) => {
 
 //tijdelijke router om songs van api op teslagen in mongodb
 //je moet gewoon id meegeven van een playlist waar wij aan kunnen
-router.get('/playlist/:id/save', async (req, res) => {
+router.get("/playlist/:id/save", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
   const playlistId = req.params.id;
   const songs = await GetPlaylistSongs(accessToken, playlistId);
@@ -91,16 +97,13 @@ router.get('/playlist/:id/save', async (req, res) => {
 });
 
 // kan de user de mood aanpassen in de song
-router.post('/song/:id/mood', async (req, res) => {
+router.post("/song/:id/mood", async (req, res) => {
   const mood = parseInt(req.body.mood);
   const userId = req.session.user?._id;
   const songId = req.params.id;
   await UpdateSongMood(userId, songId, mood);
   res.json({ success: true });
 });
-
-
-
 
 router.use("/auth", authSpotifyRouter);
 
