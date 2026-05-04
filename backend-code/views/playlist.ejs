@@ -8,7 +8,7 @@
       <!-- MAIN -->
       <main class="flex-1 p-4 md:p-6 overflow-y-auto">
         <!-- Title + view toggle -->
-        <div class="flex items-start justify-between mb-1">
+        <div class="flex items-start justify-between mb-1 animate-fadeUp">
           <div>
             <h1
               class="font-display text-3xl font-semibold tracking-tight text-light"
@@ -38,7 +38,7 @@
 
         <!-- hier komt generate -->
         <section
-          class="flex items-center justify-between bg-[#2A2650] mb-6 w-full px-6 py-4 rounded-2xl gap-6"
+          class="flex items-center justify-between bg-[#2A2650] mb-6 w-full px-6 py-4 rounded-2xl gap-6 animate-fadeUp"
         >
           <!-- Stats -->
           <div class="flex gap-4">
@@ -98,7 +98,7 @@
          </div>-->
 
         <!-- Playlists -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="playlistsContainer">
+        <div class="grid grid-cols-2 animate-fadeUp md:grid-cols-3 lg:grid-cols-4 gap-4" id="playlistsContainer">
 
           <% playlists.forEach((playlist) => { %>
           <a href="/playlist/songs/<%= playlist.id %>">

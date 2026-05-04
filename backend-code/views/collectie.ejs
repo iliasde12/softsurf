@@ -72,10 +72,10 @@
       <!-- MAIN -->
       <main class="flex-1 p-4 md:p-6 overflow-y-auto">
         <!-- Title + view toggle -->
-        <div class="flex items-start justify-between mb-1">
+        <div class="flex items-start justify-between mb-1 animate-fadeUp">
           <div>
-            <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Mijn Collectie</h1>
-            <p class="text-[#6B6B8A] text-xs md:text-sm mb-4">Je gelikte nummers, georganiseerd en klaar om af te spelen</p>
+            <h1 class="font-display text-3xl font-semibold tracking-tight text-light ">Mijn Collectie</h1>
+            <p class="text-[#6B6B8A] text-xs md:text-sm mb-4 ">Je gelikte nummers, georganiseerd en klaar om af te spelen</p>
           </div>
           <div class="flex gap-2 mt-1">
             <button class="bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full">Lijst</button>
@@ -84,10 +84,10 @@
         </div>
 
         <!-- Search + filters -->
-        <div class="flex flex-col md:flex-row gap-3 mb-6">
+        <div class="flex flex-col md:flex-row gap-3 mb-6 animate-fadeUp">
           <div class="relative flex-1 md:max-w-full">
             <div
-          class="relative animate-fadeUp "
+          class="relative"
           style="animation-delay: 0.05s"
         >
           <svg
@@ -121,7 +121,7 @@
         </div>
 
         <!-- Table header (hidden on mobile) -->
-        <div class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-base uppercase tracking-widest mb-2 px-2">
+        <div class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-base uppercase tracking-widest mb-2 px-2 animate-fadeUp">
           <span class="text-white">#</span>
           <span class="text-white">Titel</span>
           <span class="text-white">Label</span>
@@ -131,26 +131,26 @@
         </div>
 
         <!-- Tracks -->
-     <div class="flex flex-col gap-1" id="tracksContainer">
-  <% songs.forEach((song, index) => { %>
-    <div class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center <%= index % 2 === 0 ? 'bg-[#1E1B3A]' : '' %> hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition">
-      
-      <span class="text-[#6B6B8A] text-sm text-center"><%= index + 1 %></span>
+        <div class="flex flex-col gap-1" id="tracksContainer animate-fadeUp">
+            <% songs.forEach((song, index) => { %>
+              <div class="grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 animate-fadeUp items-center <%= index % 2 === 0 ? 'bg-[#1E1B3A]' : '' %> hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition">
+                
+                <span class="text-[#6B6B8A] text-sm text-center"><%= index + 1 %></span>
 
-      <div class="flex items-center gap-3">
-    <% if (song.album && song.album.images && song.album.images.length > 0) { %>
-  <img 
-    src="<%= song.album.images[1].url %>" 
-    alt="<%= song.name %>"
-    class="w-9 h-9 rounded-lg object-cover shrink-0"
-  />
-<% } else { %>
-  <div class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">
-    🎵
-  </div>
-<% } %>
-        <div>
-          <p class="text-white text-sm font-semibold"><%= song.name %></p>
+                <div class="flex items-center gap-3">
+              <% if (song.album && song.album.images && song.album.images.length > 0) { %>
+            <img 
+              src="<%= song.album.images[1].url %>" 
+              alt="<%= song.name %>"
+              class="w-9 h-9 rounded-lg object-cover shrink-0"
+            />
+          <% } else { %>
+            <div class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">
+              🎵
+            </div>
+          <% } %>
+                  <div>
+              <p class="text-white text-sm font-semibold"><%= song.name %></p>
           <p class="text-[#6B6B8A] text-xs"> <%= song.album?.artists?.[0]?.name ?? 'Onbekend' %></p>
         </div>
       </div>
