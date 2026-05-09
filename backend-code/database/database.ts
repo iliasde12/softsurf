@@ -7,6 +7,7 @@ import {
   UserSong,
   SpotifySession,
   User,
+  Playlist,
 } from "../interfaces/index";
 
 import bcrypt from "bcrypt";
@@ -48,6 +49,8 @@ export const userSongCollection = db.collection<UserSong>("userSongs");
 export const spotifySongCollection = db.collection<Song>("songs");
 export const spotifyAlbumCollection = db.collection<SpotifyAlbum>("albums");
 export const spotifyArtistCollection = db.collection<SpotifyArtist>("artisten");
+//playlist
+export const playlistCollection = db.collection<Playlist>("playlists");
 
 // create users
 export async function createUser(
@@ -330,4 +333,19 @@ export async function GetSongsByMood(userId: ObjectId | undefined): Promise<any>
   }
 
   return result;
+}
+
+//create playlist
+async function createPlaylist(userId: ObjectId, name: string, description?: string): Promise<Playlist> {
+  const playlist: Playlist = {
+    userId,
+    name,
+    description,
+    songs: [],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  const result = await playlistCollection.insertOne(playlist);
+  return { _id: result.insertedId, ...playlist };
 }
