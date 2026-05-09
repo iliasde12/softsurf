@@ -123,6 +123,18 @@ export interface UserSong {
   updatedAt: Date;
 }
 
+//playlist app
+export interface Playlist {
+  _id?: ObjectId;
+  userId: ObjectId;
+  name: string;
+  description?: string;
+  songs: Song[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+//playlist spotify
 export interface SpotifyPlaylist {
   id: string;
   name: string;
