@@ -1,8 +1,6 @@
 import express, { Router } from "express";
-import { secureMiddleware } from "../middleware/secureMiddleware";
 import authSpotifyRouter from "./authSpotify";
-import { spotifyMiddleware } from "../middleware/spotifyMiddleware";
-import { searchSongs } from "../helpers/search";
+
 import {
   GetPlaylistsSpotify,
   GetPlaylist,
@@ -16,7 +14,7 @@ import {
   GetSongsByMood,
   createPlaylist,
   GetPlaylists,
-  GetPlaylistById
+  GetPlaylistById,
 } from "../database/database";
 import { moods } from "../interfaces/mood";
 
@@ -35,9 +33,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 const router: Router = express.Router();
 
-//wordt alleen gebruikt als user spotify acc heeft
-router.use(secureMiddleware);
-router.use(spotifyMiddleware);
+
 
 router.get("/playlists", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
@@ -154,23 +150,7 @@ router.get("/search", (req, res) => {
   res.render("search");
 });
 
-//is voor live data uit search en combineert db en spotify
-router.get("/api/search", async (req, res) => {
-  try {
-    const { q } = req.query as { q: string };
-    const accessToken = res.locals.spotifyToken;
 
-    if (!q) {
-      return res.json({ fromDB: [], fromSpotify: [] });
-    }
-
-    const { fromDB, fromSpotify } = await searchSongs(q, accessToken);
-    res.json({ fromDB, fromSpotify });
-
-  } catch (error) {
-    res.status(500).json({ error: "Er ging iets mis bij het zoeken" });
-  }
-});
 
 //tijdelijke router om songs van api op teslagen in mongodb
 //je moet gewoon id meegeven van een playlist waar wij aan kunnen

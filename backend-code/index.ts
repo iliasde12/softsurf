@@ -5,6 +5,10 @@ import { connect } from "./database/database";
 import session from "./sessions/session";
 import mainRoutes from "./routes/main";
 import protectedRoutes from "./routes/protected";
+import apiRoutes from "./routes/api";
+//middleware
+import { spotifyMiddleware } from "./middleware/spotifyMiddleware";
+import { secureMiddleware } from "./middleware/secureMiddleware";
 
 dotenv.config();
 
@@ -20,7 +24,11 @@ app.set("port", process.env.PORT || 3000);
 
 //routes voegen
 app.use(mainRoutes);
-app.use(protectedRoutes);
+//beide zijn beschermd dus ze moeten ingelogd zijn en acces token komt ook vrij als ze het hebben
+app.use(secureMiddleware, spotifyMiddleware, protectedRoutes);
+app.use("/api", secureMiddleware, spotifyMiddleware, apiRoutes);
+
+
 
 app.listen(app.get("port"), async () => {
   try {
