@@ -4,15 +4,35 @@ import authSpotifyRouter from "./authSpotify";
 import { spotifyMiddleware } from "../middleware/spotifyMiddleware";
 import { searchSongs } from "../helpers/search";
 import {
-  GetPlaylists,
+  GetPlaylistsSpotify,
   GetPlaylist,
   GetPlaylistSongs,
   GetCurrentUser,
   savePlaylistSongs,
 } from "../helpers/spotify";
-import { GetSongs, UpdateSongMood, GetSongsByMood } from "../database/database";
+import {
+  GetSongs,
+  UpdateSongMood,
+  GetSongsByMood,
+  createPlaylist,
+  GetPlaylists,
+  GetPlaylistById
+} from "../database/database";
 import { moods } from "../interfaces/mood";
 
+import multer from 'multer';
+import path from 'path';
+import {ObjectId} from "mongodb";
+
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, '../public/uploads/'),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + ext);
+  }
+});
+
+const upload = multer({ storage });
 const router: Router = express.Router();
 
 //wordt alleen gebruikt als user spotify acc heeft
@@ -21,40 +41,78 @@ router.use(spotifyMiddleware);
 
 router.get("/playlists", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
+  const userId = req.session.user?._id;
 
-  let myPlaylists = [];
+  let myPlaylists:any = [];
+  let myCustomPlaylists:any = [];
 
-  if(accessToken) {
-    //promise all zodat zei beide tergelijker tijd worden opgroepen en samen worden uitegevoerd
+  // Altijd uit database halen
+  if (userId) {
+    myCustomPlaylists = await GetPlaylists(userId);
+  }
+
+  // Alleen spotify als er een token is
+  if (accessToken) {
     const [data, user] = await Promise.all([
-      GetPlaylists(accessToken),
+      GetPlaylistsSpotify(accessToken),
       GetCurrentUser(accessToken),
     ]);
 
-    //kijkt naar owner uit spotify en returnd alleen playlisten die door de user zijn gemaakt en niet de rest als je bij paar anderen ben geabonneerd
     myPlaylists = (data ?? []).filter(
         (p: { owner: { id: any } }) => p.owner.id === user.id,
     );
   }
 
-  //console.log(playlists);
   res.render("playlist", {
     user: req.session.user,
     playlists: myPlaylists,
+    customPlaylists: myCustomPlaylists,
   });
 });
 
-router.post("/playlist/create", async (req, res) => {
+router.post("/playlist/create", upload.single('image'), async (req, res) => {
+  const { name, description, songs } = req.body;
+  const image = req.file ? req.file.filename : undefined;
+  const songsList = songs ? JSON.parse(songs) : [];
+  const userId = req.session.user?._id;
 
+  console.log(req.file);
+  console.log("file name: " + req.file);
+
+  if (!userId) return res.redirect('/login');
+
+  try {
+    await createPlaylist(
+        userId,
+        name,
+        description,
+        image,
+        songsList
+    );
+  }catch (e){
+    console.log(e);
+  }
+
+  res.redirect('/playlists');
 });
 
 router.get("/playlist/songs/:id", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
   const playlistId = req.params.id;
+
+
+  if (playlistId.startsWith('db_')) {
+    const realId = playlistId.replace('db_', '');
+    const userId = new ObjectId(req.session.user?._id);
+    const playlist = await GetPlaylistById(new ObjectId(realId), userId);
+    return res.render("playlistsongs", { songs: playlist?.songs || [], playlist });
+  }
+
+  // Anders uit Spotify halen
   const songs = await GetPlaylistSongs(accessToken, playlistId);
   const playlist = await GetPlaylist(accessToken, playlistId);
 
-  res.render("playlistsongs", { songs: songs, playlist: playlist });
+  res.render("playlistsongs", { songs, playlist });
 });
 
 router.get("/account", async (req, res) => {

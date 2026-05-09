@@ -78,7 +78,7 @@
           </button>
         </section>
         <section class="flex flex-row justify-between mb-4">
-          <h2> <!--Gegenereerde Afspeellijst  - --> <%= playlists.length %> afspeelijsten</h2>
+          <h2><%= playlists.length + customPlaylists.length %> afspeelijsten</h2>
           <!-- <p
              class="mr-5 pr-2.5 pl-2.5 pt-1 pb-1 rounded-[40px] border-[3px] border-[#7B6BF5] hover:bg-[#7B6BF5]"
            >
@@ -154,9 +154,9 @@
            <span class="text-white"></span>
          </div>-->
 
-        <!-- Playlists -->
-        <div class="grid grid-cols-2 animate-fadeUp md:grid-cols-3 lg:grid-cols-4 gap-4" id="playlistsContainer">
 
+        <div class="grid grid-cols-2 animate-fadeUp md:grid-cols-3 lg:grid-cols-4 gap-4" id="playlistsContainer">
+          <!-- Spotify playlists -->
           <% playlists.forEach((playlist) => { %>
           <a href="/playlist/songs/<%= playlist.id %>">
             <div class="bg-[#1E1B3A] hover:bg-[#2A2750] rounded-xl p-4 cursor-pointer transition flex flex-col gap-3">
@@ -189,6 +189,37 @@
             </div>
           </a>
           <% }) %>
+
+            <!-- Eigen playlists uit database -->
+            <% customPlaylists.forEach((playlist) => { %>
+            <a href="/playlist/songs/db_<%= playlist._id %>">
+                <div class="bg-[#1E1B3A] hover:bg-[#2A2750] rounded-xl p-4 cursor-pointer transition flex flex-col gap-3">
+
+                  <!-- Cover -->
+                  <% if (playlist.image) { %>
+                    <img src="/uploads/<%= playlist.image %>" alt="<%= playlist.name %>"
+                         class="w-full aspect-square rounded-lg object-cover"/>
+                  <% } else { %>
+                    <div class="w-full aspect-square rounded-lg bg-[#2A2750] flex items-center justify-center text-4xl">
+                      🎵
+                    </div>
+                  <% } %>
+
+                  <!-- Info -->
+                  <div class="flex flex-col gap-1">
+                    <p class="text-white font-semibold text-sm truncate"><%= playlist.name %></p>
+                    <p class="text-white/60 text-xs truncate"><%= playlist.description || '' %></p>
+                  </div>
+
+                  <!-- Footer -->
+                  <div class="flex items-center justify-between mt-auto">
+                    <span class="text-white/40 text-xs"><%= playlist.songs?.length || 0 %> nummers</span>
+                    <span class="text-[#E91E8C] text-sm">♥</span>
+                  </div>
+
+                </div>
+              </a>
+            <% }) %>
 
         </div>
 

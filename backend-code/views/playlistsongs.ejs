@@ -14,7 +14,11 @@
                     <%= playlist.name %>
                 </h1>
                 <p class="text-[#6B6B8A] text-xs md:text-sm mb-4">
-                     <%= playlist.owner.display_name %> • <%= songs.length %> nummers
+                    <% if (playlist.owner) { %>
+                        <%= playlist.owner.display_name %>
+                    <% } else { %>
+                        <%= user?.username || 'Jij' %>
+                    <% } %> • <%= songs.length %> nummers
                 </p>
             </div>
             <div class="flex gap-2 mt-1">

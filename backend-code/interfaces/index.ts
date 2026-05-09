@@ -129,7 +129,7 @@ export interface Playlist {
   userId: ObjectId;
   name: string;
   description?: string;
-  songs: Song[];
+  songs?: Song[];
   image: string | null;
   createdAt: Date;
   updatedAt: Date;
