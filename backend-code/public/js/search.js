@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", () => {
 const searchInput = document.getElementById("searchInput");
 
 const fetchSongs = async (query) => {
@@ -88,7 +89,7 @@ function showSongs(songs) {
 
         const popularity = document.createElement("span");
         popularity.className = "hidden md:block text-[#A0A0C0] text-xs";
-        popularity.textContent = song.popularity;;
+        popularity.textContent = song.popularity;
 
         const heart = document.createElement("span");
         heart.className = "text-[#E91E8C] text-sm";
@@ -100,3 +101,5 @@ function showSongs(songs) {
     });
 
 }
+
+});
