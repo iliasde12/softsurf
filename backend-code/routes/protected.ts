@@ -22,16 +22,21 @@ router.use(spotifyMiddleware);
 router.get("/playlists", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
 
-  //promise all zodat zei beide tergelijker tijd worden opgroepen en samen worden uitegevoerd
-  const [data, user] = await Promise.all([
-    GetPlaylists(accessToken),
-    GetCurrentUser(accessToken),
-  ]);
+  let myPlaylists = [];
 
-  //kijkt naar owner uit spotify en returnd alleen playlisten die door de user zijn gemaakt en niet de rest als je bij paar anderen ben geabonneerd
-  const myPlaylists = (data ?? []).filter(
-    (p: { owner: { id: any } }) => p.owner.id === user.id,
-  );
+  if(accessToken) {
+    //promise all zodat zei beide tergelijker tijd worden opgroepen en samen worden uitegevoerd
+    const [data, user] = await Promise.all([
+      GetPlaylists(accessToken),
+      GetCurrentUser(accessToken),
+    ]);
+
+    //kijkt naar owner uit spotify en returnd alleen playlisten die door de user zijn gemaakt en niet de rest als je bij paar anderen ben geabonneerd
+    myPlaylists = (data ?? []).filter(
+        (p: { owner: { id: any } }) => p.owner.id === user.id,
+    );
+  }
+
   //console.log(playlists);
   res.render("playlist", {
     user: req.session.user,
