@@ -11,7 +11,7 @@ const fetchSongs = async (query) => {
         const normalizedDB = fromDB.map(song => ({
             name: song.name,
             popularity: song.popularity ?? 0,
-            artists: [{ name: song.artists?.[0]?.name ?? "Onbekend" }],
+            artists: [{ name: song.album?.artists?.[0]?.name ?? "Onbekend" }],
             album: {
                 images: [{ url: song.album?.images?.[0]?.url ?? "./img/default.svg" }],
                 release_date: song.album?.release_date ?? ""
