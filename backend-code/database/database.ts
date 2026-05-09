@@ -366,12 +366,12 @@ export async function SearchSongs(query: string): Promise<any[]> {
 
 
 //create playlist
-async function createPlaylist(userId: ObjectId, name: string, description?: string, image?:string): Promise<Playlist> {
+export async function createPlaylist(userId: ObjectId, name: string, description?: string, image?:string, songs?: Song[]): Promise<Playlist> {
   const playlist: Playlist = {
     userId,
     name,
     description,
-    songs: [],
+    songs: songs || undefined,
     image: image || null,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -379,4 +379,14 @@ async function createPlaylist(userId: ObjectId, name: string, description?: stri
 
   const result = await playlistCollection.insertOne(playlist);
   return { _id: result.insertedId, ...playlist };
+}
+
+//alle playlisten uit db aan de hand van userid
+export async function GetPlaylists(userId: ObjectId): Promise<Playlist[]> {
+  return await playlistCollection.find({ userId }).toArray();
+}
+
+//aan de hand van id van afspeellijst en userid zodat niet iedereen er in kan
+export async function GetPlaylistById(id: ObjectId, userId: ObjectId): Promise<Playlist | null> {
+  return await playlistCollection.findOne({ _id: id, userId });
 }

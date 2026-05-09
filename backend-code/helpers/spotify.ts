@@ -52,7 +52,7 @@ export async function RefreshSpotifyToken(userId: ObjectId): Promise<string | nu
 }
 
 //api call voor playlists
-export async function GetPlaylists(accessToken: string) {
+export async function GetPlaylistsSpotify(accessToken: string) {
   try {
     const response = await fetch(`https://api.spotify.com/v1/me/playlists`, {
   headers: { 
