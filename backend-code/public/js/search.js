@@ -70,7 +70,7 @@ function showSongs(songs) {
 
         const artistName = document.createElement("p");
         artistName.className = "text-[#6B6B8A] text-xs";
-        artistName.textContent = song.album?.artists?.[0]?.name ?? "Onbekend";
+        artistName.textContent = song.album?.artists?.[0]?.name ?? 'Onbekend';
 
         textDiv.append(trackName, artistName);
         infoWrapper.append(albumArt, textDiv);
