@@ -130,6 +130,7 @@ export interface Playlist {
   name: string;
   description?: string;
   songs: Song[];
+  images: string[] | null;
   createdAt: Date;
   updatedAt: Date;
 }
