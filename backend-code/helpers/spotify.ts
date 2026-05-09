@@ -133,8 +133,20 @@ export async function GetCurrentUser(accessToken: string) {
     return null;
   }
 }
+//api call voor search
+export async function searchSpotifyTracks(query: string, accessToken: string) {
+  const res = await fetch(
+      `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=10`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+  );
+  const data = await res.json();
+  console.log("search data spotify" + data.tracks.items);
+  return  data.tracks.items ?? [];
+}
+
 
 //api call en songs opslagen
 export async function savePlaylistSongs(tracks: SpotifyTrack[]): Promise<void> {
   await Promise.all(tracks.map(track => CreateSong(track)));
 }
+

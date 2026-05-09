@@ -334,6 +334,36 @@ export async function GetSongsByMood(userId: ObjectId | undefined): Promise<any>
 
   return result;
 }
+//search songs
+export async function SearchSongs(query: string): Promise<any[]> {
+  return await spotifySongCollection.aggregate([
+    {
+      $match: {
+        name: { $regex: query, $options: "i" }
+      }
+    },
+    {
+      $lookup: {
+        from: "artists",
+        localField: "artist_ids",
+        foreignField: "_id",
+        as: "artists",
+      },
+    },
+    {
+      $lookup: {
+        from: "albums",
+        localField: "album_id",
+        foreignField: "_id",
+        as: "album",
+      },
+    },
+    {
+      $unwind: { path: "$album", preserveNullAndEmptyArrays: true },
+    },
+  ]).toArray();
+}
+
 
 //create playlist
 async function createPlaylist(userId: ObjectId, name: string, description?: string): Promise<Playlist> {
