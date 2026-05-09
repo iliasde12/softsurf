@@ -372,6 +372,7 @@ async function createPlaylist(userId: ObjectId, name: string, description?: stri
     name,
     description,
     songs: [],
+    images: [],
     createdAt: new Date(),
     updatedAt: new Date(),
   };
