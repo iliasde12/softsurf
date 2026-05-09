@@ -14,8 +14,8 @@ import { moods } from "../interfaces/mood";
 
 const router: Router = express.Router();
 
-router.use(secureMiddleware);
 //wordt alleen gebruikt als user spotify acc heeft
+router.use(secureMiddleware);
 router.use(spotifyMiddleware);
 
 router.get("/playlists", async (req, res) => {
@@ -104,6 +104,7 @@ router.post("/song/:id/mood", async (req, res) => {
   await UpdateSongMood(userId, songId, mood);
   res.json({ success: true });
 });
+
 
 router.use("/auth", authSpotifyRouter);
 
