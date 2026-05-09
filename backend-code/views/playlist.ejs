@@ -92,6 +92,49 @@
           </button>
          </section>
 
+        <!-- modal om playlists te maken -->
+        <div id="createModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div class="bg-[#1E1B3A] rounded-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+            <h2 class="text-white font-bold text-lg mb-4">Nieuwe playlist</h2>
+
+            <!-- Naam -->
+            <label class="text-[#6B6B8A] text-xs mb-1 block">Naam</label>
+            <input id="playlistName" type="text" placeholder="Naam playlist..."
+                   class="w-full bg-[#2A2750] text-white text-sm rounded-xl px-4 py-2 mb-3 outline-none"/>
+
+            <!-- Afbeelding -->
+            <label class="text-[#6B6B8A] text-xs mb-1 block">Afbeelding</label>
+            <div id="imagePreview" class="w-full h-32 bg-[#2A2750] rounded-xl flex items-center justify-center cursor-pointer hover:bg-[#33306b] transition mb-3">
+              <span class="text-[#6B6B8A] text-sm">+ Klik om afbeelding te uploaden</span>
+            </div>
+            <input id="playlistImage" type="file" accept="image/*" class="hidden"/>
+
+            <!-- Beschrijving -->
+            <label class="text-[#6B6B8A] text-xs mb-1 block">Beschrijving</label>
+            <textarea id="playlistDescription" placeholder="Beschrijving..." rows="2"
+                      class="w-full bg-[#2A2750] text-white text-sm rounded-xl px-4 py-2 mb-3 outline-none resize-none"></textarea>
+
+            <!-- Zoek nummers -->
+            <label class="text-[#6B6B8A] text-xs mb-1 block">Nummers toevoegen</label>
+            <input id="songSearch" type="text" placeholder="Zoek nummers..."
+                   class="w-full bg-[#2A2750] text-white text-sm rounded-xl px-4 py-2 mb-2 outline-none"/>
+
+            <!-- Zoekresultaten -->
+            <div id="searchResults" class="flex flex-col gap-1 max-h-40 overflow-y-auto mb-3"></div>
+
+            <!-- Toegevoegde nummers -->
+            <label class="text-[#6B6B8A] text-xs mb-1 block">Toegevoegde nummers</label>
+            <div id="selectedSongs" class="flex flex-col gap-1 max-h-32 overflow-y-auto mb-4"></div>
+
+            <div class="flex justify-end gap-2">
+              <button id="sluitModal" class="text-[#6B6B8A] text-sm px-4 py-2">Annuleren</button>
+              <button id="slaPlaylistOp" class="bg-[#E91E8C] hover:bg-[#c4177a] text-white text-sm font-semibold px-5 py-2 rounded-full transition">
+                Aanmaken
+              </button>
+            </div>
+          </div>
+        </div>
+
          <!-- Table header (hidden on mobile)
          <div
            class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-base uppercase tracking-widest mb-2 px-2"
