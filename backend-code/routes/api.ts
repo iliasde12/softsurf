@@ -1,6 +1,6 @@
 import { searchSongs } from "../helpers/search";
 import express, {Router} from "express";
-import{ CreateSong, playlistCollection } from "../database/database";
+import{ CreateSong, playlistCollection,GetPlaylists } from "../database/database";
 import { GetTrackSpotify } from "../helpers/spotify";
 import {ObjectId } from "mongodb";
 
@@ -52,6 +52,16 @@ router.post('/playlist/add-song', async (req, res) => {
     } catch (e) {
         res.status(500).json({ error: 'Er ging iets mis' });
     }
+});
+
+
+router.get('/playlists', async (req, res) => {
+    const userId = req.session.user?._id;
+
+    if (!userId) return res.status(401).json({ error: 'Niet ingelogd' });
+
+    const playlists = await GetPlaylists(userId);
+    res.json(playlists);
 });
 
 
