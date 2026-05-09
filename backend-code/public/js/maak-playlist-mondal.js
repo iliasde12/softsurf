@@ -67,7 +67,7 @@ document.querySelector("#songSearch").addEventListener("input", async (e) => {
 
         const artist = document.createElement("p");
         artist.className = "text-[#6B6B8A] text-xs";
-        artist.textContent = song.artists?.[0]?.name ?? "Onbekend";
+        artist.textContent =  song.album?.artists?.[0]?.name ?? "Onbekend";
 
         text.append(name, artist);
         item.append(img, text);
@@ -115,31 +115,6 @@ function addSong(song) {
     container.appendChild(item);
 }
 
-// Playlist opslaan
-document.querySelector("#slaPlaylistOp").addEventListener("click", async () => {
-    const name = document.getElementById("playlistName").value.trim();
-    const description = document.getElementById("playlistDescription").value.trim();
-    const imageFile = document.getElementById("playlistImage").files[0];
-
-    if (!name || selectedSongs.length === 0) {
-        alert("Vul een naam in en voeg minstens 1 nummer toe.");
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("songs", JSON.stringify(selectedSongs));
-    if (imageFile) formData.append("image", imageFile);
-
-    await fetch("/api/playlists/create", {
-        method: "POST",
-        body: formData
-    });
-
-    document.getElementById("createModal").classList.add("hidden");
-    resetModal();
-});
 
 // Reset modal
 function resetModal() {
