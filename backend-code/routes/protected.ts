@@ -44,6 +44,10 @@ router.get("/playlists", async (req, res) => {
   });
 });
 
+router.post("/playlist/create", async (req, res) => {
+
+});
+
 router.get("/playlist/songs/:id", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
   const playlistId = req.params.id;
