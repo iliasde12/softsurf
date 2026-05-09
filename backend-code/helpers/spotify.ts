@@ -1,5 +1,5 @@
 // helpers/spotify.ts
-import { GetSpotifyToken,spotifyTokenColletion,CreateSong } from "../database/database";
+import { GetSpotifyToken, spotifyTokenColletion, CreateSong } from "../database/database";
 import { SpotifyTrack  } from "../interfaces"
 import { ObjectId } from "mongodb";
 
@@ -50,6 +50,16 @@ export async function RefreshSpotifyToken(userId: ObjectId): Promise<string | nu
     return null;
   }
 }
+
+//api call voor 1 song
+export async function GetTrackSpotify(accessToken: string, trackId: string): Promise<SpotifyTrack> {
+  const response = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
+  return await response.json();
+}
+
+
 
 //api call voor playlists
 export async function GetPlaylistsSpotify(accessToken: string) {
