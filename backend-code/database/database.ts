@@ -366,13 +366,13 @@ export async function SearchSongs(query: string): Promise<any[]> {
 
 
 //create playlist
-async function createPlaylist(userId: ObjectId, name: string, description?: string): Promise<Playlist> {
+async function createPlaylist(userId: ObjectId, name: string, description?: string, image?:string): Promise<Playlist> {
   const playlist: Playlist = {
     userId,
     name,
     description,
     songs: [],
-    images: [],
+    image: image || null,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
