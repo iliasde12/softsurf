@@ -44,11 +44,16 @@ function showSongs(songs) {
     songs.forEach((song, index) => {
         const mood = moodType[index % moodType.length];
         const color = moodColor[index % moodColor.length];
+        const trackId = song.id;
+
+        //console.log(trackId);
 
         const trackContainer = document.createElement("div");
         trackContainer.className = `grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center ${index % 2 === 0 ? "bg-[#1E1B3A]" : ""} hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition`;
 
         const number = document.createElement("span");
+        number.className = 'addSong';
+        number.dataset.trackId = trackId;
         const img = document.createElement("img");
         img.className = "w-5 mx-auto";
         img.src = "./img/plus-solid-full.svg";
