@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import { secureMiddleware } from "../middleware/secureMiddleware";
 import authSpotifyRouter from "./authSpotify";
 import { spotifyMiddleware } from "../middleware/spotifyMiddleware";
+import { searchSongs } from "../helpers/search";
 import {
   GetPlaylists,
   GetPlaylist,
@@ -81,8 +82,27 @@ router.get("/guessthesong", (req, res) => {
   res.render("guessthesong");
 });
 
+//get search
 router.get("/search", (req, res) => {
   res.render("search");
+});
+
+//is voor live data uit search en combineert db en spotify
+router.get("/api/search", async (req, res) => {
+  try {
+    const { q } = req.query as { q: string };
+    const accessToken = res.locals.spotifyToken;
+
+    if (!q) {
+      return res.json({ fromDB: [], fromSpotify: [] });
+    }
+
+    const { fromDB, fromSpotify } = await searchSongs(q, accessToken);
+    res.json({ fromDB, fromSpotify });
+
+  } catch (error) {
+    res.status(500).json({ error: "Er ging iets mis bij het zoeken" });
+  }
 });
 
 //tijdelijke router om songs van api op teslagen in mongodb
