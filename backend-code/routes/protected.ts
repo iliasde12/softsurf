@@ -15,6 +15,7 @@ import {
   createPlaylist,
   GetPlaylists,
   GetPlaylistById,
+  spotifySongCollection
 } from "../database/database";
 import { moods } from "../interfaces/mood";
 
@@ -101,7 +102,15 @@ router.get("/playlist/songs/:id", async (req, res) => {
     const realId = playlistId.replace('db_', '');
     const userId = new ObjectId(req.session.user?._id);
     const playlist = await GetPlaylistById(new ObjectId(realId), userId);
-    return res.render("playlistsongs", { songs: playlist?.songs || [], playlist });
+
+
+    // Songs ophalen uit de collection
+    const songIds = (playlist?.songs || []) as unknown as ObjectId[];
+    const songs = await spotifySongCollection
+        .find({ _id: { $in: songIds } })
+        .toArray();
+
+    return res.render("playlistsongs", { songs, playlist, user: req.session.user });
   }
 
   // Anders uit Spotify halen
