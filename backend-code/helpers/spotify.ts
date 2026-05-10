@@ -154,6 +154,7 @@ export async function searchSpotifyTracks(query: string, accessToken: string) {
   return  data.tracks.items ?? [];
 }
 
+//api call search artist and title
 
 //api call en songs opslagen
 export async function savePlaylistSongs(tracks: SpotifyTrack[]): Promise<void> {
