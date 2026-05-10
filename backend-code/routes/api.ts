@@ -65,4 +65,9 @@ router.get('/playlists', async (req, res) => {
 });
 
 
+router.post('/playlist/genereren', async (req, res) => {
+
+});
+
+
 export default router;

@@ -112,11 +112,25 @@
             <input type="text" placeholder="Collectie filteren..." class="w-full bg-[#1E1B3A] text-white text-sm pl-8 pr-4 py-2 rounded-full outline-none placeholder-[#6B6B8A]" /> -->
           </div>
           
-          <div class="flex gap-2 flex-wrap">
+          <!--<div class="flex gap-2 flex-wrap">
             <button class="bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full">Alles</button>
             <button class="bg-[#E91E8C] text-white text-xs px-3 py-1 rounded-full">Favorieten</button>
             <button class="bg-[#2A5A3A] text-white text-xs px-3 py-1 rounded-full hover:bg-[#2A2650] transition">Chill</button>
             <button class="bg-[#1E3A5A] text-white text-xs px-3 py-1 rounded-full hover:bg-[#2A2650] transition">Workout</button>
+          </div>-->
+
+          <div class="flex gap-2 flex-wrap">
+            <button class="bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full">Alles</button>
+            <!--<<button class="bg-[#E91E8C] text-white text-xs px-3 py-1 rounded-full">Favorieten</button>-->
+
+            <% moods.forEach(function(mood) { %>
+              <button
+                      style="background-color: <%= mood.color %>;"
+                      class="text-white text-xs px-3 py-1 rounded-full transition hover:opacity-80"
+              >
+                <%= mood.emoji %> <%= mood.name %>
+              </button>
+            <% }); %>
           </div>
         </div>
 
