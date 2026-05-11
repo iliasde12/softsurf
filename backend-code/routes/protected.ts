@@ -107,18 +107,15 @@ router.get("/playlist/songs/:id", async (req, res) => {
     //data uit databnak moet naam veranderen later
     const songs = await GetSongsByIds(userId, songIds);
 
-    console.log(songs);
+    //console.log(songs);
 
     return res.render("playlistsongs", { songs, playlist, user: req.session.user });
   }
 
-  if (playlistId.startsWith('sp_')) {
-    const realId = playlistId.replace('sp_', '');
-    const songs = await GetPlaylistSongs(accessToken, realId);
-    const playlist = await GetPlaylist(accessToken, realId);
+  const songs = await GetPlaylistSongs(accessToken, playlistId);
+  const playlist = await GetPlaylist(accessToken, playlistId);
 
-    return res.render("playlistsongs", { songs, playlist, user: req.session.user });
-  }
+  res.render("playlistsongs", { songs, playlist });
 });
 
 router.get("/account", async (req, res) => {
