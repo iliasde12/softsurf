@@ -36,7 +36,10 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
             <% songs.forEach((song) => { %>
-                <div class="bg-[#1E1B3A] hover:bg-[#2A2750] rounded-xl p-4 cursor-pointer transition flex flex-col gap-3">
+                <div class="bg-[#1E1B3A] hover:bg-[#2A2750] rounded-xl p-4 cursor-pointer transition flex flex-col gap-3"
+                     data-song-id="<%= song._id %>"
+                     data-song-name="<%= song.item ? song.item.name : song.name %>"
+                     data-song-artist="<%= song.item ? song.item.artists[0].name : song.artists?.[0]?.name ?? 'Onbekend' %>">
 
                     <!-- Cover -->
                     <% if (song.item && song.item.album && song.item.album.images.length > 0) { %>
@@ -80,6 +83,24 @@
 
     </main>
 </div>
+
+<script>
+    document.querySelectorAll('[data-song-id]').forEach(card => {
+        card.addEventListener('click', async () => {
+            const songId = card.dataset.songId;
+            const name = card.dataset.songName;
+            const artist = card.dataset.songArtist;
+
+            const res = await fetch(`/api/song/${songId}/playable`);
+            const playable = await res.json();
+
+            if (playable.youtubeId) {
+                playSong(playable.youtubeId, name, artist);
+            }
+        });
+    });
+</script>
+
 
 <%- include('partials/footer') %>
 </body>

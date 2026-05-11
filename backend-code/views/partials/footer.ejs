@@ -1,51 +1,46 @@
-<footer
-  class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0"
->
+<footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
+  <div id="ytPlayer"></div>
+
   <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
-    <div
-      class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0"
-    >
+    <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">
       🎵
     </div>
     <div>
-      <p class="text-white text-[1rem] font-semibold">Last Last</p>
-      <p class="text-white/75 text-[15px]">Burna Boy</p>
+      <p id="playerName" class="text-white text-[1rem] font-semibold">Last Last</p>
+      <p id="playerArtist" class="text-white/75 text-[15px]">Burna Boy</p>
     </div>
   </div>
 
   <div class="hidden md:flex flex-col items-center flex-1 gap-1">
     <div class="flex items-center gap-4">
       <button class="text-[#A0A0C0] hover:text-white text-sm">
-        <img class="w-6" src="img/left.svg" alt="" />
+        <img class="w-6" src="/img/left.svg" alt="" />
       </button>
-      <button class="flex items-center justify-center text-black text-[1rem]">
-        <img class="w-6" src="img/pause.svg" alt="" />
+      <button id="pauseBtn" onclick="togglePlay()" class="flex items-center justify-center text-black text-[1rem]">
+        <img id="pauseBtn" class="w-6" src="/img/pause.svg" alt="" />
       </button>
       <button class="text-[#A0A0C0] hover:text-white text-[1rem]">
-        <img class="w-6" src="img/right.svg" alt="" />
+        <img class="w-6" src="/img/right.svg" alt="" />
       </button>
     </div>
     <div class="flex items-center gap-2 w-full max-w-md">
-      <span class="text-[#6B6B8A] text-[1rem]">1:22</span>
+      <span id="currentTime" class="text-[#6B6B8A] text-[1rem]">0:00</span>
       <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full">
-        <div class="w-[40%] h-full bg-[#7B6BF5] rounded-full"></div>
+        <div id="progressBar" class="w-0 h-full bg-[#7B6BF5] rounded-full"></div>
       </div>
-      <span class="text-[#6B6B8A] text-[1rem]">4:08</span>
+      <span id="duration" class="text-[#6B6B8A] text-[1rem]">0:00</span>
     </div>
   </div>
 
-  <button
-    class="md:hidden flex items-center justify-center text-black text-[1rem] shrink-0"
-  >
-    <img class="w-6" src="img/pause.svg" alt="" />
-  </button>
-
   <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
-    <span class="text-[#6B6B8A] text-[1rem]"
-      ><img class="w-6" src="img/volume-solid-full.svg" alt=""
-    /></span>
+    <span class="text-[#6B6B8A] text-[1rem]">
+      <img class="w-6" src="/img/volume-solid-full.svg" alt=""/>
+    </span>
     <div class="w-20 h-1 bg-[#1E1B3A] rounded-full">
-      <div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
+      <div id="volumeBar" class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
     </div>
   </div>
 </footer>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="/js/player.js"></script>

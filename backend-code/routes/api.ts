@@ -1,6 +1,6 @@
 import { searchSongs } from "../helpers/search";
 import express, {Router} from "express";
-import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,spotifySongCollection,CreateSongPlayable } from "../database/database";
+import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable } from "../database/database";
 import { GetTrackSpotify } from "../helpers/spotify";
 import {ObjectId } from "mongodb";
 
@@ -74,13 +74,15 @@ router.get('/playlists', async (req, res) => {
 //api voor muziek afpselen
 router.get('/song/:id/playable', async (req, res) => {
     const songId = new ObjectId(req.params.id);
+    const userId = req.session.user?._id;
 
     // check of al bestaat
     const existing = await songPlayableCollection.findOne({ songId });
     if (existing) return res.json(existing);
 
     // ophalen song voor naam en artiest
-    const song = await spotifySongCollection.findOne({ _id: songId });
+    const songs = await GetSongsByIds(userId, [songId]);
+    const song = songs[0];
     if (!song) return res.status(404).json({ error: 'Song niet gevonden' });
 
     // youtube zoeken en opslaan
