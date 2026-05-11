@@ -19,7 +19,7 @@ const now: Date = new Date();
 dotenv.config();
 
 //uri
-//console.log(`MongoDB URI: ${process.env.MONGODB_URI}`);
+console.log(`MongoDB URI: ${process.env.MONGODB_URI}`);
 
 // Connection config MongoDB
 export const MONGODB_URI: string = process.env.MONGODB_URI ?? "";
