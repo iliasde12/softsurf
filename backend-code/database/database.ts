@@ -11,11 +11,21 @@ import {
 } from "../interfaces/index";
 
 import bcrypt from "bcrypt";
+import dotenv from 'dotenv';
+
+
 const saltRounds: number = 10;
 const now: Date = new Date();
+dotenv.config();
+
+//uri
+//console.log(`MongoDB URI: ${process.env.MONGODB_URI}`);
 
 // Connection config MongoDB
 export const MONGODB_URI: string = process.env.MONGODB_URI ?? "";
+
+
+
 const client: MongoClient = new MongoClient(MONGODB_URI);
 
 //db connection
