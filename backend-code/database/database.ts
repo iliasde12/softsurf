@@ -15,8 +15,7 @@ const saltRounds: number = 10;
 const now: Date = new Date();
 
 // Connection config MongoDB
-export const MONGODB_URI: string =
-  "mongodb+srv://SoftSurfUser:softsurf990304@softsurf.pxq1kmm.mongodb.net/?appName=SoftSurf";
+export const MONGODB_URI: string = process.env.MONGODB_URI ?? "";
 const client: MongoClient = new MongoClient(MONGODB_URI);
 
 //db connection
