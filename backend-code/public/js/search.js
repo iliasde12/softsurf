@@ -9,7 +9,9 @@ const fetchSongs = async (query) => {
         const { fromDB, fromSpotify } = await response.json();
 
         // Normaliseer DB songs naar Spotify structuur
+        //om te zien of in db zit
         const normalizedDB = fromDB.map(song => ({
+            id: `db_${song._id}`,  // ← db_ prefix
             name: song.name,
             popularity: song.popularity ?? 0,
             artists: [{ name: song.album?.artists?.[0]?.name ?? "Onbekend" }],
