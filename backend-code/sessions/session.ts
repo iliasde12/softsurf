@@ -10,8 +10,6 @@ declare module "express-session" {
 }
 
 
-//console.log(process.env.SESSION_SECRET);
-
 export default session({
   secret:
     process.env.SESSION_SECRET ?? "",
