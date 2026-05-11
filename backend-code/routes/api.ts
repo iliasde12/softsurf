@@ -35,13 +35,20 @@ router.post('/playlist/add-song', async (req, res) => {
     if (!userId) return res.status(401).json({ error: 'Niet ingelogd' });
 
     try {
-        const track = await GetTrackSpotify(accessToken, trackId);
-        const songId = await CreateSong(track);
+        let songId: ObjectId;
 
-        if(!songId){
-            return res.status(401).json({ error: 'geen song' });
+        //prefix moet altijd anders zien wij het verschill niet tussen spotify en databank want beide zijn hexa id even lang
+        //omdat data letterlijk van spotify in db komt
+        if (trackId.startsWith('db_')) {
+            // Al in DB → gewoon ID gebruiken
+            songId = new ObjectId(trackId.replace('db_', ''));
+        } else {
+            // Komt van Spotify → eerst opslaan in DB
+            const track = await GetTrackSpotify(accessToken, trackId);
+            const createdId = await CreateSong(track);
+            if (!createdId) return res.status(401).json({ error: 'geen song' });
+            songId = createdId;
         }
-
 
         await playlistCollection.updateOne(
             { _id: new ObjectId(playlistId), userId: new ObjectId(userId) },
