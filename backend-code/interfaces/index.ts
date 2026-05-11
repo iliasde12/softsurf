@@ -123,7 +123,7 @@ export interface UserSong {
   updatedAt: Date;
 }
 
-//playlist app
+//playlist van databank
 export interface Playlist {
   _id?: ObjectId;
   userId: ObjectId;
@@ -133,6 +133,16 @@ export interface Playlist {
   image: string | null;
   createdAt: Date;
   updatedAt: Date;
+}
+
+//playbale song
+export interface SongPlayable {
+  _id?: ObjectId;
+  songId: ObjectId;
+  youtubeId: string | null;
+  previewUrl: string | null;
+  source: "youtube" | "spotify_preview";
+  createdAt: Date;
 }
 
 //playlist spotify
