@@ -32,6 +32,7 @@ searchInput.addEventListener("input", () => {
     fetchSongs(searchInput.value);
 });
 
+//show songs uit search
 function showSongs(songs) {
     const containerPlaylist = document.getElementById("containerSongs");
     containerPlaylist.textContent = "";
@@ -52,11 +53,32 @@ function showSongs(songs) {
         trackContainer.className = `grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center ${index % 2 === 0 ? "bg-[#1E1B3A]" : ""} hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition`;
 
         const number = document.createElement("span");
-        number.className = 'addSong';
-        number.dataset.trackId = trackId;
+        //number.className = 'addSong';
+        //number.dataset.trackId = trackId;
         const img = document.createElement("img");
         img.className = "w-5 mx-auto";
         img.src = "./img/plus-solid-full.svg";
+        //functie voor muziek te voegen in playlist
+        number.addEventListener('click', async () => {
+            const res = await fetch('/api/playlists');
+            const playlists = await res.json();
+
+            const list = document.getElementById('playlistList');
+            list.innerHTML = '';
+            playlists.forEach(playlist => {
+                const div = document.createElement('div');
+                div.className = 'text-white bg-[#2A2750] rounded-xl px-4 py-2 cursor-pointer hover:bg-[#33306b]';
+                div.textContent = playlist.name;
+                div.addEventListener('click', async () => {
+                    await addSongToPlaylist(playlist._id, trackId);
+                    document.getElementById('addSongModal').classList.add('hidden');
+                });
+                list.appendChild(div);
+            });
+
+            document.getElementById('addSongModal').classList.remove('hidden');
+        });
+
         number.append(img);
 
         const infoWrapper = document.createElement("div");
@@ -106,5 +128,22 @@ function showSongs(songs) {
     });
 
 }
+
+//is voor muziek te voegen aan playlist
+    async function addSongToPlaylist(playlistId, trackId) {
+        const response = await fetch('/api/playlist/add-song', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ playlistId, trackId })
+        });
+        return await response.json();
+    }
+
+    //sluiten van modal van playlist add
+    document.getElementById('sluitAddModal').addEventListener('click', () => {
+        document.getElementById('addSongModal').classList.add('hidden');
+    });
+
+
 
 });
