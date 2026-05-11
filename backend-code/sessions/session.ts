@@ -9,11 +9,13 @@ declare module "express-session" {
   }
 }
 
+
+//console.log(process.env.SESSION_SECRET);
+
 export default session({
   secret:
-    process.env.SESSION_SECRET ??
-    "90ff518dca1ae21b582c4d072904e1632dea9f53fc761f21ef1b26c893b663c0",
-  store: MongoStore.create({
+    process.env.SESSION_SECRET ?? "",
+    store: MongoStore.create({
     mongoUrl: MONGODB_URI,
     dbName: "softsurf",
     collectionName: "sessions",
