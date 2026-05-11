@@ -42,6 +42,9 @@
                     <% if (song.item && song.item.album && song.item.album.images.length > 0) { %>
                         <img src="<%= song.item.album.images[0].url %>" alt="<%= song.item.name %>"
                              class="w-full aspect-square rounded-lg object-cover"/>
+                    <% } else if (song.album && song.album.images && song.album.images.length > 0) { %>
+                        <img src="<%= song.album.images[0].url %>" alt="<%= song.name %>"
+                             class="w-full aspect-square rounded-lg object-cover"/>
                     <% } else { %>
                         <div class="w-full aspect-square rounded-lg bg-[#2A2750] flex items-center justify-center text-4xl">
                             🎵
@@ -50,9 +53,8 @@
 
                     <!-- Info -->
                     <div class="flex flex-col gap-1">
-                        <p class="text-white font-semibold text-sm truncate"><%= song.name %></p>
                         <p class="text-white font-semibold text-sm truncate">
-                            <%= song.name  %>
+                            <%= song.name %>
                         </p>
                         <p class="text-white/60 text-xs truncate">
                             <%= song.item ? song.item.artists[0].name : song.name %>
@@ -61,9 +63,13 @@
 
                     <!-- Footer -->
                     <div class="flex items-center justify-between mt-auto">
-                <span class="text-white/40 text-xs">
-                  <%= new Date(song.added_at).toLocaleDateString("nl-NL", { day: "numeric", month: "short" }) %>
-                </span>
+             <span class="text-white/40 text-xs">
+                 <% if (song.added_at) { %>
+                     <%= new Date(song.added_at).toLocaleDateString("nl-NL", { day: "numeric", month: "short" }) %>
+                 <% } else if (song.createdAt) { %>
+                     <%= new Date(song.createdAt).toLocaleDateString("nl-NL", { day: "numeric", month: "short" }) %>
+                 <% } %>
+             </span>
                         <span class="text-[#E91E8C] text-sm">♥</span>
                     </div>
 
