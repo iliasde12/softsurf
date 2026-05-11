@@ -8,10 +8,12 @@ import {
   SpotifySession,
   User,
   Playlist,
+  SongPlayable,
 } from "../interfaces/index";
 
 import bcrypt from "bcrypt";
 import dotenv from 'dotenv';
+import { SearchYouTube } from "../helpers/youtube";
 
 
 const saltRounds: number = 10;
@@ -58,6 +60,8 @@ export const userSongCollection = db.collection<UserSong>("userSongs");
 export const spotifySongCollection = db.collection<Song>("songs");
 export const spotifyAlbumCollection = db.collection<SpotifyAlbum>("albums");
 export const spotifyArtistCollection = db.collection<SpotifyArtist>("artisten");
+//song play
+export const songPlayableCollection = db.collection<SongPlayable>("SongPlayable");
 //playlist
 export const playlistCollection = db.collection<Playlist>("playlists");
 
@@ -447,4 +451,20 @@ export async function GetPlaylists(userId: ObjectId): Promise<Playlist[]> {
 //aan de hand van id van afspeellijst en userid zodat niet iedereen er in kan
 export async function GetPlaylistById(id: ObjectId, userId: ObjectId): Promise<Playlist | null> {
   return await playlistCollection.findOne({ _id: id, userId });
+}
+
+//create songpalyable
+export async function CreateSongPlayable(songId: ObjectId, songName: string, artistName: string, previewUrl?: string): Promise<void> {
+  const existing = await songPlayableCollection.findOne({ songId });
+  if (existing) return;
+
+  const youtubeId = await SearchYouTube(`${songName} ${artistName}`);
+
+  await songPlayableCollection.insertOne({
+    songId,
+    youtubeId,
+    previewUrl: previewUrl ?? null,
+    source: youtubeId ? "youtube" : "spotify_preview",
+    createdAt: new Date()
+  });
 }
