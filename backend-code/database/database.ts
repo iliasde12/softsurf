@@ -281,6 +281,55 @@ export async function GetSongs(userId: ObjectId | undefined): Promise<any[]> {
   ]).toArray();
 }
 
+//get songs voor playlist page
+export async function GetSongsByIds(userId: ObjectId | undefined, songIds: ObjectId[]): Promise<any[]> {
+  return await spotifySongCollection.aggregate([
+    {
+      $match: { _id: { $in: songIds } }
+    },
+    {
+      $lookup: {
+        from: "artists",
+        localField: "artist_ids",
+        foreignField: "_id",
+        as: "artists",
+      },
+    },
+    {
+      $lookup: {
+        from: "albums",
+        localField: "album_id",
+        foreignField: "_id",
+        as: "album",
+      },
+    },
+    {
+      $unwind: { path: "$album", preserveNullAndEmptyArrays: true },
+    },
+    {
+      $lookup: {
+        from: "userSongs",
+        let: { songId: "$_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ["$songId", "$$songId"] },
+                  { $eq: ["$userId", new ObjectId(userId)] },
+                ],
+              },
+            },
+          },
+        ],
+        as: "userSong",
+      },
+    },
+    {
+      $unwind: { path: "$userSong", preserveNullAndEmptyArrays: true },
+    },
+  ]).toArray();
+}
 // update mood  voor elke user is her anders 
 export async function UpdateSongMood(userId: ObjectId | undefined, songId: string, mood: number | null): Promise<boolean> {
   try {
