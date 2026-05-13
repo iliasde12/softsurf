@@ -1,6 +1,6 @@
 import { searchSongs } from "../helpers/search";
 import express, {Router} from "express";
-import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable } from "../database/database";
+import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable,createPlaylist } from "../database/database";
 import { GetTrackSpotify } from "../helpers/spotify";
 import {ObjectId } from "mongodb";
 
@@ -94,8 +94,63 @@ router.get('/song/:id/playable', async (req, res) => {
 
 //moet nog gemaakt worden ga er claude in bouwen en kan die afspeellijsten generen
 router.post('/playlist/genereren', async (req, res) => {
+    const { stemming, aantal, mixtype } = req.body;
 
+    try {
+        // 1. Claude bedenkt welke nummers passen
+        const { success, suggestions, error } = await generatePlaylistSuggestions({
+            stemming,
+            aantal: Number(aantal),
+            mixtype,
+        });
+
+        if (!success) return res.json({ success: false, error });
+
+        // 2. Spotify zoekt de echte track data op
+        const resolved = await searchTracks(suggestions);
+
+        const tracks = resolved.map(({ suggestion, result }) => ({
+            id: result?.id ?? null,
+            name: result?.name ?? suggestion.title,
+            artist: result?.artists?.[0]?.name ?? suggestion.artist,
+            album_cover: result?.album?.images?.[0]?.url ?? null,
+            uri: result?.uri ?? null,
+            duration_ms: result?.duration_ms ?? 0,
+            preview_url: result?.preview_url ?? null,
+            found_on_spotify: result !== null,
+        }));
+
+        // 3. Claude genereert ook een playlistnaam
+        const nameRes = await generatePlaylistName({ stemming, mixtype, tracks: suggestions });
+
+        res.json({ success: true, tracks, playlistName: nameRes });
+    } catch (err) {
+        res.json({ success: false, error: err.message });
+    }
 });
+//crearen van de gegeneerde playlist
+router.post("/create-generated", async (req, res) => {
+    const { name, songIds } = req.body;
+    const userId = req.session.user?._id;
 
+    if (!userId) return res.status(401).json({ success: false, error: "Niet ingelogd" });
+    if (!name || !songIds?.length) return res.status(400).json({ success: false, error: "Naam of nummers ontbreken" });
+
+    try {
+        const playlist = await createPlaylist(
+            new ObjectId(userId),
+            name,
+            "",
+            undefined,
+            //lijst van ids
+            songIds
+        );
+
+        res.json({ success: true, playlist });
+    } catch (err) {
+        // @ts-ignore
+        res.json({ success: false, error: err.message });
+    }
+});
 
 export default router;

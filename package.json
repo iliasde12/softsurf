@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.95.2",
     "@types/multer": "^2.1.0",
     "bcrypt": "^6.0.0",
     "connect-mongo": "^6.0.0",
