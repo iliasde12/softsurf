@@ -161,3 +161,35 @@ export async function savePlaylistSongs(tracks: SpotifyTrack[]): Promise<void> {
   await Promise.all(tracks.map(track => CreateSong(track)));
 }
 
+// Search op title + artist, geeft volledige SpotifyTrack terug
+export async function searchTrack(
+    title: string,
+    artist: string,
+    accessToken: string
+): Promise<SpotifyTrack | null> {
+  try {
+    const query = `track:${title} artist:${artist}`;
+    const res = await fetch(
+        `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=1`,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+    const data = await res.json();
+    return data.tracks?.items?.[0] ?? null;
+  } catch (e) {
+    console.error("searchTrack error:", e);
+    return null;
+  }
+}
+
+// Bulk versie voor Claude suggestions
+export async function searchTracks(
+    suggestions: { title: string; artist: string }[],
+    accessToken: string
+): Promise<{ suggestion: { title: string; artist: string }; result: SpotifyTrack | null }[]> {
+  return Promise.all(
+      suggestions.map(async (s) => ({
+        suggestion: s,
+        result: await searchTrack(s.title, s.artist, accessToken),
+      }))
+  );
+}
