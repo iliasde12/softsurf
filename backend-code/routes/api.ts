@@ -1,9 +1,17 @@
 import { searchSongs } from "../helpers/search";
 import express, {Router} from "express";
+<<<<<<< Updated upstream
 import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable } from "../database/database";
 import { GetTrackSpotify } from "../helpers/spotify";
 import {ObjectId } from "mongodb";
 
+=======
+import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable,createPlaylist, spotifySongCollection  } from "../database/database";
+import { GetTrackSpotify,searchTracks } from "../helpers/spotify";
+import { ObjectId,WithId  } from "mongodb";
+import { generatePlaylistSuggestions, generatePlaylistName } from "../helpers/claude";
+import { Song, SpotifyTrack } from "../interfaces/index";
+>>>>>>> Stashed changes
 
 const router: Router = express.Router();
 
@@ -93,9 +101,111 @@ router.get('/song/:id/playable', async (req, res) => {
 });
 
 //moet nog gemaakt worden ga er claude in bouwen en kan die afspeellijsten generen
+<<<<<<< Updated upstream
 router.post('/playlist/genereren', async (req, res) => {
 
 });
 
+=======
+router.post('/playlist/generate', async (req, res) => {
+    const { stemming, aantal, mixtype } = req.body;
+    const accessToken = res.locals.spotifyToken;
+
+    try {
+        const { success, suggestions, error } = await generatePlaylistSuggestions({
+            stemming,
+            aantal: Number(aantal),
+            mixtype,
+        });
+
+        if (!success) return res.json({ success: false, error });
+
+        const resolved = await searchTracks(suggestions,accessToken);
+
+        const tracks = resolved.map(({ suggestion, result }) => ({
+            id: result?.id ?? null,
+            name: result?.name ?? suggestion.title,
+            artist: result?.artists?.[0]?.name ?? suggestion.artist,
+            artist_id: result?.artists?.[0]?.id ?? null,        // toevoegen
+            album_id: result?.album?.id ?? null,                 // toevoegen
+            album_name: result?.album?.name ?? null,             // toevoegen
+            album_cover: result?.album?.images?.[0]?.url ?? null,
+            uri: result?.uri ?? null,
+            duration_ms: result?.duration_ms ?? 0,
+            preview_url: result?.preview_url ?? null,
+            found_on_spotify: result !== null,
+        }));
+
+        const nameRes = await generatePlaylistName({ stemming, mixtype, tracks: suggestions });
+
+        res.json({ success: true, tracks, playlistName: nameRes });
+    } catch (err) {
+        res.json({ success: false, error: (err as Error).message });
+    }
+});
+
+router.post("/playlist/create-generated", async (req, res) => {
+    const { name, tracks } = req.body;
+    const userId = req.session.user?._id;
+
+    if (!userId) return res.status(401).json({ success: false, error: "Niet ingelogd" });
+    if (!name || !tracks?.length) return res.status(400).json({ success: false, error: "Naam of nummers ontbreken" });
+
+    try {
+        const songIds: ObjectId[] = [];
+
+        for (const t of tracks) {
+            if (!t.found_on_spotify || !t.id) continue;
+
+            const spotifyTrack: SpotifyTrack = {
+                id: t.id,
+                name: t.name,
+                uri: t.uri ?? "",
+                href: "",
+                duration_ms: t.duration_ms,
+                explicit: false,
+                popularity: 0,
+                preview_url: t.preview_url ?? null,
+                track_number: 0,
+                disc_number: 0,
+                type: "track",
+                artists: [{ id: t.id + "_artist", name: t.artist, href: "", uri: "", type: "artist", createdAt: new Date(), updatedAt: new Date() }],
+                album: {
+                    id: t.id + "_album",  // uniek per track
+                    name: t.name + " (album)",
+                    href: "",
+                    uri: "",
+                    album_type: "album",
+                    total_tracks: 0,
+                    images: t.album_cover ? [{ url: t.album_cover }] : [],
+                    release_date: "",
+                    release_date_precision: "day",
+                    type: "album",
+                    artists: [],
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                },
+            };
+
+            const songId = await CreateSong(spotifyTrack);
+            if (songId) songIds.push(songId);
+        }
+
+        const coverUrl = tracks.find((track: any) => track.album_cover)?.album_cover ?? null;
+
+        const playlist = await createPlaylist(
+            new ObjectId(userId),
+            name,
+            "",
+            coverUrl ?? undefined,
+            songIds
+        );
+
+        res.json({ success: true, playlist });
+    } catch (err) {
+        res.json({ success: false, error: (err as Error).message });
+    }
+});
+>>>>>>> Stashed changes
 
 export default router;
