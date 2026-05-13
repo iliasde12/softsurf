@@ -428,7 +428,7 @@ export async function SearchSongs(query: string): Promise<any[]> {
 
 
 //create playlist
-export async function createPlaylist(userId: ObjectId, name: string, description?: string, image?:string, songs?: Song[]): Promise<Playlist> {
+export async function createPlaylist(userId: ObjectId, name: string, description?: string, image?:string,  songs?: ObjectId[]): Promise<Playlist> {
   const playlist: Playlist = {
     userId,
     name,
