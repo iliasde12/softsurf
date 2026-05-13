@@ -155,3 +155,18 @@ export interface SpotifyPlaylist {
   owner: { display_name: string };
   external_urls: { spotify: string };
 }
+
+//playlistRequest voor claude genereren
+export interface PlaylistRequest {
+  stemming: string;
+  aantal: number;
+  mixtype: string;
+}
+
+
+//song sugetstions
+export interface TrackSuggestion {
+  title: string;
+  artist: string;
+}
+

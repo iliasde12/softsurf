@@ -161,3 +161,33 @@ export async function savePlaylistSongs(tracks: SpotifyTrack[]): Promise<void> {
   await Promise.all(tracks.map(track => CreateSong(track)));
 }
 
+//api call kan claude ai zoeken voor een spotify id en returnerd 1 track
+export async function searchTrack(
+    title: string,
+    artist: string,
+    accessToken: string
+){
+  const query = encodeURIComponent(`track:${title} artist:${artist}`);
+  const response = await fetch(
+      `https://api.spotify.com/v1/search?q=${query}&type=track&limit=1`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+  );
+
+  const data = await response.json();
+  return data.tracks?.items?.[0] ?? null;
+}
+
+//returnd een list van tracks
+export async function searchTracks(
+    suggestions:any,
+    accessToken: string,
+){
+  const results = await Promise.all(
+      suggestions.map(async (s:any) => ({
+        suggestion: s,
+        result: await searchTrack(s.title, s.artist,accessToken),
+      }))
+  );
+
+  return results;
+}
