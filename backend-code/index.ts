@@ -25,6 +25,7 @@ app.set("port", process.env.PORT || 3000);
 //routes voegen
 app.use(mainRoutes);
 //beide zijn beschermd dus ze moeten ingelogd zijn en acces token komt ook vrij als ze het hebben
+//api is er want daar gebruiken js fetches naar
 app.use(secureMiddleware, spotifyMiddleware, protectedRoutes);
 app.use("/api", secureMiddleware, spotifyMiddleware, apiRoutes);
 
