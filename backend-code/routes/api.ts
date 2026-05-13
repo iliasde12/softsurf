@@ -1,19 +1,32 @@
 import { searchSongs } from "../helpers/search";
 import express, {Router} from "express";
-<<<<<<< Updated upstream
-import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable } from "../database/database";
-import { GetTrackSpotify } from "../helpers/spotify";
-import {ObjectId } from "mongodb";
-
-=======
-import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable,createPlaylist, spotifySongCollection  } from "../database/database";
-import { GetTrackSpotify,searchTracks } from "../helpers/spotify";
-import { ObjectId,WithId  } from "mongodb";
+import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable,createPlaylist  } from "../database/database";
+import { GetTrackSpotify,searchTracks  } from "../helpers/spotify";
+import { ObjectId  } from "mongodb";
 import { generatePlaylistSuggestions, generatePlaylistName } from "../helpers/claude";
-import { Song, SpotifyTrack } from "../interfaces/index";
->>>>>>> Stashed changes
-
+import {  SpotifyTrack } from "../interfaces/index";
+//tijdelijk voor de album covers opteslagen
+import path from "path";
+import { writeFile } from "fs/promises";
 const router: Router = express.Router();
+
+//download functie om de album images te donwloaden
+// @ts-ignore
+
+async function downloadImage(url: string, filename: string): Promise<string | null> {
+    try {
+        const res = await fetch(url);
+        const buffer = await res.arrayBuffer();
+        const filePath = path.join(process.cwd(), "public", "uploads", filename);
+        // @ts-ignore
+        await writeFile(filePath, Buffer.from(buffer));
+        return filename;
+    } catch (e) {
+        console.error("downloadImage error:", e);
+        return null;
+    }
+}
+
 
 //is voor live data uit search en combineert db en spotify
 router.get("/search", async (req, res) => {
@@ -101,12 +114,6 @@ router.get('/song/:id/playable', async (req, res) => {
 });
 
 //moet nog gemaakt worden ga er claude in bouwen en kan die afspeellijsten generen
-<<<<<<< Updated upstream
-router.post('/playlist/genereren', async (req, res) => {
-
-});
-
-=======
 router.post('/playlist/generate', async (req, res) => {
     const { stemming, aantal, mixtype } = req.body;
     const accessToken = res.locals.spotifyToken;
@@ -122,13 +129,15 @@ router.post('/playlist/generate', async (req, res) => {
 
         const resolved = await searchTracks(suggestions,accessToken);
 
+        // @ts-ignore
         const tracks = resolved.map(({ suggestion, result }) => ({
             id: result?.id ?? null,
             name: result?.name ?? suggestion.title,
             artist: result?.artists?.[0]?.name ?? suggestion.artist,
-            artist_id: result?.artists?.[0]?.id ?? null,        // toevoegen
-            album_id: result?.album?.id ?? null,                 // toevoegen
-            album_name: result?.album?.name ?? null,             // toevoegen
+            artist_id: result?.artists?.[0]?.id ?? null,
+            artists: result?.artists ?? [],   // volledige artists array toevoegen
+            album_id: result?.album?.id ?? null,
+            album_name: result?.album?.name ?? null,
             album_cover: result?.album?.images?.[0]?.url ?? null,
             uri: result?.uri ?? null,
             duration_ms: result?.duration_ms ?? 0,
@@ -145,7 +154,7 @@ router.post('/playlist/generate', async (req, res) => {
 });
 
 router.post("/playlist/create-generated", async (req, res) => {
-    const { name, tracks } = req.body;
+    const { name, tracks, stemming, mixtype } = req.body;
     const userId = req.session.user?._id;
 
     if (!userId) return res.status(401).json({ success: false, error: "Niet ingelogd" });
@@ -169,10 +178,28 @@ router.post("/playlist/create-generated", async (req, res) => {
                 track_number: 0,
                 disc_number: 0,
                 type: "track",
-                artists: [{ id: t.id + "_artist", name: t.artist, href: "", uri: "", type: "artist", createdAt: new Date(), updatedAt: new Date() }],
+                artists: t.artists?.length
+                    ? t.artists.map((a: any) => ({
+                        id: a.id,
+                        name: a.name,
+                        href: a.href ?? "",
+                        uri: a.uri ?? "",
+                        type: "artist" as const,
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                    }))
+                    : [{
+                        id: t.artist_id ?? t.id + "_artist",
+                        name: t.artist,
+                        href: "",
+                        uri: "",
+                        type: "artist" as const,
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                    }],
                 album: {
-                    id: t.id + "_album",  // uniek per track
-                    name: t.name + " (album)",
+                    id: t.album_id ?? t.id + "_album",    // echte Spotify album ID
+                    name: t.album_name ?? t.name,
                     href: "",
                     uri: "",
                     album_type: "album",
@@ -192,12 +219,18 @@ router.post("/playlist/create-generated", async (req, res) => {
         }
 
         const coverUrl = tracks.find((track: any) => track.album_cover)?.album_cover ?? null;
+        let coverFilename: string | undefined = undefined;
+        if (coverUrl) {
+            const filename = `playlist_${Date.now()}.jpg`;
+            const saved = await downloadImage(coverUrl, filename);
+            if (saved) coverFilename = saved;
+        }
 
         const playlist = await createPlaylist(
             new ObjectId(userId),
             name,
-            "",
-            coverUrl ?? undefined,
+            `AI gegenereerd · ${stemming} · ${mixtype}`,
+            coverFilename,  // lokale bestandsnaam
             songIds
         );
 
@@ -206,6 +239,5 @@ router.post("/playlist/create-generated", async (req, res) => {
         res.json({ success: false, error: (err as Error).message });
     }
 });
->>>>>>> Stashed changes
 
 export default router;

@@ -1,22 +1,15 @@
-import Anthropic from '@anthropic-ai/sdk';
-import { TrackSuggestion, PlaylistRequest } from "../interfaces";
+import Anthropic from "@anthropic-ai/sdk";
+import { TrackSuggestion, PlaylistRequest, ClaudePlaylistResponse } from "../interfaces";
 
 const client = new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-// ─── Playlist suggesties ───────────────────────────────────────────────────────
-
-export interface ClaudePlaylistResponse {
-    success: boolean;
-    suggestions: TrackSuggestion[];
-    error?: string;
-}
-
 export async function generatePlaylistSuggestions(
     req: PlaylistRequest
 ): Promise<ClaudePlaylistResponse> {
     const { stemming, aantal, mixtype } = req;
+    const randomSeed = Math.floor(Math.random() * 10000);
 
     try {
         const response = await client.messages.create({
@@ -25,7 +18,9 @@ export async function generatePlaylistSuggestions(
             messages: [
                 {
                     role: "user",
-                    content: `Genereer een afspeellijst van ${aantal} nummers voor stemming: "${stemming}", mix type: "${mixtype}".
+                    content: `Genereer een VERRASSENDE en GEVARIEERDE afspeellijst van ${aantal} nummers voor stemming: "${stemming}", mix type: "${mixtype}". (variatie: ${randomSeed})
+
+Kies elke keer ANDERE nummers, vermijd voor de hand liggende keuzes. Mix verschillende jaren, subgenres en artiesten. Wees creatief en onverwacht in je keuzes.
 
 Geef ALLEEN een JSON-array terug, geen uitleg, geen markdown, geen backticks. Elk object heeft:
 - title (string)
@@ -37,8 +32,8 @@ Voorbeeld: [{"title":"Blinding Lights","artist":"The Weeknd"}]`,
         });
 
         const raw = response.content
-            .filter((b:any) => b.type === "text")
-            .map((b:any) => b.text)
+            .filter((b: any) => b.type === "text")
+            .map((b: any) => b.text)
             .join("")
             .replace(/```json|```/g, "")
             .trim();
@@ -52,8 +47,6 @@ Voorbeeld: [{"title":"Blinding Lights","artist":"The Weeknd"}]`,
     }
 }
 
-// ─── Playlistnaam genereren ────────────────────────────────────────────────────
-
 export async function generatePlaylistName({
                                                stemming,
                                                mixtype,
@@ -63,6 +56,8 @@ export async function generatePlaylistName({
     mixtype: string;
     tracks: { title: string; artist: string }[];
 }): Promise<string> {
+    const randomSeed = Math.floor(Math.random() * 10000);
+
     try {
         const trackList = tracks.map((t) => `${t.title} - ${t.artist}`).join(", ");
 
@@ -72,7 +67,7 @@ export async function generatePlaylistName({
             messages: [
                 {
                     role: "user",
-                    content: `Bedenk een creatieve, korte playlistnaam (max 4 woorden) voor een "${stemming}" playlist met mix type "${mixtype}". 
+                    content: `Bedenk een CREATIEVE en UNIEKE playlistnaam (max 4 woorden) voor een "${stemming}" playlist met mix type "${mixtype}". (variatie: ${randomSeed})
 De nummers zijn: ${trackList}.
 Geef ALLEEN de naam terug, geen uitleg, geen aanhalingstekens.`,
                 },
@@ -80,8 +75,8 @@ Geef ALLEEN de naam terug, geen uitleg, geen aanhalingstekens.`,
         });
 
         return response.content
-            .filter((b:any) => b.type === "text")
-            .map((b:any) => b.text)
+            .filter((b: any) => b.type === "text")
+            .map((b: any) => b.text)
             .join("")
             .trim();
     } catch {

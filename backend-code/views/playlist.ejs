@@ -1,5 +1,5 @@
 <%- include('partials/head') %>
-<script src="js/maak-playlist-mondal.js" defer></script>
+
   <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
     
     <%- include('partials/header') %>
@@ -38,41 +38,48 @@
         <!-- Search + filters -->
 
         <!-- hier komt generate -->
-        <section
-          class="flex items-center justify-between bg-[#2A2650] mb-6 w-full px-6 py-4 rounded-2xl gap-6 animate-fadeUp"
-        >
-          <!-- Stats -->
+        <section class="flex items-center justify-between bg-[#2A2650] mb-6 w-full px-6 py-4 rounded-2xl gap-6 animate-fadeUp">
           <div class="flex gap-4">
-            <div
-           class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]"
-         >
-        <span class="text-zinc-400 text-[11px] uppercase tracking-widest"
-             >Stemming</span
-           >
-              <span class="text-white text-sm font-semibold">Feest</span>
+
+            <div class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]">
+              <span class="text-zinc-400 text-[11px] uppercase tracking-widest">Stemming</span>
+              <select id="stemmingSelect" class="bg-[#4d467a] text-white text-sm font-semibold outline-none cursor-pointer ">
+                <option>Feest</option>
+                <option>Chill</option>
+                <option>Focus</option>
+                <option>Romantisch</option>
+                <option>Workout</option>
+                <option>Energie</option>
+              </select>
             </div>
-            <div
-              class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]"
-            >
-              <span class="text-zinc-400 text-[11px] uppercase tracking-widest"
-                >aantal nummers</span
-              >
-              <span class="text-white text-sm font-semibold">4 nummers</span>
+
+            <div class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]">
+              <span class="text-zinc-400 text-[11px] uppercase tracking-widest">Aantal nummers</span>
+              <select id="aantalSelect" class="bg-[#4d467a] text-white text-sm font-semibold outline-none cursor-pointer ">
+                <option value="3">3 nummers</option>
+                <option value="4" selected>4 nummers</option>
+                <option value="5">5 nummers</option>
+                <option value="8">8 nummers</option>
+                <option value="10">10 nummers</option>
+              </select>
             </div>
-            <div
-              class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]"
-            >
-              <span class="text-zinc-400 text-[11px] uppercase tracking-widest"
-                >Mix type</span
-              >
-              <span class="text-white text-sm font-semibold"
-                >Populair + ontdekking</span
-              >
+
+            <div class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]">
+              <span class="text-zinc-400 text-[11px] uppercase tracking-widest">Mix type</span>
+              <select id="mixtypeSelect" class="bg-[#4d467a] text-white text-sm font-semibold outline-none cursor-pointer">
+                <option>Populair + ontdekking</option>
+                <option>Alleen populair</option>
+                <option>Alleen ontdekking</option>
+                <option>Klassiekers</option>
+                <option>Nieuw</option>
+              </select>
             </div>
+
           </div>
-          <!-- Button -->
+
           <button
-            class="bg-[#934c99] hover:brightness-110 transition text-white text-sm font-semibold px-6 py-3 rounded-xl shadow-[0_4px_15px_#934c9966] whitespace-nowrap cursor-pointer"
+                  id="generateBtn"
+                  class="bg-[#934c99] hover:brightness-110 transition text-white text-sm font-semibold px-6 py-3 rounded-xl shadow-[0_4px_15px_#934c9966] whitespace-nowrap cursor-pointer"
           >
             ✦ Genereer afspeellijst
           </button>
@@ -230,5 +237,6 @@
     </div>
 
    <%- include('partials/footer') %>
+    <script src="/js/maak-playlist-mondal.js" defer></script>
   </body>
 </html>

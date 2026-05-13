@@ -125,14 +125,13 @@ function resetModal() {
     document.getElementById("searchResults").textContent = "";
     document.getElementById("selectedSongs").textContent = "";
     selectedSongs.length = 0;
-<<<<<<< Updated upstream
-=======
 }
 
 //hier komt mondal van gegeneerde
+let currentStemming = "";
+let currentMixtype = "";
+
 document.addEventListener("DOMContentLoaded", () => {
-    const generateBtn = document.querySelector("button.bg-\\[\\#934c99\\]");
-    // selecteer specifiek de genereer knop via data attribute (zie EJS aanpassing)
     const generateSection = document.getElementById("generateBtn");
     if (generateSection) generateSection.addEventListener("click", openGenerateModal);
 });
@@ -144,7 +143,9 @@ async function openGenerateModal() {
     const aantal = document.getElementById("aantalSelect")?.value || 4;
     const mixtype = document.getElementById("mixtypeSelect")?.value || "Populair + ontdekking";
 
-    // Toon loading modal
+    currentStemming = stemming;
+    currentMixtype = mixtype;
+
     showGenerateModal({ loading: true, stemming, aantal, mixtype });
 
     try {
@@ -173,7 +174,6 @@ async function openGenerateModal() {
 // ─── Modal renderen ───────────────────────────────────────────────────────────
 
 function showGenerateModal({ loading, tracks, playlistName, error, stemming, aantal, mixtype }) {
-    // Verwijder bestaande modal
     document.getElementById("generateModal")?.remove();
 
     const modal = document.createElement("div");
@@ -181,14 +181,14 @@ function showGenerateModal({ loading, tracks, playlistName, error, stemming, aan
     modal.className = "fixed inset-0 bg-black/60 flex items-center justify-center z-50";
     modal.innerHTML = `
     <div class="bg-[#1E1B3A] rounded-2xl p-6 w-full max-w-lg max-h-[90vh] flex flex-col">
- 
+
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-white font-bold text-lg">
           ${loading ? "Genereren..." : error ? "Fout" : "Gegenereerde playlist"}
         </h2>
         <button onclick="closeGenerateModal()" class="text-[#6B6B8A] hover:text-white text-xl transition">✕</button>
       </div>
- 
+
       ${loading ? `
         <div class="flex flex-col items-center justify-center py-12 gap-4">
           <div class="w-8 h-8 border-2 border-[#934c99] border-t-transparent rounded-full animate-spin"></div>
@@ -197,7 +197,6 @@ function showGenerateModal({ loading, tracks, playlistName, error, stemming, aan
       ` : error ? `
         <p class="text-red-400 text-sm py-4">${error}</p>
       ` : `
-        <!-- Playlist naam -->
         <div class="mb-4">
           <label class="text-[#6B6B8A] text-xs mb-1 block">Naam</label>
           <input
@@ -207,8 +206,7 @@ function showGenerateModal({ loading, tracks, playlistName, error, stemming, aan
             class="w-full bg-[#2A2750] text-white text-sm rounded-xl px-4 py-2 outline-none focus:ring-1 focus:ring-[#934c99]"
           />
         </div>
- 
-        <!-- Tracks -->
+
         <div class="flex flex-col gap-2 overflow-y-auto flex-1 mb-4 pr-1">
           ${tracks.map((t, i) => `
             <div class="flex items-center gap-3 bg-[#2A2750] rounded-xl px-4 py-3">
@@ -228,8 +226,7 @@ function showGenerateModal({ loading, tracks, playlistName, error, stemming, aan
             </div>
           `).join("")}
         </div>
- 
-        <!-- Acties -->
+
         <div class="flex gap-2 pt-2 border-t border-[#2A2750]">
           <button
             onclick="closeGenerateModal()"
@@ -248,7 +245,6 @@ function showGenerateModal({ loading, tracks, playlistName, error, stemming, aan
     </div>
   `;
 
-    // Sluit op achtergrond klik
     modal.addEventListener("click", (e) => {
         if (e.target === modal) closeGenerateModal();
     });
@@ -266,7 +262,7 @@ async function createGeneratedPlaylist(tracks) {
         const res = await fetch("/api/playlist/create-generated", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, tracks }), // tracks i.p.v. songIds
+            body: JSON.stringify({ name, tracks, stemming: currentStemming, mixtype: currentMixtype }),
         });
 
         const data = await res.json();
@@ -281,5 +277,4 @@ async function createGeneratedPlaylist(tracks) {
 
 function closeGenerateModal() {
     document.getElementById("generateModal")?.remove();
->>>>>>> Stashed changes
 }
