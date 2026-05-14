@@ -1,6 +1,6 @@
 import { searchSongs } from "../helpers/search";
 import express, {Router} from "express";
-import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable,createPlaylist  } from "../database/database";
+import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable,createPlaylist ,spotifySongCollection } from "../database/database";
 import { GetTrackSpotify,searchTracks  } from "../helpers/spotify";
 import { ObjectId  } from "mongodb";
 import { generatePlaylistSuggestions, generatePlaylistName } from "../helpers/claude";
@@ -95,11 +95,11 @@ router.get('/playlists', async (req, res) => {
 //api voor muziek afpselen
 router.get('/song/:id/playable', async (req, res) => {
     const rawId = req.params.id;
+    console.log('rawId:', rawId);
     const userId = req.session.user?._id;
     let songId: ObjectId;
 
     if (ObjectId.isValid(rawId) && rawId.length === 24) {
-        // MongoDB ID → gewoon gebruiken
         songId = new ObjectId(rawId);
     } else {
         // Spotify ID → ophalen en opslaan
@@ -107,9 +107,13 @@ router.get('/song/:id/playable', async (req, res) => {
         if (!accessToken) return res.status(401).json({ error: 'Geen access token' });
 
         const spotifySong = await GetTrackSpotify(accessToken, rawId);
+        console.log('spotify response:', spotifySong);
         if (!spotifySong) return res.status(404).json({ error: 'Spotify song niet gevonden' });
 
         const insertedId = await CreateSong(spotifySong);
+        const check = await spotifySongCollection.findOne({ _id: insertedId as any });
+        console.log('direct check:', check);
+
         if (!insertedId) return res.status(500).json({ error: 'Song opslaan mislukt' });
 
         songId = insertedId;
@@ -119,12 +123,15 @@ router.get('/song/:id/playable', async (req, res) => {
     if (existing) return res.json(existing);
 
     const songs = await GetSongsByIds(userId, [songId]);
+    console.log('songs:', songs);
     const song = songs[0];
     if (!song) return res.status(404).json({ error: 'Song niet gevonden' });
 
     await CreateSongPlayable(songId, song.name, song.artists?.[0]?.name ?? "");
     const playable = await songPlayableCollection.findOne({ songId });
 
+    console.log('song name:', song.name);
+    console.log('song artist:', song.artists?.[0]?.name);
     res.json(playable);
 });
 
