@@ -94,19 +94,34 @@ router.get('/playlists', async (req, res) => {
 
 //api voor muziek afpselen
 router.get('/song/:id/playable', async (req, res) => {
-    const songId = new ObjectId(req.params.id);
+    const rawId = req.params.id;
     const userId = req.session.user?._id;
+    let songId: ObjectId;
 
-    // check of al bestaat
+    if (ObjectId.isValid(rawId) && rawId.length === 24) {
+        // MongoDB ID → gewoon gebruiken
+        songId = new ObjectId(rawId);
+    } else {
+        // Spotify ID → ophalen en opslaan
+        const accessToken = res.locals.spotifyToken;
+        if (!accessToken) return res.status(401).json({ error: 'Geen access token' });
+
+        const spotifySong = await GetTrackSpotify(accessToken, rawId);
+        if (!spotifySong) return res.status(404).json({ error: 'Spotify song niet gevonden' });
+
+        const insertedId = await CreateSong(spotifySong);
+        if (!insertedId) return res.status(500).json({ error: 'Song opslaan mislukt' });
+
+        songId = insertedId;
+    }
+
     const existing = await songPlayableCollection.findOne({ songId });
     if (existing) return res.json(existing);
 
-    // ophalen song voor naam en artiest
     const songs = await GetSongsByIds(userId, [songId]);
     const song = songs[0];
     if (!song) return res.status(404).json({ error: 'Song niet gevonden' });
 
-    // youtube zoeken en opslaan
     await CreateSongPlayable(songId, song.name, song.artists?.[0]?.name ?? "");
     const playable = await songPlayableCollection.findOne({ songId });
 
