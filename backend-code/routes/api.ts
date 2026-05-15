@@ -46,6 +46,45 @@ router.get("/search", async (req, res) => {
     }
 });
 
+//herkening van sound
+router.post("/shazam/detect", async (req, res) => {
+    try {
+        const { audio } = req.body;
+
+        if (!audio) {
+            return res.status(400).json({ error: "Geen audio meegestuurd" });
+        }
+
+        const rapidApiKey = process.env.RAPID_API_KEY!;
+
+        const response = await fetch("https://shazam.p.rapidapi.com/songs/v2/detect", {
+            method: "POST",
+            headers: {
+                "content-type": "text/plain",
+                "x-rapidapi-host": "shazam.p.rapidapi.com",
+                "x-rapidapi-key": rapidApiKey,
+            },
+            body: audio
+        });
+
+        // Tijdelijk: log wat Shazam teruggeeft
+        const rawText = await response.text();
+        console.log("Shazam status:", response.status);
+        console.log("Shazam response:", rawText);
+
+        if (!response.ok) {
+            return res.status(502).json({ error: "Shazam API fout: " + response.status, detail: rawText });
+        }
+
+        res.json(JSON.parse(rawText));
+
+    } catch (error) {
+        console.error("Shazam fout:", error);
+        res.status(500).json({ error: "Er ging iets mis" });
+    }
+});
+
+
 
 //is voor song toe tevoegen in playlist
 router.post('/playlist/add-song', async (req, res) => {

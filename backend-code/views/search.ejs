@@ -92,25 +92,66 @@
 
         <!-- nieuwe search -->
         <div
-          class="relative animate-fadeUp mb-6"
-          style="animation-delay: 0.05s"
+                class="relative animate-fadeUp mb-6"
+                style="animation-delay: 0.05s"
         >
-          <svg
-            class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
-          <input
-            type="search"
-            placeholder="Zoek een nummer…"
-            class="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-light placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition"
-            id="searchInput"
-          />
+          <div class="flex items-center gap-2">
+            <div class="relative flex-1">
+              <svg
+                      class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              <input
+                      type="search"
+                      placeholder="Zoek een nummer…"
+                      class="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-light placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition"
+                      id="searchInput"
+              />
+            </div>
+            <button
+                    id="shazamBtn"
+                    class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border bg-surface text-sm text-muted hover:text-light hover:border-accent transition"
+            >
+              <!-- vervang dit later met je eigen icon -->
+              Luisteren
+            </button>
+          </div>
+        </div>
+
+        <!-- Luister Modal -->
+        <div id="shazamModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div class="bg-surface border border-border rounded-2xl p-8 w-80 text-center">
+            <div id="shazamRing" class="w-20 h-20 rounded-full border-2 border-accent/30 bg-accent/10 flex items-center justify-center mx-auto mb-5 text-3xl transition-all duration-300">
+              🎵
+            </div>
+            <p id="shazamTitle" class="text-light font-semibold text-base mb-2">Muziek herkennen</p>
+            <p id="shazamSub" class="text-muted text-sm mb-6 min-h-[40px]">Druk op starten en houd je apparaat bij de muziek.</p>
+            <p id="shazamTimer" class="hidden text-accent font-bold text-2xl mb-4">0s</p>
+
+            <!-- Resultaat -->
+            <div id="shazamResult" class="hidden bg-[#1E1B3A] rounded-xl p-4 mb-5 text-left">
+              <div class="flex items-center gap-3">
+                <img id="shazamResultImg" src="" alt="" class="w-12 h-12 rounded-lg object-cover" />
+                <div>
+                  <p id="shazamResultSong" class="text-white text-sm font-semibold"></p>
+                  <p id="shazamResultArtist" class="text-muted text-xs"></p>
+                  <p class="text-green-400 text-xs mt-1">✓ Herkend via Shazam</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex gap-2 justify-center">
+              <button id="shazamCancel" class="px-4 py-2 rounded-xl border border-border text-muted text-sm hover:text-light transition">Annuleren</button>
+              <button id="shazamStart" class="px-4 py-2 rounded-xl bg-accent/20 border border-accent/40 text-accent text-sm font-medium hover:bg-accent/30 transition">Starten</button>
+              <button id="shazamAdd" class="hidden px-4 py-2 rounded-xl bg-accent text-white text-sm font-medium hover:opacity-90 transition">+ Zoeken</button>
+            </div>
+          </div>
         </div>
 
         <!-- Tracks -->
