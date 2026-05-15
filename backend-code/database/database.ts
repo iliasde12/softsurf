@@ -460,6 +460,8 @@ export async function CreateSongPlayable(songId: ObjectId, songName: string, art
 
   const youtubeId = await SearchYouTube(`${songName} ${artistName}`);
 
+  console.log('zoeken op youtube:', `${songName} ${artistName}`);
+
   await songPlayableCollection.insertOne({
     songId,
     youtubeId,
