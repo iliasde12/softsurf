@@ -2,42 +2,44 @@
   <div id="ytPlayer"></div>
 
   <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
-    <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">
-      🎵
+    <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg overflow-hidden flex items-center justify-center shrink-0">
+      <img id="playerThumb" src="" alt="" class="w-full h-full object-cover hidden" />
+      <span id="playerThumbFallback" class="text-sm">🎵</span>
     </div>
     <div>
-      <p id="playerName" class="text-white text-[1rem] font-semibold">Last Last</p>
-      <p id="playerArtist" class="text-white/75 text-[15px]">Burna Boy</p>
+      <p id="playerName" class="text-white text-[1rem] font-semibold">Geen nummer</p>
+      <p id="playerArtist" class="text-white/75 text-[15px]"></p>
     </div>
   </div>
 
   <div class="hidden md:flex flex-col items-center flex-1 gap-1">
     <div class="flex items-center gap-4">
-      <button class="text-[#A0A0C0] hover:text-white text-sm">
+      <button onclick="prevSong()" class="text-[#A0A0C0] hover:text-white text-sm">
         <img class="w-6" src="/img/left.svg" alt="" />
       </button>
-      <button id="pauseBtn" onclick="togglePlay()" class="flex items-center justify-center text-black text-[1rem]">
-        <img id="pauseBtn" class="w-6" src="/img/pause.svg" alt="" />
+      <button onclick="togglePlay()" class="flex items-center justify-center">
+        <img id="pauseBtn" class="w-6" src="/img/play.svg" alt="" />
       </button>
-      <button class="text-[#A0A0C0] hover:text-white text-[1rem]">
+      <button onclick="nextSong()" class="text-[#A0A0C0] hover:text-white text-[1rem]">
         <img class="w-6" src="/img/right.svg" alt="" />
       </button>
     </div>
+
     <div class="flex items-center gap-2 w-full max-w-md">
       <span id="currentTime" class="text-[#6B6B8A] text-[1rem]">0:00</span>
-      <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full">
-        <div id="progressBar" class="w-0 h-full bg-[#7B6BF5] rounded-full"></div>
+      <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full relative cursor-pointer" id="progressTrack" onclick="seekTo(event)">
+        <div id="progressBar" class="w-0 h-full bg-[#7B6BF5] rounded-full pointer-events-none"></div>
       </div>
       <span id="duration" class="text-[#6B6B8A] text-[1rem]">0:00</span>
     </div>
   </div>
 
   <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
-    <span class="text-[#6B6B8A] text-[1rem]">
-      <img class="w-6" src="/img/volume-solid-full.svg" alt=""/>
-    </span>
-    <div class="w-20 h-1 bg-[#1E1B3A] rounded-full">
-      <div id="volumeBar" class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
+    <button onclick="toggleMute()" class="text-[#6B6B8A] hover:text-white">
+      <img id="volIcon" class="w-6" src="/img/volume-solid-full.svg" alt=""/>
+    </button>
+    <div class="w-20 h-1 bg-[#1E1B3A] rounded-full relative cursor-pointer" id="volumeTrack" onclick="setVolume(event)">
+      <div id="volumeBar" class="w-[70%] h-full bg-[#7B6BF5] rounded-full pointer-events-none"></div>
     </div>
   </div>
 </footer>
