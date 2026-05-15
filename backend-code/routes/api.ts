@@ -95,43 +95,43 @@ router.get('/playlists', async (req, res) => {
 //api voor muziek afpselen
 router.get('/song/:id/playable', async (req, res) => {
     const rawId = req.params.id;
-    console.log('rawId:', rawId);
     const userId = req.session.user?._id;
     let songId: ObjectId;
+    let songName: string;
+    let songArtist: string;
 
     if (ObjectId.isValid(rawId) && rawId.length === 24) {
+        // MongoDB ID
         songId = new ObjectId(rawId);
+
+        const songs = await GetSongsByIds(userId, [songId]);
+        const song = songs[0];
+        if (!song) return res.status(404).json({ error: 'Song niet gevonden' });
+
+        songName = song.name;
+        songArtist = song.artists?.[0]?.name ?? "";
     } else {
-        // Spotify ID → ophalen en opslaan
+        // Spotify ID
         const accessToken = res.locals.spotifyToken;
         if (!accessToken) return res.status(401).json({ error: 'Geen access token' });
 
         const spotifySong = await GetTrackSpotify(accessToken, rawId);
-        console.log('spotify response:', spotifySong);
         if (!spotifySong) return res.status(404).json({ error: 'Spotify song niet gevonden' });
 
         const insertedId = await CreateSong(spotifySong);
-        const check = await spotifySongCollection.findOne({ _id: insertedId as any });
-        console.log('direct check:', check);
-
         if (!insertedId) return res.status(500).json({ error: 'Song opslaan mislukt' });
 
         songId = insertedId;
+        songName = spotifySong.name;
+        songArtist = spotifySong.artists?.[0]?.name ?? "";
     }
 
     const existing = await songPlayableCollection.findOne({ songId });
     if (existing) return res.json(existing);
 
-    const songs = await GetSongsByIds(userId, [songId]);
-    console.log('songs:', songs);
-    const song = songs[0];
-    if (!song) return res.status(404).json({ error: 'Song niet gevonden' });
-
-    await CreateSongPlayable(songId, song.name, song.artists?.[0]?.name ?? "");
+    await CreateSongPlayable(songId, songName, songArtist);
     const playable = await songPlayableCollection.findOne({ songId });
 
-    console.log('song name:', song.name);
-    console.log('song artist:', song.artists?.[0]?.name);
     res.json(playable);
 });
 
