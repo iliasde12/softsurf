@@ -305,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             setShazamRing('listening');
             shazamTitle.textContent = 'Luisteren...';
-            shazamSub.textContent = 'Houd je apparaat bij de muziek. Stopt na 10 seconden.';
+            shazamSub.textContent = 'Houd je apparaat bij de muziek. Stopt na 4 seconden.';
             shazamTimerEl.classList.remove('hidden');
             shazamStartBtn.classList.add('hidden');
 
@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
             shazamTimer = setInterval(() => {
                 shazamSeconds++;
                 shazamTimerEl.textContent = shazamSeconds + 's';
-                if (shazamSeconds >= 10) stopShazamRecording()
+                if (shazamSeconds >= 4) stopShazamRecording()
             }, 1000);
 
         } catch (e) {
@@ -338,8 +338,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const blob = new Blob(shazamChunks, { type: shazamRecorder.mimeType || 'audio/webm' });
-            const buffer = await blob.arrayBuffer();
-            const bytes = new Uint8Array(buffer);
+            const arrayBuffer = await blob.arrayBuffer();
+
+            // Decode naar PCM via Web Audio API
+            const audioCtx = new AudioContext({ sampleRate: 44100 });
+            const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+            const pcmBuffer = convertToPCM16(audioBuffer);
+            await audioCtx.close();
+
+            // Encode naar base64
+            const bytes = new Uint8Array(pcmBuffer);
             let binary = '';
             for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
             const base64Audio = btoa(binary);
@@ -394,6 +402,26 @@ document.addEventListener("DOMContentLoaded", () => {
             setShazamRing('idle');
             console.error(err);
         }
+    }
+
+    function convertToPCM16(audioBuffer) {
+        const numChannels = audioBuffer.numberOfChannels;
+
+        // Max 4 seconden aan 44100hz = 176400 samples
+        const maxSamples = 44100 * 4;
+        const length = Math.min(audioBuffer.length, maxSamples);
+        const pcm = new Int16Array(length);
+
+        for (let i = 0; i < length; i++) {
+            let sample = 0;
+            for (let c = 0; c < numChannels; c++) {
+                sample += audioBuffer.getChannelData(c)[i];
+            }
+            sample /= numChannels;
+            pcm[i] = Math.max(-32768, Math.min(32767, Math.round(sample * 32767)));
+        }
+
+        return pcm.buffer;
     }
 
     shazamAddBtn.addEventListener('click', () => {
