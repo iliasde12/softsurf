@@ -152,12 +152,12 @@
                 <span class="text-[#6B6B8A] text-sm text-center"><%= index + 1 %></span>
 
                 <div class="flex items-center gap-3">
-              <% if (song.album && song.album.images && song.album.images.length > 0) { %>
-            <img 
-              src="<%= song.album.images[1].url %>" 
-              alt="<%= song.name %>"
-              class="w-9 h-9 rounded-lg object-cover shrink-0"
-            />
+                  <% if (song.album && song.album.images && song.album.images.length > 0) { %>
+                    <img
+                            src="<%= song.album.images[0].url %>"
+                            alt="<%= song.name %>"
+                            class="w-9 h-9 rounded-lg object-cover shrink-0"
+                    />
           <% } else { %>
             <div class="w-9 h-9 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">
               🎵

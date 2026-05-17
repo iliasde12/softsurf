@@ -1,7 +1,7 @@
 import { searchSpotifyTracks } from "./spotify";
 import { SearchSongs,GetSongs } from "../database/database";
 
-export async function searchSongs(query: string, accessToken?: string) {
+export async function searchSongsDbSpotify(query: string, accessToken?: string) {
     const dbResults = query ? await SearchSongs(query) : await GetSongs(undefined);
 
     let spotifyTracks = [];
