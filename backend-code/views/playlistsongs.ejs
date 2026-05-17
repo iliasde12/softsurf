@@ -37,7 +37,7 @@
 
             <% songs.forEach((song) => { %>
                 <div class="bg-[#1E1B3A] hover:bg-[#2A2750] rounded-xl p-4 cursor-pointer transition flex flex-col gap-3"
-                     data-song-id="<%= song._id %>"
+                     data-song-id="<%= song.item ? song.item.id : song._id %>"
                      data-song-name="<%= song.item ? song.item.name : song.name %>"
                      data-song-artist="<%= song.item ? song.item.artists[0].name : song.artists?.[0]?.name ?? 'Onbekend' %>">
 

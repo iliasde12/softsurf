@@ -114,6 +114,7 @@ router.get("/playlist/songs/:id", async (req, res) => {
 
   const songs = await GetPlaylistSongs(accessToken, playlistId);
   const playlist = await GetPlaylist(accessToken, playlistId);
+  console.log(songs);
 
   res.render("playlistsongs", { songs, playlist });
 });

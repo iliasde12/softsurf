@@ -223,4 +223,213 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('sluitAddModal').addEventListener('click', () => {
         document.getElementById('addSongModal').classList.add('hidden');
     });
+
+
+    // ── Shazam ────────────────────────────────────────────────────────────────
+    let shazamRecorder = null;
+    let shazamChunks = [];
+    let shazamTimer = null;
+    let shazamSeconds = 0;
+    let shazamResult = null;
+
+    const shazamModal        = document.getElementById('shazamModal');
+    const shazamRing         = document.getElementById('shazamRing');
+    const shazamTitle        = document.getElementById('shazamTitle');
+    const shazamSub          = document.getElementById('shazamSub');
+    const shazamTimerEl      = document.getElementById('shazamTimer');
+    const shazamResultBox    = document.getElementById('shazamResult');
+    const shazamResultImg    = document.getElementById('shazamResultImg');
+    const shazamResultSong   = document.getElementById('shazamResultSong');
+    const shazamResultArtist = document.getElementById('shazamResultArtist');
+    const shazamStartBtn     = document.getElementById('shazamStart');
+    const shazamAddBtn       = document.getElementById('shazamAdd');
+
+    function shazamReset() {
+        shazamResult = null;
+        stopShazamRecording();
+        shazamRing.textContent = '🎵';
+        shazamRing.className = 'w-20 h-20 rounded-full border-2 border-accent/30 bg-accent/10 flex items-center justify-center mx-auto mb-5 text-3xl transition-all duration-300';
+        shazamTitle.textContent = 'Muziek herkennen';
+        shazamSub.textContent = 'Druk op starten en houd je apparaat bij de muziek.';
+        shazamTimerEl.classList.add('hidden');
+        shazamResultBox.classList.add('hidden');
+        shazamStartBtn.classList.remove('hidden');
+        shazamStartBtn.textContent = 'Starten';
+        shazamStartBtn.onclick = startShazam;
+        shazamAddBtn.classList.add('hidden');
+    }
+
+    function setShazamRing(state) {
+        const base = 'w-20 h-20 rounded-full border-2 flex items-center justify-center mx-auto mb-5 text-3xl transition-all duration-300';
+        if (state === 'listening') {
+            shazamRing.className = base + ' border-pink-500 bg-pink-500/10 animate-pulse';
+            shazamRing.textContent = '🎤';
+        } else if (state === 'processing') {
+            shazamRing.className = base + ' border-yellow-500 bg-yellow-500/10';
+            shazamRing.textContent = '⏳';
+        } else {
+            shazamRing.className = base + ' border-accent/30 bg-accent/10';
+            shazamRing.textContent = '🎵';
+        }
+    }
+
+    document.getElementById('shazamBtn').addEventListener('click', () => {
+        shazamReset();
+        shazamModal.classList.remove('hidden');
+    });
+
+    document.getElementById('shazamCancel').addEventListener('click', () => {
+        stopShazamRecording();
+        shazamModal.classList.add('hidden');
+    });
+
+    shazamModal.addEventListener('click', e => {
+        if (e.target === shazamModal) {
+            stopShazamRecording();
+            shazamModal.classList.add('hidden');
+        }
+    });
+
+    shazamStartBtn.onclick = startShazam;
+
+    async function startShazam() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const mimeType = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg', 'audio/mp4']
+                .find(m => MediaRecorder.isTypeSupported(m)) || '';
+            shazamRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
+            shazamChunks = [];
+            shazamRecorder.ondataavailable = e => { if (e.data.size > 0) shazamChunks.push(e.data); };
+            shazamRecorder.onstop = processShazam;
+            shazamRecorder.start(100);
+
+            setShazamRing('listening');
+            shazamTitle.textContent = 'Luisteren...';
+            shazamSub.textContent = 'Houd je apparaat bij de muziek. Stopt na 4 seconden.';
+            shazamTimerEl.classList.remove('hidden');
+            shazamStartBtn.classList.add('hidden');
+
+            shazamSeconds = 0;
+            shazamTimerEl.textContent = '0s';
+            shazamTimer = setInterval(() => {
+                shazamSeconds++;
+                shazamTimerEl.textContent = shazamSeconds + 's';
+                if (shazamSeconds >= 4) stopShazamRecording()
+            }, 1000);
+
+        } catch (e) {
+            shazamSub.textContent = 'Microfoon toegang geweigerd. Sta dit toe in je browser.';
+        }
+    }
+
+    function stopShazamRecording() {
+        if (shazamTimer) { clearInterval(shazamTimer); shazamTimer = null; }
+        if (shazamRecorder && shazamRecorder.state !== 'inactive') {
+            shazamRecorder.stop();
+            shazamRecorder.stream.getTracks().forEach(t => t.stop());
+        }
+    }
+
+    async function processShazam() {
+        setShazamRing('processing');
+        shazamTitle.textContent = 'Herkennen...';
+        shazamSub.textContent = 'Shazam analyseert de audio...';
+        shazamTimerEl.classList.add('hidden');
+
+        try {
+            const blob = new Blob(shazamChunks, { type: shazamRecorder.mimeType || 'audio/webm' });
+            const arrayBuffer = await blob.arrayBuffer();
+
+            // Decode naar PCM via Web Audio API
+            const audioCtx = new AudioContext({ sampleRate: 44100 });
+            const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+            const pcmBuffer = convertToPCM16(audioBuffer);
+            await audioCtx.close();
+
+            // Encode naar base64
+            const bytes = new Uint8Array(pcmBuffer);
+            let binary = '';
+            for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+            const base64Audio = btoa(binary);
+
+            const res = await fetch('/api/shazam/detect', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ audio: base64Audio })
+            });
+
+            if (res.status === 401) {
+                shazamTitle.textContent = 'Niet ingelogd';
+                shazamSub.textContent = 'Log opnieuw in om muziek te herkennen.';
+                setShazamRing('idle');
+                return;
+            }
+
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+
+            if (data && data.track) {
+                shazamResult = {
+                    name: data.track.title || 'Onbekend',
+                    artist: data.track.subtitle || '',
+                    img: data.track.images?.coverart || ''
+                };
+                shazamResultSong.textContent = shazamResult.name;
+                shazamResultArtist.textContent = shazamResult.artist;
+                shazamResultImg.src = shazamResult.img;
+                shazamResultImg.style.display = shazamResult.img ? 'block' : 'none';
+                shazamResultBox.classList.remove('hidden');
+                shazamAddBtn.classList.remove('hidden');
+                shazamStartBtn.classList.add('hidden');
+                shazamTitle.textContent = '🎉 Gevonden!';
+                shazamSub.textContent = '';
+                setShazamRing('idle');
+            } else {
+                shazamTitle.textContent = 'Niet herkend';
+                shazamSub.textContent = 'Probeer opnieuw met de muziek dichter bij je microfoon.';
+                shazamStartBtn.classList.remove('hidden');
+                shazamStartBtn.textContent = '↺ Opnieuw';
+                shazamStartBtn.onclick = shazamReset;
+                setShazamRing('idle');
+            }
+
+        } catch (err) {
+            shazamTitle.textContent = 'Fout opgetreden';
+            shazamSub.textContent = 'Controleer je internetverbinding en probeer opnieuw.';
+            shazamStartBtn.classList.remove('hidden');
+            shazamStartBtn.textContent = '↺ Opnieuw';
+            shazamStartBtn.onclick = shazamReset;
+            setShazamRing('idle');
+            console.error(err);
+        }
+    }
+
+    function convertToPCM16(audioBuffer) {
+        const numChannels = audioBuffer.numberOfChannels;
+
+        // Max 4 seconden aan 44100hz = 176400 samples
+        const maxSamples = 44100 * 4;
+        const length = Math.min(audioBuffer.length, maxSamples);
+        const pcm = new Int16Array(length);
+
+        for (let i = 0; i < length; i++) {
+            let sample = 0;
+            for (let c = 0; c < numChannels; c++) {
+                sample += audioBuffer.getChannelData(c)[i];
+            }
+            sample /= numChannels;
+            pcm[i] = Math.max(-32768, Math.min(32767, Math.round(sample * 32767)));
+        }
+
+        return pcm.buffer;
+    }
+
+    shazamAddBtn.addEventListener('click', () => {
+        if (!shazamResult) return;
+        shazamModal.classList.add('hidden');
+        searchInput.value = shazamResult.name;
+        fetchSongs(shazamResult.name);
+    });
+
+
 });
