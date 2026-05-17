@@ -1,4 +1,4 @@
-import { searchSongs } from "../helpers/search";
+import { searchSongsDbSpotify } from "../helpers/search";
 import express, {Router} from "express";
 import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable,createPlaylist ,spotifySongCollection } from "../database/database";
 import { GetTrackSpotify,searchTracks  } from "../helpers/spotify";
@@ -38,7 +38,7 @@ router.get("/search", async (req, res) => {
             return res.json({ fromDB: [], fromSpotify: [] });
         }
 
-        const { fromDB, fromSpotify } = await searchSongs(q, accessToken);
+        const { fromDB, fromSpotify } = await searchSongsDbSpotify(q, accessToken);
         res.json({ fromDB, fromSpotify });
 
     } catch (error) {

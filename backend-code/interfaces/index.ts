@@ -174,3 +174,27 @@ export interface ClaudePlaylistResponse {
   suggestions: TrackSuggestion[];
   error?: string;
 }
+
+//raad de game interfaces
+export interface GameSession {
+  _id?: ObjectId;
+  userId: ObjectId;           // → users
+  playlistId?: ObjectId;      // optioneel, welke playlist
+  score: number;              // "7 goed"
+  total: number;              // "12 totaal"
+  streak: number;             // "3 reeks"
+  startedAt: Date;
+  endedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Guess {
+  _id?: ObjectId;
+  sessionId: ObjectId;        // → game_sessions
+  songId: ObjectId;           // → songs
+  guessedName: string;        // wat de speler typte
+  correct: boolean;
+  timeMs?: number;            // hoe snel geraden
+  createdAt: Date;
+}
