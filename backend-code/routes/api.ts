@@ -1,7 +1,8 @@
 import { searchSongsDbSpotify } from "../helpers/search";
 import express, {Router} from "express";
 import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongsByIds,CreateSongPlayable,createPlaylist ,spotifySongCollection } from "../database/database";
-import { GetTrackSpotify,searchTracks  } from "../helpers/spotify";
+import { GetTrackSpotify,searchTracks,searchSpotifyArtist   } from "../helpers/spotify";
+import { searchLastFmArtist } from "../helpers/lastFm";
 import { ObjectId  } from "mongodb";
 import { generatePlaylistSuggestions, generatePlaylistName } from "../helpers/claude";
 import {  SpotifyTrack } from "../interfaces/index";
@@ -9,6 +10,7 @@ import {  SpotifyTrack } from "../interfaces/index";
 import path from "path";
 import { writeFile } from "fs/promises";
 const router: Router = express.Router();
+
 
 //download functie om de album images te donwloaden
 // @ts-ignore
@@ -30,6 +32,9 @@ async function downloadImage(url: string, filename: string): Promise<string | nu
 
 //is voor live data uit search en combineert db en spotify
 router.get("/search", async (req, res) => {
+    const userId = req.session.user?._id;
+    if (!userId) return res.status(401).json({ success: false, error: "Niet ingelogd" });
+
     try {
         const { q } = req.query as { q: string };
         const accessToken = res.locals.spotifyToken;
@@ -48,6 +53,9 @@ router.get("/search", async (req, res) => {
 
 //herkening van sound
 router.post("/shazam/detect", async (req, res) => {
+    const userId = req.session.user?._id;
+    if (!userId) return res.status(401).json({ success: false, error: "Niet ingelogd" });
+
     try {
         const { audio } = req.body;
 
@@ -135,6 +143,8 @@ router.get('/playlists', async (req, res) => {
 router.get('/song/:id/playable', async (req, res) => {
     const rawId = req.params.id;
     const userId = req.session.user?._id;
+    if (!userId) return res.status(401).json({ success: false, error: "Niet ingelogd" });
+
     let songId: ObjectId;
     let songName: string;
     let songArtist: string;
@@ -178,6 +188,10 @@ router.get('/song/:id/playable', async (req, res) => {
 router.post('/playlist/generate', async (req, res) => {
     const { stemming, aantal, mixtype } = req.body;
     const accessToken = res.locals.spotifyToken;
+
+    const userId = req.session.user?._id;
+    if (!userId) return res.status(401).json({ success: false, error: "Niet ingelogd" });
+
 
     try {
         const { success, suggestions, error } = await generatePlaylistSuggestions({
@@ -300,5 +314,102 @@ router.post("/playlist/create-generated", async (req, res) => {
         res.json({ success: false, error: (err as Error).message });
     }
 });
+
+//voor artiesten te vergelijken
+router.get("/vergelijken/artist", async (req, res) => {
+    const { q } = req.query;
+
+    const userId = req.session.user?._id;
+
+    if (!userId) return res.status(401).json({ success: false, error: "Niet ingelogd" });
+
+    if (!q || typeof q !== "string") {
+        return res.status(400).json({ error: "Geef een artiestnaam mee via ?q=" });
+    }
+
+    try {
+        //als nul is gaat het naar searchlastFm
+        const accessToken = res.locals.spotifyToken ?? null;
+
+        const artist = accessToken
+            ? await searchSpotifyArtist(q, accessToken)
+            : await searchLastFmArtist(q);
+
+        console.log("artist:", JSON.stringify(artist, null, 2));
+
+        if (!artist) {
+            return res.status(404).json({ error: "Artiest niet gevonden" });
+        }
+
+        if (artist.source === "spotify") {
+            const lastfm = await searchLastFmArtist(q).catch(() => null);
+            return res.json({ ...artist, monthlyListeners: lastfm?.monthlyListeners ?? null });
+        }
+
+        return res.json(artist);
+    } catch (e) {
+        console.error("vergelijken/artist error:", e);
+        return res.status(500).json({ error: "Er ging iets mis" });
+    }
+});
+
+// GET /vergelijken/compare?artist1=Burna+Boy&artist2=Wizkid
+router.get("/vergelijken/compare", async (req, res) => {
+    const { artist1, artist2 } = req.query;
+    const userId = req.session.user?._id;
+
+    if (!userId) return res.status(401).json({ success: false, error: "Niet ingelogd" });
+
+
+    if (!artist1 || !artist2 || typeof artist1 !== "string" || typeof artist2 !== "string") {
+        return res.status(400).json({ error: "Geef twee artiesten mee via ?artist1=&artist2=" });
+    }
+
+    try {
+        const accessToken = res.locals.spotifyToken ?? null;
+
+        const fetchArtist = async (name: string) => {
+            const data = accessToken
+                ? await searchSpotifyArtist(name, accessToken)
+                : await searchLastFmArtist(name);
+
+            if (data?.source === "spotify") {
+                const lastfm = await searchLastFmArtist(name).catch(() => null);
+                return { ...data, monthlyListeners: lastfm?.monthlyListeners ?? null };
+            }
+
+            return data;
+        };
+
+        const [a, b] = await Promise.all([fetchArtist(artist1), fetchArtist(artist2)]);
+
+        console.log("artist1 : " + a);
+        console.log("artist2 : " + b);
+
+        if (!a || !b) {
+            return res.status(404).json({ error: "Een of beide artiesten niet gevonden" });
+        }
+
+        const winner = (valA: number | null, valB: number | null) => {
+            if (valA == null || valB == null) return null;
+            return valA > valB ? "a" : valA < valB ? "b" : "tie";
+        };
+
+        return res.json({
+            a,
+            b,
+            compare: {
+                popularity:       winner(a.popularity, b.popularity),
+                followers:        winner(a.followers, b.followers),
+                albums:           winner(a.albums, b.albums),
+                monthlyListeners: winner(a.monthlyListeners ?? null, b.monthlyListeners ?? null),
+            },
+        });
+    } catch (e) {
+        console.error("vergelijken/compare error:", e);
+        return res.status(500).json({ error: "Er ging iets mis" });
+    }
+});
+
 
 export default router;

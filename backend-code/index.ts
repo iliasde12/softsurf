@@ -26,6 +26,7 @@ app.set("port", process.env.PORT || 3000);
 app.use(mainRoutes);
 //beide zijn beschermd dus ze moeten ingelogd zijn en acces token komt ook vrij als ze het hebben
 app.use(secureMiddleware, spotifyMiddleware, protectedRoutes);
+//alle check op de login mag eigelijk weg
 app.use("/api", secureMiddleware, spotifyMiddleware, apiRoutes);
 
 
