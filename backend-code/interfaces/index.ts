@@ -4,6 +4,9 @@
 import { ObjectId } from "mongodb";
 import { Mood } from "./mood";
 
+//interface moet geupdate worden
+
+
 //user interface
 //bespreking morgen voor stemming
 export interface User {
@@ -15,6 +18,10 @@ export interface User {
   //mood?: Mood;
   createdAt: Date;
   updatedAt: Date;
+  //is voor de puten bij te houden en hoeveel games je hebt gedaan
+  totalScore: number;
+  gamesPlayed: number;
+  bestStreak: number;
 }
 
 //spotify token interface om te connecten met user
@@ -64,7 +71,7 @@ export interface SpotifyAlbum {
   release_date_precision: "day" | "month" | "year";
   type: "album";
   uri: string;
-  artists: SpotifyArtist[];
+  artist_ids?: ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -175,7 +182,7 @@ export interface ClaudePlaylistResponse {
   error?: string;
 }
 
-//raad de game interfaces
+//raad de game is voor de session bij te houden
 export interface GameSession {
   _id?: ObjectId;
   userId: ObjectId;           // → users
@@ -189,6 +196,8 @@ export interface GameSession {
   updatedAt: Date;
 }
 
+
+//data van wat je hebt geguest
 export interface Guess {
   _id?: ObjectId;
   sessionId: ObjectId;        // → game_sessions
@@ -197,4 +206,16 @@ export interface Guess {
   correct: boolean;
   timeMs?: number;            // hoe snel geraden
   createdAt: Date;
+}
+
+//houdt data bij van de round
+export interface CurrentRound {
+  _id?: ObjectId;
+  sessionId: ObjectId;      // → game_sessions
+  songId: ObjectId;         // → songs (het juiste antwoord)
+  roundNumber: number;      // hoeveelste nummer in de sessie
+  previewUrl: string;       // Spotify preview URL (30 sec)
+  options: string[];        // 3 foute + 1 juiste optie voor meerkeuze
+  startedAt: Date;
+  answeredAt?: Date;
 }
