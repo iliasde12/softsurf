@@ -63,6 +63,8 @@ export interface SpotifyAlbum {
   total_tracks: number;
   //available_markets: string[];
   //external_urls: SpotifyExternalUrls;
+  //moet veranderd worden naar objectid en connecten met artist collection
+  artists: SpotifyArtist[];
   href: string;
   id: string;
   images: SpotifyImage[];
@@ -84,6 +86,7 @@ export interface SpotifyAlbum {
 
 export interface SpotifyTrack {
   album: SpotifyAlbum;
+  //moet veranderd worden naar objectid en connecten met artist collection
   artists: SpotifyArtist[];
   //available_markets: string[];
   disc_number: number;
@@ -197,25 +200,14 @@ export interface GameSession {
 }
 
 
-//data van wat je hebt geguest
+//data van wat je hebt geguest in de game
 export interface Guess {
   _id?: ObjectId;
-  sessionId: ObjectId;        // → game_sessions
-  songId: ObjectId;           // → songs
-  guessedName: string;        // wat de speler typte
+  sessionId: ObjectId;
+  songId: ObjectId;
+  guessedName: string;
   correct: boolean;
-  timeMs?: number;            // hoe snel geraden
+  timeMs?: number;
   createdAt: Date;
 }
 
-//houdt data bij van de round
-export interface CurrentRound {
-  _id?: ObjectId;
-  sessionId: ObjectId;      // → game_sessions
-  songId: ObjectId;         // → songs (het juiste antwoord)
-  roundNumber: number;      // hoeveelste nummer in de sessie
-  previewUrl: string;       // Spotify preview URL (30 sec)
-  options: string[];        // 3 foute + 1 juiste optie voor meerkeuze
-  startedAt: Date;
-  answeredAt?: Date;
-}
