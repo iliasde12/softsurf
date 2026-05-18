@@ -9,6 +9,7 @@ import {
   User,
   Playlist,
   SongPlayable,
+  Guess, GameSession,
 } from "../interfaces/index";
 
 import bcrypt from "bcrypt";
@@ -64,6 +65,9 @@ export const spotifyArtistCollection = db.collection<SpotifyArtist>("artisten");
 export const songPlayableCollection = db.collection<SongPlayable>("SongPlayable");
 //playlist
 export const playlistCollection = db.collection<Playlist>("playlists");
+//game
+export const gameSessionCollection = db.collection<GameSession>("game_sessions");
+export const guessCollection = db.collection<Guess>("guesses");
 
 // create users
 export async function createUser(
@@ -79,6 +83,7 @@ export async function createUser(
   }
 
   try {
+    //alles op nul zetten als start bij game enzo
     await userCollection.insertOne({
       username: username,
       email: email,
@@ -86,6 +91,10 @@ export async function createUser(
       avatar: avatar,
       createdAt: now,
       updatedAt: now,
+      //later gevoegd voor de game
+      totalScore: 0,
+      gamesPlayed: 0,
+      bestStreak: 0,
     });
   } catch (e) {
     throw new Error("error: " + e);
