@@ -79,6 +79,7 @@ export async function createUser(
   }
 
   try {
+    //alles op nul zetten als start bij game enzo
     await userCollection.insertOne({
       username: username,
       email: email,
@@ -86,6 +87,10 @@ export async function createUser(
       avatar: avatar,
       createdAt: now,
       updatedAt: now,
+      //later gevoegd voor de game
+      totalScore: 0,
+      gamesPlayed: 0,
+      bestStreak: 0,
     });
   } catch (e) {
     throw new Error("error: " + e);
