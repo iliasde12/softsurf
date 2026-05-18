@@ -4,6 +4,9 @@
 import { ObjectId } from "mongodb";
 import { Mood } from "./mood";
 
+//interface moet geupdate worden
+
+
 //user interface
 //bespreking morgen voor stemming
 export interface User {
@@ -15,6 +18,10 @@ export interface User {
   //mood?: Mood;
   createdAt: Date;
   updatedAt: Date;
+  //is voor de puten bij te houden en hoeveel games je hebt gedaan
+  totalScore: number;
+  gamesPlayed: number;
+  bestStreak: number;
 }
 
 //spotify token interface om te connecten met user
@@ -56,6 +63,8 @@ export interface SpotifyAlbum {
   total_tracks: number;
   //available_markets: string[];
   //external_urls: SpotifyExternalUrls;
+  //moet veranderd worden naar objectid en connecten met artist collection
+  artists: SpotifyArtist[];
   href: string;
   id: string;
   images: SpotifyImage[];
@@ -64,7 +73,7 @@ export interface SpotifyAlbum {
   release_date_precision: "day" | "month" | "year";
   type: "album";
   uri: string;
-  artists: SpotifyArtist[];
+  artist_ids?: ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -77,6 +86,7 @@ export interface SpotifyAlbum {
 
 export interface SpotifyTrack {
   album: SpotifyAlbum;
+  //moet veranderd worden naar objectid en connecten met artist collection
   artists: SpotifyArtist[];
   //available_markets: string[];
   disc_number: number;
@@ -175,7 +185,7 @@ export interface ClaudePlaylistResponse {
   error?: string;
 }
 
-//raad de game interfaces
+//raad de game is voor de session bij te houden
 export interface GameSession {
   _id?: ObjectId;
   userId: ObjectId;           // → users
@@ -189,12 +199,15 @@ export interface GameSession {
   updatedAt: Date;
 }
 
+
+//data van wat je hebt geguest in de game
 export interface Guess {
   _id?: ObjectId;
-  sessionId: ObjectId;        // → game_sessions
-  songId: ObjectId;           // → songs
-  guessedName: string;        // wat de speler typte
+  sessionId: ObjectId;
+  songId: ObjectId;
+  guessedName: string;
   correct: boolean;
-  timeMs?: number;            // hoe snel geraden
+  timeMs?: number;
   createdAt: Date;
 }
+

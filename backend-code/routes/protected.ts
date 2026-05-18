@@ -15,7 +15,8 @@ import {
   createPlaylist,
   GetPlaylists,
   GetPlaylistById,
-  GetSongsByIds
+  GetSongsByIds,
+    userCollection
 } from "../database/database";
 import { moods } from "../interfaces/mood";
 
@@ -180,7 +181,43 @@ router.post("/song/:id/mood", async (req, res) => {
   res.json({ success: true });
 });
 
+//leaderboard voor punten
+router.get("/leaderboard", async (req, res) => {
+  const userId = req.session.user?._id;
+  if (!userId) return res.redirect("/login");
 
+  try {
+    const topUsers = await userCollection.find(
+        {},
+        {
+          sort: { totalScore: -1 },
+          limit: 10,
+          projection: { username: 1, avatar: 1, totalScore: 1, gamesPlayed: 1, bestStreak: 1 }
+        }
+    ).toArray();
+
+    const currentUser = await userCollection.findOne(
+        { _id: new ObjectId(userId) },
+        { projection: { username: 1, avatar: 1, totalScore: 1, gamesPlayed: 1, bestStreak: 1 } }
+    );
+
+    // Rank van huidige gebruiker berekenen
+    const userRank = await userCollection.countDocuments({ totalScore: { $gt: currentUser?.totalScore ?? 0 } }) + 1;
+
+    return res.render("leaderboard", {
+      topUsers,
+      currentUser,
+      userRank,
+      currentPath: "/leaderboard",
+    });
+  } catch (e) {
+    console.error("leaderboard error:", e);
+    return res.status(500).send("Er ging iets mis");
+  }
+});
+
+
+//alle auth voor spotify
 router.use("/auth", authSpotifyRouter);
 
 export default router;

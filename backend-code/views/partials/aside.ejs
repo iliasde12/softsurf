@@ -33,13 +33,18 @@
       </a>
     </nav>
 
-    <p class="text-[#6B6B8A] text-sm uppercase font-semibold mb-2 tracking-widest">Spelletjes</p>
-    <nav class="flex flex-col gap-1">
-      <a href="/guessthesong" class="flex items-center gap-2 text-[1rem] py-1 px-2 rounded-lg transition <%= currentPath === '/guessthesong' ? 'text-white bg-[#7B6BF5]' : 'text-[#A0A0C0] hover:text-white hover:bg-[#1E1B3A]' %>">
-        <img class="w-5" src="/img/question-solid-full.svg" alt="" />
-        <span>Raad het Nummer</span>
-      </a>
-    </nav>
+      <p class="text-[#6B6B8A] text-sm uppercase font-semibold mb-2 tracking-widest">Spelletjes</p>
+      <nav class="flex flex-col gap-1">
+          <a href="/leaderboard" class="flex items-center gap-2 text-[1rem] py-1 px-2 rounded-lg transition <%= currentPath === '/leaderboard' ? 'text-white bg-[#7B6BF5]' : 'text-[#A0A0C0] hover:text-white hover:bg-[#1E1B3A]' %>">
+              <img class="w-5" src="/img/trophy-solid-full.svg" alt="" />
+              <span>Leaderboard</span>
+          </a>
+          <a href="/guessthesong" class="flex items-center gap-2 text-[1rem] py-1 px-2 rounded-lg transition <%= currentPath === '/guessthesong' ? 'text-white bg-[#7B6BF5]' : 'text-[#A0A0C0] hover:text-white hover:bg-[#1E1B3A]' %>">
+              <img class="w-5" src="/img/question-solid-full.svg" alt="" />
+              <span>Raad het Nummer</span>
+          </a>
+
+      </nav>
   </div>
 
   <div class="flex items-center gap-2 border-t border-[#1E1B3A] pt-4">
