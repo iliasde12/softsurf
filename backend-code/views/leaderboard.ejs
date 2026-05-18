@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
+    <title>Leaderboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"halyard-display"', "sans-serif"],
+                        body: ['"halyard-text"', "sans-serif"],
+                    },
+                    colors: {
+                        base: "#0f0e17",
+                        surface: "#1a1828",
+                        card: "#221f33",
+                        border: "#2e2b42",
+                        accent: "#7c6aff",
+                        green: "#4ade80",
+                        red: "#f87171",
+                        muted: "#6b6889",
+                        light: "#e8e6f0",
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            "0%": { opacity: "0", transform: "translateY(14px)" },
+                            "100%": { opacity: "1", transform: "translateY(0)" },
+                        },
+                    },
+                    animation: {
+                        fadeUp: "fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both",
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+
+<body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
+<!-- HEADER -->
+<header class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start">
+    <button class="md:hidden text-white text-xl">☰</button>
+    <img src="/img/softsurf_logo.svg" alt="softsurf_logo" class="w-28 md:w-30 mx-auto md:mx-0" />
+    <div class="md:hidden w-6"></div>
+</header>
+
+<div class="flex flex-1 overflow-hidden">
+    <%- include('partials/aside') %>
+
+    <main class="flex-1 p-4 md:p-8 overflow-y-auto">
+        <div class="max-w-2xl mx-auto animate-fadeUp">
+
+            <!-- Titel -->
+            <div class="mb-8">
+                <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Leaderboard</h1>
+                <p class="mt-1 text-base text-muted">De beste spelers van MusicMatch</p>
+            </div>
+
+            <!-- Jouw positie -->
+            <div class="rounded-2xl px-6 py-4 mb-6 flex items-center gap-4" style="background:linear-gradient(135deg,rgba(124,106,255,0.15),rgba(168,85,247,0.1));border:1px solid rgba(124,106,255,0.3)">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shrink-0" style="background:linear-gradient(135deg,#7c6aff,#a855f7)">
+                    #<%= userRank %>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold text-light">Jouw positie</p>
+                    <p class="text-muted text-sm">
+                        <%= currentUser.totalScore %> punten ·
+                        <%= currentUser.gamesPlayed %> gespeeld ·
+                        beste reeks <%= currentUser.bestStreak %>
+                    </p>
+                </div>
+                <div class="shrink-0">
+                    <% if (currentUser.avatar?.url) { %>
+                        <img src="<%= currentUser.avatar.url %>" class="w-10 h-10 rounded-full object-cover" alt="avatar" />
+                    <% } else { %>
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg" style="background:#2a2648">
+                            <%= currentUser.username.charAt(0).toUpperCase() %>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <!-- Leeg of gevuld -->
+            <% const heeftScores = topUsers.some(u => u.totalScore > 0); %>
+
+            <% if (!heeftScores) { %>
+
+                <!-- Lege staat -->
+                <div class="rounded-2xl px-6 py-14 text-center" style="background:#1a1730;border:1px solid #2a2648">
+                    <div class="text-5xl mb-4">🎮</div>
+                    <p class="font-semibold text-light text-lg mb-2">Nog geen scores</p>
+                    <p class="text-muted text-sm mb-6">Speel Raad het Nummer om als eerste op het leaderboard te komen!</p>
+                    <a href="/guessthesong" class="inline-block px-6 py-3 rounded-full font-semibold text-white text-sm transition-transform hover:scale-105"
+                       style="background:linear-gradient(135deg,#7c6aff,#a855f7)">
+                        Start het spel
+                    </a>
+                </div>
+
+            <% } else { %>
+
+                <!-- Top 10 -->
+                <div class="rounded-2xl overflow-hidden" style="background:#1a1730;border:1px solid #2a2648">
+                    <% topUsers.forEach((user, i) => { %>
+                        <div class="flex items-center gap-4 px-6 py-4 <%= i < topUsers.length - 1 ? 'border-b border-[#2a2648]' : '' %> <%= currentUser._id?.toString() === user._id?.toString() ? 'bg-accent/5' : '' %> hover:bg-white/5 transition">
+
+                            <!-- Rank -->
+                            <div class="w-8 text-center shrink-0">
+                                <% if (i === 0) { %>
+                                    <span class="text-xl">🥇</span>
+                                <% } else if (i === 1) { %>
+                                    <span class="text-xl">🥈</span>
+                                <% } else if (i === 2) { %>
+                                    <span class="text-xl">🥉</span>
+                                <% } else { %>
+                                    <span class="font-bold text-muted">#<%= i + 1 %></span>
+                                <% } %>
+                            </div>
+
+                            <!-- Avatar -->
+                            <% if (user.avatar?.url) { %>
+                                <img src="<%= user.avatar.url %>" class="w-10 h-10 rounded-full object-cover shrink-0" alt="avatar" />
+                            <% } else { %>
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0" style="background:#2a2648;color:#a79bfa">
+                                    <%= user.username.charAt(0).toUpperCase() %>
+                                </div>
+                            <% } %>
+
+                            <!-- Naam + stats -->
+                            <div class="flex-1 min-w-0">
+                                <p class="font-semibold text-light truncate">
+                                    <%= user.username %>
+                                    <% if (currentUser._id?.toString() === user._id?.toString()) { %>
+                                        <span class="text-xs font-normal text-accent ml-1">(jij)</span>
+                                    <% } %>
+                                </p>
+                                <p class="text-muted text-sm">
+                                    <%= user.gamesPlayed %> gespeeld ·
+                                    beste reeks <%= user.bestStreak %>
+                                </p>
+                            </div>
+
+                            <!-- Score -->
+                            <div class="text-right shrink-0">
+                                <% if (user.totalScore > 0) { %>
+                                    <p class="font-bold text-lg" style="color:#a79bfa"><%= user.totalScore %></p>
+                                    <p class="text-muted text-xs">punten</p>
+                                <% } else { %>
+                                    <p class="text-muted text-sm">Nog niet gespeeld</p>
+                                <% } %>
+                            </div>
+
+                        </div>
+                    <% }) %>
+                </div>
+
+            <% } %>
+
+        </div>
+    </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
+    <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
+        <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+        <div>
+            <p class="text-white text-[1rem] font-semibold">Last Last</p>
+            <p class="text-white/75 text-[15px]">Burna Boy</p>
+        </div>
+    </div>
+    <div class="hidden md:flex flex-col items-center flex-1 gap-1">
+        <div class="flex items-center gap-4">
+            <button class="text-[#A0A0C0] hover:text-white"><img class="w-6" src="img/left.svg" alt="" /></button>
+            <button class="flex items-center justify-center"><img class="w-6" src="img/pause.svg" alt="" /></button>
+            <button class="text-[#A0A0C0] hover:text-white"><img class="w-6" src="img/right.svg" alt="" /></button>
+        </div>
+        <div class="flex items-center gap-2 w-full max-w-md">
+            <span class="text-[#6B6B8A] text-[1rem]">1:22</span>
+            <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full"><div class="w-[40%] h-full bg-[#7B6BF5] rounded-full"></div></div>
+            <span class="text-[#6B6B8A] text-[1rem]">4:08</span>
+        </div>
+    </div>
+    <button class="md:hidden flex items-center justify-center shrink-0"><img class="w-6" src="img/pause.svg" alt="" /></button>
+    <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
+        <span class="text-[#6B6B8A]"><img class="w-6" src="img/volume-solid-full.svg" alt="" /></span>
+        <div class="w-20 h-1 bg-[#1E1B3A] rounded-full"><div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div></div>
+    </div>
+</footer>
+</body>
+</html>
