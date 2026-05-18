@@ -194,6 +194,9 @@ export async function searchTracks(
   );
 }
 
+
+
+
 //getsimilartracks voor games om verschillende voorbeelden te zien
 export async function getSimilarTracks(
     accessToken: string,
@@ -216,3 +219,49 @@ export async function getSimilarTracks(
         artist: track.artists[0].name,
       }));
 }
+
+
+
+
+// Zoek artiest op naam, geeft genormaliseerde data terug
+export async function searchSpotifyArtist(name: string, accessToken: string) {
+  const res = await fetch(
+      `https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+  );
+  const data = await res.json();
+  const artist = data.artists?.items?.[0];
+  if (!artist) return null;
+
+  // Haal volledig artist object op voor followers en genres
+  const [fullRes, albumCount] = await Promise.all([
+    fetch(`https://api.spotify.com/v1/artists/${artist.id}`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    }),
+    getSpotifyArtistAlbumCount(artist.id, accessToken),
+  ]);
+
+  const full = await fullRes.json();
+
+  return {
+    name: full.name as string,
+    image: (full.images?.[0]?.url ?? null) as string | null,
+    popularity: full.popularity as number,
+    followers: (full.followers?.total ?? null) as number | null,
+    albums: albumCount,
+    genre: (full.genres?.[0] ?? null) as string | null,
+    source: "spotify" as const,
+  };
+}
+// Hulpfunctie: tel unieke albums van een artiest
+async function getSpotifyArtistAlbumCount(artistId: string, accessToken: string): Promise<number> {
+  const res = await fetch(
+      `https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album&limit=50`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+  );
+  const data = await res.json();
+  console.log("albums data:", JSON.stringify(data, null, 2));
+  return new Set<string>(data.items?.map((a: any) => a.name as string)).size;
+}
+
+
