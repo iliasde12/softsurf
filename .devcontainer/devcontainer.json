@@ -16,7 +16,9 @@
         "esbenp.prettier-vscode",
         "christian-kohler.npm-intellisense",
         "pkief.material-icon-theme",
-        "humao.rest-client"
+        "humao.rest-client",
+        "ms-vscode.vscode-typescript-next",
+        "DigitalBrainstem.javascript-ejs-support"
       ],
       "settings": {
         "editor.formatOnSave": true,
