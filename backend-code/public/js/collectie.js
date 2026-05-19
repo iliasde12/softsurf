@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const data = window.__COLLECTIE_DATA__ || { songs: [], moods: [] };
-  const moods = Array.isArray(data.moods) ? data.moods : [];
-
-  let lastSongs = Array.isArray(data.songs) ? data.songs : [];
+  let moods = [];
+  let lastSongs = [];
   let viewMode = "lijst";
 
   const containerPlaylist = document.getElementById("containerSongs");
@@ -46,11 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "bg-[#2A2750] text-white text-xs rounded-full px-2 py-1 border-none cursor-pointer";
 
     select.addEventListener("click", (e) => e.stopPropagation());
-    select.addEventListener("change", () => {
-      if (typeof window.updateMood === "function") {
-        window.updateMood(song._id, select.value);
-      }
-    });
+    select.addEventListener("change", () => updateMood(song._id, select.value));
 
     const noneOpt = document.createElement("option");
     noneOpt.value = "";
@@ -196,5 +190,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   updateViewButtons();
-  showSongs(lastSongs);
+
+  const fetchCollectie = async () => {
+    try {
+      const response = await fetch("/api/collectie");
+      const { songs, moods: serverMoods } = await response.json();
+      moods = Array.isArray(serverMoods) ? serverMoods : [];
+      showSongs(Array.isArray(songs) ? songs : []);
+    } catch (error) {
+      console.error("Error fetching collectie:", error);
+    }
+  };
+
+  fetchCollectie();
+
+  async function updateMood(songId, mood) {
+    await fetch(`/song/${songId}/mood`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mood }),
+    });
+  }
 });
