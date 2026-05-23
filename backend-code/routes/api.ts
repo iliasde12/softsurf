@@ -28,12 +28,20 @@ async function downloadImage(url: string, filename: string): Promise<string | nu
 }
 
 router.get("/search", async (req, res) => {
-    try {
-        const { q } = req.query as { q: string };
+    const { q, collection } = req.query as { q: string; collection?: string };
+    const isCollection = collection === "true";
+
+    if (!q) return res.json({ fromDB: [], fromSpotify: [] });
+    try{
+    if (isCollection) {
+        // collectie logica
+        const fromDB = await searchSongsDbSpotify(q); // alleen db
+        res.json({ fromDB, fromSpotify: [] });
+    } else {
         const accessToken = res.locals.spotifyToken;
-        if (!q) return res.json({ fromDB: [], fromSpotify: [] });
         const { fromDB, fromSpotify } = await searchSongsDbSpotify(q, accessToken);
         res.json({ fromDB, fromSpotify });
+    }
     } catch (error) {
         res.status(500).json({ error: "Er ging iets mis bij het zoeken" });
     }
