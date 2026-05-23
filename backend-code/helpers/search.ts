@@ -11,3 +11,7 @@ export async function searchSongsDbSpotify(query: string, accessToken?: string) 
 
     return { fromDB: dbResults, fromSpotify: spotifyTracks };
 }
+
+/*export async function searchDb(query: string) {
+    return  query ? await SearchSongs(query) : await GetSongs(undefined);
+}*/
