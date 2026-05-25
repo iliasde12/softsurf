@@ -78,6 +78,25 @@ export interface SpotifyAlbum {
   updatedAt: Date;
 }
 
+//mongodb
+export interface AlbumDocument {
+  album_type: "single" | "album" | "compilation";
+  total_tracks: number;
+  artist_ids: ObjectId[];    // ← alleen IDs
+  href: string;
+  id: string;
+  images: SpotifyImage[];
+  name: string;
+  release_date: string;
+  release_date_precision: "day" | "month" | "year";
+  type: "album";
+  uri: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+
+
 /*export interface SpotifyExternalIds {
   isrc?: string;
   ean?: string;

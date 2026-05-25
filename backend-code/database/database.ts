@@ -9,7 +9,9 @@ import {
   User,
   Playlist,
   SongPlayable,
-  Guess, GameSession,
+  Guess,
+  GameSession,
+  AlbumDocument,
 } from "../interfaces/index";
 
 import bcrypt from "bcrypt";
@@ -59,7 +61,7 @@ export const spotifyTokenColletion =
 export const userSongCollection = db.collection<UserSong>("userSongs");
 // songs
 export const spotifySongCollection = db.collection<Song>("songs");
-export const spotifyAlbumCollection = db.collection<SpotifyAlbum>("albums");
+export const spotifyAlbumCollection = db.collection<AlbumDocument>("albums");
 export const spotifyArtistCollection = db.collection<SpotifyArtist>("artisten");
 //song play
 export const songPlayableCollection = db.collection<SongPlayable>("SongPlayable");
@@ -214,13 +216,19 @@ export async function CreateSong(songData: SpotifyTrack): Promise<ObjectId | nul
 export async function CreateAlbum(albumData: SpotifyAlbum): Promise<ObjectId | null> {
   try {
     const existing = await spotifyAlbumCollection.findOne({ id: albumData.id });
+    if (existing) return existing._id!;
 
-    if (existing) {
-      return existing._id!;
-    }
+    // Artists aanmaken en IDs ophalen
+    const artistIds = await Promise.all(
+        albumData.artists.map(artist => CreateArtist(artist))
+    );
+
+    // Artists eruit destructuren
+    const { artists, ...albumWithoutArtists } = albumData;
 
     const result = await spotifyAlbumCollection.insertOne({
-      ...albumData,
+      ...albumWithoutArtists,
+      artist_ids: artistIds.filter((id): id is ObjectId => id !== null),
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -231,7 +239,6 @@ export async function CreateAlbum(albumData: SpotifyAlbum): Promise<ObjectId | n
     return null;
   }
 }
-
 // create artist
 export async function CreateArtist(artistData: SpotifyArtist): Promise<ObjectId | null> {
   try {
