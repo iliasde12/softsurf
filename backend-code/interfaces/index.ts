@@ -148,6 +148,8 @@ export interface UserSong {
   userId: ObjectId;
   songId: ObjectId ;
   mood: number | null;
+  //is makkelijker dan een is favoriet interface apart
+  isFavorite: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -175,6 +177,7 @@ export interface SongPlayable {
 }
 
 //playlist spotify
+//wordt niet eens gebruikt
 export interface SpotifyPlaylist {
   id: string;
   name: string;

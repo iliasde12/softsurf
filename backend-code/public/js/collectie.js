@@ -14,6 +14,29 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  function buildHeart(song) {
+    const heart = document.createElement("span");
+    heart.className = `text-sm cursor-pointer transition ${song.userSong?.isFavorite ? "text-[#E91E8C]" : "text-[#6B6B8A]"}`;
+    heart.textContent = "♥";
+
+    heart.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const result = await toggleFavorite(song._id);
+      heart.className = `text-sm cursor-pointer transition ${result ? "text-[#E91E8C]" : "text-[#6B6B8A]"}`;
+    });
+
+    return heart;
+  }
+
+  async function toggleFavorite(songId) {
+    const res = await fetch(`api/song/${songId}/favorite`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    return data.isFavorite;
+  }
+
   function updateViewButtons() {
     if (viewMode === "lijst") {
       lijstBtn.className = "bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full";
@@ -118,15 +141,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const bottom = document.createElement("div");
         bottom.className = "flex items-center justify-between";
 
-        const popularity = document.createElement("span");
+        /*const popularity = document.createElement("span");
         popularity.className = "text-[#A0A0C0] text-xs";
-        popularity.textContent = song.popularity ?? "";
+        popularity.textContent = song.popularity ?? "";*/
 
-        const heart = document.createElement("span");
+        //oude
+        /*const heart = document.createElement("span");
         heart.className = "text-[#E91E8C] text-sm";
-        heart.textContent = "♥";
+        heart.textContent = "♥";*/
 
-        bottom.append(popularity, heart);
+        //nieuwe die werkt
+        const heart = buildHeart(song);
+
+        bottom.append(/*popularity,*/ heart);
         card.append(albumArt, trackName, artistEl, moodSelect, bottom);
         containerPlaylist.appendChild(card);
 
@@ -171,15 +198,18 @@ document.addEventListener("DOMContentLoaded", () => {
             ? new Date(release).toLocaleDateString("nl-NL", { day: "numeric", month: "short" })
             : "";
 
-        const popularity = document.createElement("span");
+        /*const popularity = document.createElement("span");
         popularity.className = "hidden md:block text-[#A0A0C0] text-xs";
-        popularity.textContent = song.popularity ?? "";
+        popularity.textContent = song.popularity ?? "";*/
 
-        const heart = document.createElement("span");
+        /*const heart = document.createElement("span");
         heart.className = "text-[#E91E8C] text-sm";
-        heart.textContent = "♥";
+        heart.textContent = "♥";*/
 
-        trackContainer.append(number, infoWrapper, labelWrapper, date, popularity, heart);
+        //nieuwe die werkt
+        const heart = buildHeart(song);
+
+        trackContainer.append(number, infoWrapper, labelWrapper, date, /*popularity,*/ heart);
         containerPlaylist.appendChild(trackContainer);
       }
     });
