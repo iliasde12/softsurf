@@ -1,6 +1,6 @@
 import { searchSongsDbSpotify } from "../helpers/search";
 import express, {Router} from "express";
-import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongs,GetSongsByIds,CreateSongPlayable,createPlaylist ,spotifySongCollection, userCollection, db } from "../database/database";
+import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongs,GetSongsByIds,CreateSongPlayable,createPlaylist ,spotifySongCollection, userCollection, gameSessionCollection,guessCollection } from "../database/database";
 import { moods } from "../interfaces/mood";
 import { GetTrackSpotify,searchTracks  } from "../helpers/spotify";
 import { ObjectId  } from "mongodb";
@@ -10,8 +10,7 @@ import path from "path";
 import { writeFile } from "fs/promises";
 const router: Router = express.Router();
 
-const gameSessionCollection = db.collection<GameSession>("game_sessions");
-const guessCollection = db.collection<Guess>("guesses");
+
 
 async function downloadImage(url: string, filename: string): Promise<string | null> {
     try {
