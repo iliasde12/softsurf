@@ -113,6 +113,22 @@ router.get('/playlists', async (req, res) => {
     res.json(playlists);
 });
 
+//is voor songs gezeik
+router.post("/songs/save", async (req, res) => {
+    try {
+        const songData: SpotifyTrack = req.body;
+
+        const _id = await CreateSong(songData);
+
+        if (!_id) return res.status(500).json({ error: "Opslaan mislukt" });
+
+        res.json({ _id, ...songData });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: "Opslaan mislukt" });
+    }
+});
+
 router.get('/song/:id/playable', async (req, res) => {
     const rawId = req.params.id;
     const userId = req.session.user?._id;

@@ -71,11 +71,12 @@ router.get("/playlists", async (req, res) => {
 router.post("/playlist/create", upload.single('image'), async (req, res) => {
   const { name, description, songs } = req.body;
   const image = req.file ? req.file.filename : undefined;
-  const songsList = songs ? JSON.parse(songs) : [];
+  const songsList: ObjectId[] = songs
+      ? JSON.parse(songs).map((id: string) => new ObjectId(id))  // ← strings naar ObjectId
+      : [];
   const userId = req.session.user?._id;
 
-  console.log(req.file);
-  console.log("file name: " + req.file);
+  console.log("songs: ", songsList);
 
   if (!userId) return res.redirect('/login');
 
@@ -87,7 +88,7 @@ router.post("/playlist/create", upload.single('image'), async (req, res) => {
         image,
         songsList
     );
-  }catch (e){
+  } catch (e) {
     console.log(e);
   }
 
