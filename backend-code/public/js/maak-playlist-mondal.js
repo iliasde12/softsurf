@@ -85,6 +85,7 @@ document.querySelector("#songSearch").addEventListener("input", async (e) => {
             if (song.isSpotify) {
                 // Opslaan in DB, _id terugkrijgen
                 //is zodat het kan stoppen in db
+                console.log("spotify song");
                 const saveRes = await fetch("/api/songs/save", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
