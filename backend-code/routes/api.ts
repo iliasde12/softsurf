@@ -118,6 +118,8 @@ router.post("/songs/save", async (req, res) => {
     try {
         const songData: SpotifyTrack = req.body;
 
+        console.log("song: " + songData);
+
         const _id = await CreateSong(songData);
 
         if (!_id) return res.status(500).json({ error: "Opslaan mislukt" });
