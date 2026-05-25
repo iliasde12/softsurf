@@ -39,7 +39,10 @@ document.querySelector("#songSearch").addEventListener("input", async (e) => {
     const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
     const { fromDB, fromSpotify } = await res.json();
 
+    // DB songs: _id bewaren, isSpotify = false
     const normalizedDB = fromDB.map(song => ({
+        _id: song._id,  // ← bewaren!
+        isSpotify: false,
         name: song.name,
         popularity: song.popularity ?? 0,
         artists: [{ name: song.album?.artists?.[0]?.name ?? "Onbekend" }],
@@ -49,7 +52,13 @@ document.querySelector("#songSearch").addEventListener("input", async (e) => {
         }
     }));
 
-    const songs = [...normalizedDB, ...fromSpotify];
+    // Spotify songs: geen _id, isSpotify = true
+    const normalizedSpotify = fromSpotify.map(song => ({
+        ...song,
+        isSpotify: true,
+    }));
+
+    const songs = [...normalizedDB, ...normalizedSpotify];
 
     songs.slice(0, 5).forEach(song => {
         const item = document.createElement("div");
@@ -67,19 +76,45 @@ document.querySelector("#songSearch").addEventListener("input", async (e) => {
 
         const artist = document.createElement("p");
         artist.className = "text-[#6B6B8A] text-xs";
-        artist.textContent =  song.album?.artists?.[0]?.name ?? "Onbekend";
+        artist.textContent = song.artists?.[0]?.name ?? "Onbekend";
 
         text.append(name, artist);
         item.append(img, text);
-        item.addEventListener("click", () => addSong(song));
+
+        item.addEventListener("click", async () => {
+            if (song.isSpotify) {
+                // Opslaan in DB, _id terugkrijgen
+                //is zodat het kan stoppen in db
+                const saveRes = await fetch("/api/songs/save", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(song)
+                });
+                const saved = await saveRes.json();
+                addSong(saved); // nu met _id
+            } else {
+                addSong(song); // heeft al _id
+            }
+        });
+
         container.appendChild(item);
     });
 });
+//update songs
+//id voegen bij hidden input zodat backend er aankan
+//werkt niet er is geen id dus wordt zien of uit db is of spotify
+function updateSongsInput() {
+    console.log(selectedSongs);
+    document.getElementById("songsInput").value = JSON.stringify(
+        selectedSongs.map(s => s._id)  // only send MongoDB _id
+    );
+}
 
 // Nummer toevoegen
 function addSong(song) {
     if (selectedSongs.find(s => s.name === song.name)) return;
     selectedSongs.push(song);
+    updateSongsInput();
 
     const container = document.getElementById("selectedSongs");
 
@@ -109,6 +144,7 @@ function addSong(song) {
     remove.addEventListener("click", () => {
         selectedSongs.splice(selectedSongs.indexOf(song), 1);
         item.remove();
+        updateSongsInput();
     });
 
     item.append(img, text, remove);
@@ -264,6 +300,7 @@ async function createGeneratedPlaylist(tracks) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, tracks, stemming: currentStemming, mixtype: currentMixtype }),
         });
+
 
         const data = await res.json();
         if (!data.success) throw new Error(data.error);
