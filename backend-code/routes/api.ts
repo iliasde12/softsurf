@@ -144,6 +144,7 @@ router.get('/song/:id/playable', async (req, res) => {
         if (!song) return res.status(404).json({ error: 'Song niet gevonden' });
         songName = song.name;
         songArtist = song.artists?.[0]?.name ?? "";
+        console.log("artiest: " + songArtist);
     } else {
         const accessToken = res.locals.spotifyToken;
         if (!accessToken) return res.status(401).json({ error: 'Geen access token' });
@@ -153,7 +154,9 @@ router.get('/song/:id/playable', async (req, res) => {
         if (!insertedId) return res.status(500).json({ error: 'Song opslaan mislukt' });
         songId = insertedId;
         songName = spotifySong.name;
+        //deze werkt wel
         songArtist = spotifySong.artists?.[0]?.name ?? "";
+        console.log("artiest: " + songArtist);
     }
 
     const existing = await songPlayableCollection.findOne({ songId });

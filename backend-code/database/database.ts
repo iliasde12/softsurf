@@ -318,7 +318,7 @@ export async function GetSongsByIds(userId: ObjectId | undefined, songIds: Objec
     },
     {
       $lookup: {
-        from: "artists",
+        from: "artisten",  //geupdate
         localField: "artist_ids",
         foreignField: "_id",
         as: "artists",

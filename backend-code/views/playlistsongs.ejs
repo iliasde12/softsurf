@@ -90,6 +90,8 @@
             const name = card.dataset.songName;
             const artist = card.dataset.songArtist;
 
+            console.log(`${name}: ${artist}`);
+
             const res = await fetch(`/api/song/${songId}/playable`);
             const playable = await res.json();
 
