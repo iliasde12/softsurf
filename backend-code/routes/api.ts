@@ -1,6 +1,6 @@
 import { searchSongsDbSpotify } from "../helpers/search";
 import express, {Router} from "express";
-import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongs,GetSongsByIds,CreateSongPlayable,createPlaylist ,spotifySongCollection, userCollection, db } from "../database/database";
+import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongs,GetSongsByIds,CreateSongPlayable,createPlaylist ,spotifySongCollection, userCollection, gameSessionCollection,guessCollection } from "../database/database";
 import { moods } from "../interfaces/mood";
 import { GetTrackSpotify,searchTracks  } from "../helpers/spotify";
 import { ObjectId  } from "mongodb";
@@ -10,8 +10,7 @@ import path from "path";
 import { writeFile } from "fs/promises";
 const router: Router = express.Router();
 
-const gameSessionCollection = db.collection<GameSession>("game_sessions");
-const guessCollection = db.collection<Guess>("guesses");
+
 
 async function downloadImage(url: string, filename: string): Promise<string | null> {
     try {
@@ -145,6 +144,7 @@ router.get('/song/:id/playable', async (req, res) => {
         if (!song) return res.status(404).json({ error: 'Song niet gevonden' });
         songName = song.name;
         songArtist = song.artists?.[0]?.name ?? "";
+        console.log("artiest: " + songArtist);
     } else {
         const accessToken = res.locals.spotifyToken;
         if (!accessToken) return res.status(401).json({ error: 'Geen access token' });
@@ -154,7 +154,9 @@ router.get('/song/:id/playable', async (req, res) => {
         if (!insertedId) return res.status(500).json({ error: 'Song opslaan mislukt' });
         songId = insertedId;
         songName = spotifySong.name;
+        //deze werkt wel
         songArtist = spotifySong.artists?.[0]?.name ?? "";
+        console.log("artiest: " + songArtist);
     }
 
     const existing = await songPlayableCollection.findOne({ songId });
