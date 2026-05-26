@@ -268,7 +268,7 @@ export async function GetSongs(userId: ObjectId | undefined): Promise<any[]> {
   return await spotifySongCollection.aggregate([
     {
       $lookup: {
-        from: "artists",
+        from: "artisten",
         localField: "artist_ids",
         foreignField: "_id",
         as: "artists",
@@ -485,4 +485,30 @@ export async function CreateSongPlayable(songId: ObjectId, songName: string, art
     source: youtubeId ? "youtube" : "spotify_preview",
     createdAt: new Date()
   });
+
+}
+
+//dit is favorite
+export async function ToggleFavorite(userId: ObjectId, songId: ObjectId): Promise<boolean> {
+  const existing = await userSongCollection.findOne({ userId, songId });
+
+  const newValue = !(existing?.isFavorite ?? false);
+
+  await userSongCollection.updateOne(
+      { userId, songId },
+      {
+        $set: { isFavorite: newValue, updatedAt: new Date() },
+        $setOnInsert: { mood: null, createdAt: new Date() }
+      },
+      { upsert: true }
+  );
+
+  return newValue;
+}
+
+//krijg favoriete
+export async function GetFavorites(userId: ObjectId): Promise<any[]> {
+  const favorites = await userSongCollection.find({ userId, isFavorite: true }).toArray();
+  const songIds = favorites.map(f => f.songId);
+  return await GetSongsByIds(userId, songIds);
 }
