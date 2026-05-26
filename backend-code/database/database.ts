@@ -103,19 +103,43 @@ export async function createUser(
   }
 }
 
-// update users
+// update user
+//alleen de username en avatar
+//aan de hand van de id
 export async function editUser(
-  username: string,
-  email: string,
-  password: string,
-  avatar: { url: string; alt: string },
-) {
+    userId: ObjectId,
+    username?: string,
+    email?: string,
+    password?: string,
+): Promise<boolean> {
   try {
+    const update: any = { updatedAt: new Date() };
+
+    if (username) update.username = username;
+
+    if (email) {
+      const existing = await userCollection.findOne({ email });
+      if (existing && existing._id?.toString() !== userId.toString()) {
+        throw new Error("Email al in gebruik");
+      }
+      update.email = email;
+    }
+
+    if (password) {
+      update.password = await bcrypt.hash(password, saltRounds);
+    }
+
+    const result = await userCollection.updateOne(
+        { _id: userId },
+        { $set: update }
+    );
+
+    return result.modifiedCount === 1;
   } catch (e) {
     console.log(e);
+    throw e;
   }
 }
-
 // login user
 export async function login(email: string, password: string): Promise<User> {
   if (email === "" || password === "") {
