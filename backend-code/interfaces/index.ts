@@ -13,15 +13,15 @@ export interface User {
   _id?: ObjectId;
   username: string;
   email: string;
-  password: string;
-  avatar: { url: string; alt: string };
+  password?: string;
+  avatar?: { url: string; alt: string };
   //mood?: Mood;
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt: Date;
   //is voor de puten bij te houden en hoeveel games je hebt gedaan
-  totalScore: number;
-  gamesPlayed: number;
-  bestStreak: number;
+  totalScore?: number;
+  gamesPlayed?: number;
+  bestStreak?: number;
 }
 
 //spotify token interface om te connecten met user
