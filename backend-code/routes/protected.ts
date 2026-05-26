@@ -15,7 +15,9 @@ import {
   GetPlaylists,
   GetPlaylistById,
   GetSongsByIds,
-    userCollection
+    userCollection,
+  GetFavorites,
+  editUser
 } from "../database/database";
 import { moods } from "../interfaces/mood";
 
@@ -121,10 +123,69 @@ router.get("/playlist/songs/:id", async (req, res) => {
 });
 
 router.get("/account", async (req, res) => {
+  const userId = new ObjectId(req.session.user?._id);
+  const accessToken = res.locals.spotifyToken;
+
+  const [mongoPlaylists, favorites] = await Promise.all([
+    GetPlaylists(userId),
+    GetFavorites(userId),
+  ]);
+
+  let spotifyPlaylistCount = 0;
+
+  if (accessToken) {
+    const [data, spotifyUser] = await Promise.all([
+      GetPlaylistsSpotify(accessToken),
+      GetCurrentUser(accessToken),
+    ]);
+
+    const myPlaylists = (data ?? []).filter(
+        (p: { owner: { id: any } }) => p.owner.id === spotifyUser.id
+    );
+
+    spotifyPlaylistCount = myPlaylists.length;
+  }
+
   res.render("account", {
     user: req.session.user,
+    playlistCount: mongoPlaylists.length + spotifyPlaylistCount,
+    favoriteCount: favorites.length,
+    isPremium: !!accessToken,
   });
 });
+
+//update account
+//edit user
+router.post("/account/update", async (req, res) => {
+  const userId = new ObjectId(req.session.user?._id);
+  const { username, email } = req.body;
+  try {
+    await editUser(userId, username, email);
+    req.session.user = {
+      ...req.session.user, username, email, updatedAt: new Date()
+    };
+    //kan flash message voegen voor return
+    res.redirect("/account");
+  } catch (e: any) {
+    console.log(e);
+  }
+});
+
+//passowrd
+router.post("/account/password", async (req, res) => {
+  const userId = new ObjectId(req.session.user?._id);
+  const { wachtwoord, herhaalWachtwoord } = req.body;
+  if (wachtwoord !== herhaalWachtwoord) {
+    return res.status(400).json({ error: "Wachtwoorden komen niet overeen" });
+  }
+  try {
+    await editUser(userId, undefined, undefined, wachtwoord);
+    res.redirect("/account");
+  } catch (e: any) {
+    console.log(e);
+  }
+});
+
 
 router.get('/songs', async (req, res) => {
   const userId = req.session.user?._id;
@@ -213,7 +274,6 @@ router.get("/leaderboard", async (req, res) => {
     return res.status(500).send("Er ging iets mis");
   }
 });
-
 
 //alle auth voor spotify
 router.use("/auth", authSpotifyRouter);
