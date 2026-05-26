@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
+    <title>Nummers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/songs.js" defer></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['"halyard-display"', "sans-serif"],
+              body: ['"halyard-text"', "sans-serif"],
+            },
+            colors: {
+              base: "#0f0e17",
+              surface: "#1a1828",
+              card: "#221f33",
+              border: "#2e2b42",
+              accent: "#7c6aff",
+              green: "#4ade80",
+              red: "#f87171",
+              muted: "#6b6889",
+              light: "#e8e6f0",
+            },
+            keyframes: {
+              fadeUp: {
+                "0%": { opacity: "0", transform: "translateY(14px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+            animation: {
+              fadeUp: "fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
+    <!-- HEADER -->
+    <header class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start">
+      <button class="md:hidden text-white text-xl">☰</button>
+      <img src="/img/softsurf_logo.svg" alt="softsurf_logo" class="w-28 md:w-30 mx-auto md:mx-0" />
+      <div class="md:hidden w-6"></div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+      <%- include('partials/aside') %>
+
+      <!-- MAIN -->
+      <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+
+        <!-- Title -->
+        <div class="flex items-start justify-between mb-4 animate-fadeUp">
+          <div>
+            <h1 class="font-display text-3xl font-semibold tracking-tight text-light">Nummers</h1>
+            <p class="text-[#6B6B8A] text-xs md:text-sm">Alle nummers in je bibliotheek</p>
+          </div>
+        </div>
+
+        <!-- Search -->
+        <div class="mb-6 animate-fadeUp">
+          <div class="relative">
+            <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input
+              type="search"
+              id="searchInput"
+              placeholder="Zoek een nummer of artiest…"
+              class="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-light placeholder-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition"
+            />
+          </div>
+        </div>
+
+        <!-- Table header -->
+        <div class="hidden md:grid grid-cols-[40px_1fr_160px_100px_40px] gap-2 text-[#6B6B8A] text-xs uppercase tracking-widest mb-2 px-2 animate-fadeUp">
+          <span>#</span>
+          <span>Titel</span>
+          <span>Label</span>
+          <span>Datum</span>
+          <span></span>
+        </div>
+
+        <!-- Tracks -->
+        <div class="flex flex-col gap-1 animate-fadeUp" id="containerSongs">
+          <% songs.forEach((song, index) => { %>
+            <% const artistName = song.artists && song.artists[0] ? song.artists[0].name : 'Onbekend'; %>
+            <% const albumImg = song.album && song.album.images && song.album.images[0] ? song.album.images[0].url : '/img/default.svg'; %>
+            <% const releaseDate = song.album && song.album.release_date ? new Date(song.album.release_date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' }) : ''; %>
+            <% const isFavorite = song.userSong && song.userSong.isFavorite; %>
+
+            <div class="song-row playable-song grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_40px] gap-2 items-center <%= index % 2 === 0 ? 'bg-[#1E1B3A]' : '' %> hover:bg-[#2A2750] rounded-xl px-2 py-2 cursor-pointer transition"
+                 data-name="<%= song.name.toLowerCase() %>"
+                 data-artist="<%= artistName.toLowerCase() %>"
+                 data-song-id="<%= song._id %>"
+                 data-song-name="<%= song.name %>"
+                 data-song-artist="<%= artistName %>">
+
+              <!-- Nummer -->
+              <span class="text-[#6B6B8A] text-sm text-center"><%= index + 1 %></span>
+
+              <!-- Info -->
+              <div class="flex items-center gap-3">
+                <img src="<%= albumImg %>" alt="<%= song.name %>" class="w-9 h-9 rounded-lg object-cover shrink-0" />
+                <div>
+                  <p class="text-white text-sm font-semibold"><%= song.name %></p>
+                  <p class="text-[#6B6B8A] text-xs"><%= artistName %></p>
+                </div>
+              </div>
+
+              <!-- Mood select -->
+              <select class="mood-select hidden md:block bg-[#2A2750] text-white text-xs rounded-full px-2 py-1 border-none cursor-pointer"
+                      data-song-id="<%= song._id %>">
+                <option value="">geen</option>
+                <% moods.forEach(function(mood) { %>
+                  <option value="<%= mood.id %>" <%= song.userSong && song.userSong.mood === mood.id ? 'selected' : '' %>>
+                    <%= mood.emoji || '' %> <%= mood.name || '' %>
+                  </option>
+                <% }) %>
+              </select>
+
+              <!-- Datum -->
+              <span class="hidden md:block text-[#6B6B8A] text-xs"><%= releaseDate %></span>
+
+              <!-- Heart -->
+              <span
+                class="heart text-sm cursor-pointer transition <%= isFavorite ? 'text-[#E91E8C]' : 'text-[#6B6B8A]' %>"
+                data-song-id="<%= song._id %>"
+                data-favorite="<%= isFavorite ? 'true' : 'false' %>"
+              >♥</span>
+            </div>
+          <% }) %>
+        </div>
+      </main>
+    </div>
+
+    <!-- FOOTER -->
+    <script>
+      document.querySelectorAll('.playable-song').forEach(card => {
+        card.addEventListener('click', async () => {
+          const songId = card.dataset.songId;
+          const name = card.dataset.songName;
+          const artist = card.dataset.songArtist;
+
+          console.log(`${name}: ${artist}`);
+
+          const res = await fetch(`/api/song/${songId}/playable`);
+          const playable = await res.json();
+
+          if (playable.youtubeId) {
+            playSong(playable.youtubeId, name, artist);
+          }
+        });
+      });
+    </script>
+
+
+    <%- include('partials/footer') %>
+    <!--<footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
+      <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
+        <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+        <div>
+          <p class="text-white text-[1rem] font-semibold">Last Last</p>
+          <p class="text-white/75 text-[15px]">Burna Boy</p>
+        </div>
+      </div>
+
+      <div class="hidden md:flex flex-col items-center flex-1 gap-1">
+        <div class="flex items-center gap-4">
+          <button class="text-[#A0A0C0] hover:text-white text-sm">
+            <img class="w-6" src="img/left.svg" alt="" />
+          </button>
+          <button class="flex items-center justify-center text-black text-[1rem]">
+            <img class="w-6" src="img/pause.svg" alt="" />
+          </button>
+          <button class="text-[#A0A0C0] hover:text-white text-[1rem]">
+            <img class="w-6" src="img/right.svg" alt="" />
+          </button>
+        </div>
+        <div class="flex items-center gap-2 w-full max-w-md">
+          <span class="text-[#6B6B8A] text-[1rem]">1:22</span>
+          <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full">
+            <div class="w-[40%] h-full bg-[#7B6BF5] rounded-full"></div>
+          </div>
+          <span class="text-[#6B6B8A] text-[1rem]">4:08</span>
+        </div>
+      </div>
+
+      <button class="md:hidden flex items-center justify-center text-black text-[1rem] shrink-0">
+        <img class="w-6" src="img/pause.svg" alt="" />
+      </button>
+
+      <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
+        <span class="text-[#6B6B8A] text-[1rem]"><img class="w-6" src="img/volume-solid-full.svg" alt="" /></span>
+        <div class="w-20 h-1 bg-[#1E1B3A] rounded-full">
+          <div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
+        </div>
+      </div>
+    </footer>-->
+
+  </body>
+</html>

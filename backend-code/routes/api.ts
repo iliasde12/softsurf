@@ -1,11 +1,24 @@
 import { searchSongsDbSpotify } from "../helpers/search";
 import express, {Router} from "express";
-import{ CreateSong, playlistCollection,GetPlaylists,songPlayableCollection,GetSongs,GetSongsByIds,CreateSongPlayable,createPlaylist ,spotifySongCollection, userCollection, gameSessionCollection,guessCollection } from "../database/database";
+import{ CreateSong,
+    playlistCollection,
+    GetPlaylists,
+    songPlayableCollection,
+    GetSongsByIds,
+    CreateSongPlayable,
+    createPlaylist ,
+    spotifySongCollection,
+    userCollection,
+    gameSessionCollection,
+    guessCollection,
+    ToggleFavorite,
+    GetFavorites,
+    UpdateSongMood} from "../database/database";
 import { moods } from "../interfaces/mood";
 import { GetTrackSpotify,searchTracks  } from "../helpers/spotify";
 import { ObjectId  } from "mongodb";
 import { generatePlaylistSuggestions, generatePlaylistName } from "../helpers/claude";
-import {  SpotifyTrack, GameSession, Guess } from "../interfaces/index";
+import {  SpotifyTrack } from "../interfaces/index";
 import path from "path";
 import { writeFile } from "fs/promises";
 const router: Router = express.Router();
@@ -50,12 +63,22 @@ router.get("/collectie", async (req, res) => {
     try {
         const userId = req.session.user?._id;
         if (!userId) return res.status(401).json({ error: "Niet ingelogd" });
-        const songs = await GetSongs(userId);
+        const songs = await GetFavorites(new ObjectId(userId));
         res.json({ songs, moods });
     } catch (error) {
         res.status(500).json({ error: "Er ging iets mis bij het laden van je collectie" });
     }
 });
+
+// kan de user de mood aanpassen in de song
+router.post("/song/:id/mood", async (req, res) => {
+    const mood = parseInt(req.body.mood);
+    const userId = req.session.user?._id;
+    const songId = req.params.id;
+    await UpdateSongMood(userId, songId, mood);
+    res.json({ success: true });
+});
+
 
 router.post("/shazam/detect", async (req, res) => {
     try {
@@ -356,5 +379,18 @@ router.post("/game/session/end", async (req, res) => {
         return res.status(500).json({ error: "Er ging iets mis" });
     }
 });
+
+
+//favoriet
+router.post('/song/:id/favorite', async (req, res) => {
+    const userId = req.session.user?._id;
+    if (!userId) return res.status(401).json({ error: 'Niet ingelogd' });
+
+    const songId = new ObjectId(req.params.id);
+    const isFavorite = await ToggleFavorite(new ObjectId(userId), songId);
+
+    res.json({ isFavorite });
+});
+
 
 export default router;

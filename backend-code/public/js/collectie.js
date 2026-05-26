@@ -14,6 +14,29 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  function buildHeart(song) {
+    const heart = document.createElement("span");
+    heart.className = `text-sm cursor-pointer transition ${song.userSong?.isFavorite ? "text-[#E91E8C]" : "text-[#6B6B8A]"}`;
+    heart.textContent = "♥";
+
+    heart.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const result = await toggleFavorite(song._id);
+      heart.className = `text-sm cursor-pointer transition ${result ? "text-[#E91E8C]" : "text-[#6B6B8A]"}`;
+    });
+
+    return heart;
+  }
+
+  async function toggleFavorite(songId) {
+    const res = await fetch(`api/song/${songId}/favorite`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    return data.isFavorite;
+  }
+
   function updateViewButtons() {
     if (viewMode === "lijst") {
       lijstBtn.className = "bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full";
@@ -99,6 +122,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = document.createElement("div");
         card.className = "bg-[#1E1B3A] rounded-xl p-3 flex flex-col gap-2 cursor-pointer hover:bg-[#2A2750] transition";
 
+        card.addEventListener("click", async () => {
+              const songId = song._id;
+              const name = song.name;
+              const artist = song.artists?.[0]?.name ?? "Onbekend";
+
+              console.log(`${name}: ${artist}`);
+
+              const res = await fetch(`/api/song/${songId}/playable`);
+              const playable = await res.json();
+
+              if (playable.youtubeId) {
+                playSong(playable.youtubeId, name, artist);
+              }
+        })
+
         const albumArt = document.createElement("img");
         albumArt.className = "w-full aspect-square rounded-lg object-cover";
         albumArt.src = albumImg;
@@ -118,15 +156,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const bottom = document.createElement("div");
         bottom.className = "flex items-center justify-between";
 
-        const popularity = document.createElement("span");
+        /*const popularity = document.createElement("span");
         popularity.className = "text-[#A0A0C0] text-xs";
-        popularity.textContent = song.popularity ?? "";
+        popularity.textContent = song.popularity ?? "";*/
 
-        const heart = document.createElement("span");
+        //oude
+        /*const heart = document.createElement("span");
         heart.className = "text-[#E91E8C] text-sm";
-        heart.textContent = "♥";
+        heart.textContent = "♥";*/
 
-        bottom.append(popularity, heart);
+        //nieuwe die werkt
+        const heart = buildHeart(song);
+
+        bottom.append(/*popularity,*/ heart);
         card.append(albumArt, trackName, artistEl, moodSelect, bottom);
         containerPlaylist.appendChild(card);
 
@@ -135,6 +177,21 @@ document.addEventListener("DOMContentLoaded", () => {
         trackContainer.className = `grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center ${
             index % 2 === 0 ? "bg-[#1E1B3A]" : ""
         } hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition`;
+
+        trackContainer.addEventListener("click", async () => {
+          const songId = song._id;
+          const name = song.name;
+          const artist = song.artists?.[0]?.name ?? "Onbekend";
+
+          console.log(`${name}: ${artist}`);
+
+          const res = await fetch(`/api/song/${songId}/playable`);
+          const playable = await res.json();
+
+          if (playable.youtubeId) {
+            playSong(playable.youtubeId, name, artist);
+          }
+        })
 
         const number = document.createElement("span");
         number.className = "text-[#6B6B8A] text-sm text-center";
@@ -171,15 +228,18 @@ document.addEventListener("DOMContentLoaded", () => {
             ? new Date(release).toLocaleDateString("nl-NL", { day: "numeric", month: "short" })
             : "";
 
-        const popularity = document.createElement("span");
+        /*const popularity = document.createElement("span");
         popularity.className = "hidden md:block text-[#A0A0C0] text-xs";
-        popularity.textContent = song.popularity ?? "";
+        popularity.textContent = song.popularity ?? "";*/
 
-        const heart = document.createElement("span");
+        /*const heart = document.createElement("span");
         heart.className = "text-[#E91E8C] text-sm";
-        heart.textContent = "♥";
+        heart.textContent = "♥";*/
 
-        trackContainer.append(number, infoWrapper, labelWrapper, date, popularity, heart);
+        //nieuwe die werkt
+        const heart = buildHeart(song);
+
+        trackContainer.append(number, infoWrapper, labelWrapper, date, /*popularity,*/ heart);
         containerPlaylist.appendChild(trackContainer);
       }
     });
@@ -198,12 +258,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function updateMood(songId, mood) {
-    await fetch(`/song/${songId}/mood`, {
+    await fetch(`api/song/${songId}/mood`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ mood }),
     });
   }
+
 
   updateViewButtons();
   fetchCollectie();
