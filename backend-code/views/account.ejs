@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
     
-    <title>Vergelijken – Artiesten</title>
+    <title>Account</title>
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -64,11 +64,12 @@
 
         <!-- Cards grid -->
         <div class="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 items-start animate-fadeUp" style="animation-delay: 0.05s">
+
           <!-- Profielkaart -->
-          <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40">
+          <div class="md:row-span-2 bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40">
             <div class="flex flex-col items-center gap-3 px-6 pt-7 pb-5 border-b border-border">
               <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-lg">
-                   <img src="<%= user.avatar.url %>" alt="<%= user.avatar.alt %>" width="35" height="35" />
+                <img src="<%= user.avatar.url %>" alt="<%= user.avatar.alt %>" width="35" height="35" />
               </div>
               <div class="text-center">
                 <h2 class="font-display text-lg font-semibold text-light gebruikersnaamcontainer"></h2>
@@ -76,29 +77,18 @@
               </div>
               <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20">🎉 Feest-stemming</span>
 
-
-              
-            <!-- Niet verbonden -->
-    <!-- Niet verbonden -->
-<% if (!locals.spotifyToken) { %>
-  <a href="/auth/spotify" 
-     class="flex items-center gap-2 bg-[#1DB954] hover:bg-[#1aa34a] text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors duration-200">
-   <img src="/img/spotify-icon.svg" alt="Spotify" class="w-4 h-4" />
-    Verbind met Spotify
-  </a>
-
-<% } else { %>
-<!-- Verbonden -->
-  <div class="flex items-center gap-2 bg-[#1DB954]/20 text-[#1DB954] text-sm font-semibold px-4 py-2 rounded-full">
-   <img src="/img/spotify-icon.svg" alt="Spotify" class="w-4 h-4" />
-    Spotify verbonden ✓
-  </div>
-<% } %>
-
-
+              <% if (!locals.spotifyToken) { %>
+                <a href="/auth/spotify" class="flex items-center gap-2 bg-[#1DB954] hover:bg-[#1aa34a] text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors duration-200">
+                  <img src="/img/spotify-icon.svg" alt="Spotify" class="w-4 h-4" />
+                  Verbind met Spotify
+                </a>
+              <% } else { %>
+                <div class="flex items-center gap-2 bg-[#1DB954]/20 text-[#1DB954] text-sm font-semibold px-4 py-2 rounded-full">
+                  <img src="/img/spotify-icon.svg" alt="Spotify" class="w-4 h-4" />
+                  Spotify verbonden ✓
+                </div>
+              <% } %>
             </div>
-
-
 
             <div class="px-5 py-2">
               <div class="py-3.5 border-b border-border flex justify-between items-center px-1">
@@ -107,15 +97,18 @@
               </div>
               <div class="py-3.5 border-b border-border flex justify-between items-center px-1">
                 <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Afspeellijsten</span>
-                <span class="text-sm font-semibold text-green">12</span>
+                <span class="text-sm font-semibold text-green"><%= playlistCount %></span>
               </div>
               <div class="py-3.5 border-b border-border flex justify-between items-center px-1">
                 <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Favorieten</span>
-                <span class="text-sm font-semibold text-green">84</span>
+                <span class="text-sm font-semibold text-green"><%= favoriteCount %></span>
               </div>
               <div class="py-3.5 flex justify-between items-center px-1">
                 <span class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Abonnement</span>
-                <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full bg-accent/10 text-violet-400 border border-accent/20">Premium</span>
+                <span class="text-[0.7rem] font-semibold px-3 py-1 rounded-full
+                <%= isPremium ? 'bg-accent/10 text-violet-400 border border-accent/20' : 'bg-surface text-muted border border-border' %>">
+                <%= isPremium ? 'Premium' : 'Basic' %>
+              </span>
               </div>
             </div>
           </div>
@@ -127,91 +120,103 @@
                 <h2 class="font-display text-lg font-semibold text-light">Persoonlijke gegevens</h2>
                 <p class="text-xs text-muted mt-0.5">Beheer je naam, e-mail en gebruikersnaam</p>
               </div>
-              <button class="text-xs text-violet-400 border border-accent/30 bg-accent/10 hover:bg-accent/20 px-3 py-1 rounded-full transition" id="bewerkenButton">Bewerken</button>
+              <!--<button class="text-xs text-violet-400 border border-accent/30 bg-accent/10 hover:bg-accent/20 px-3 py-1 rounded-full transition" id="bewerkenButton">Bewerken</button>-->
             </div>
-            <div class="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
-               <!--
-              <div class="flex flex-col gap-1.5">
-                <label for="naam" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Naam</label>
-                <input
-                  id="naam"
-                  type="text"
-                  class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed" />
+            <form action="/account/update" method="POST">
+              <div class="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="flex flex-col gap-1.5">
+                  <label for="email" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">E-mail</label>
+                  <input value="<%= user.email %>" id="email" name="email" type="email"
+                         class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition" />
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label for="gebruikersnaam" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Gebruikersnaam</label>
+                  <input value="<%= user.username %>" id="gebruikersnaam" name="username" type="text"
+                         class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition" />
+                </div>
+                <div class="sm:col-span-2 flex justify-end">
+                  <button type="submit" class="text-xs text-violet-400 border border-accent/30 bg-accent/10 hover:bg-accent/20 px-3 py-1 rounded-full transition">Bewerken</button>
+                </div>
               </div>
-              -->
-              <div class="flex flex-col gap-1.5">
-                <label for="email" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">E-mail</label>
-                <input
-                  value="<%= user.email %>"
-                  id="email"
-                  type="email"
-                  class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed" />
-              </div>
-             <div class="flex flex-col gap-1.5">
-                <label for="gebruikersnaam" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Gebruikersnaam</label>
-                <input
-                value="<%= user.username %>"
-                  id="gebruikersnaam"
-                  type="text"
-                  class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed" />
-              </div>
-              <div class="flex flex-col gap-1.5">
-                <label for="taal" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Taal</label>
-                <input
-                  id="taal"
-                  type="text"
-                  value="Nederlands"
-                  disabled
-                  class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition disabled:opacity-60 disabled:cursor-not-allowed" />
-              </div>
-            </div>
+            </form>
           </div>
+
+
+
+          <!-- Wachtwoord wijzigen -->
+          <div class="bg-gradient-to-b from-card to-surface border border-border rounded-2xl overflow-hidden shadow-xl transition hover:border-accent/40">
+            <div class="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border">
+              <div>
+                <h2 class="font-display text-lg font-semibold text-light">Wachtwoord wijzigen</h2>
+                <p class="text-xs text-muted mt-0.5">Kies een sterk wachtwoord</p>
+              </div>
+            </div>
+            <form action="/account/password" method="POST">
+              <div class="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="flex flex-col gap-1.5">
+                  <label for="wachtwoord" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Nieuw wachtwoord</label>
+                  <input id="wachtwoord" name="wachtwoord" type="password" placeholder="••••••••"
+                         class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition" />
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label for="herhaalWachtwoord" class="text-[0.7rem] font-medium uppercase tracking-widest text-muted">Herhaal wachtwoord</label>
+                  <input id="herhaalWachtwoord" name="herhaalWachtwoord" type="password" placeholder="••••••••"
+                         class="bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-light outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition" />
+                </div>
+                <div class="sm:col-span-2 flex justify-end">
+                  <button type="submit" class="text-xs text-white bg-accent hover:bg-accent/80 px-4 py-2 rounded-full transition">Wachtwoord opslaan</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
         </div>
         <!-- /grid -->
       </main>
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
-      <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
-        <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
-        <div>
-          <p class="text-white text-[1rem] font-semibold">Last Last</p>
-          <p class="text-white/75 text-[15px]">Burna Boy</p>
-        </div>
-      </div>
+    <%- include('partials/footer') %>
+    <!-- <footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
+     <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
+       <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg flex items-center justify-center text-sm shrink-0">🎵</div>
+       <div>
+         <p class="text-white text-[1rem] font-semibold">Last Last</p>
+         <p class="text-white/75 text-[15px]">Burna Boy</p>
+       </div>
+     </div>
 
-      <div class="hidden md:flex flex-col items-center flex-1 gap-1">
-        <div class="flex items-center gap-4">
-          <button class="text-[#A0A0C0] hover:text-white text-sm">
-            <img class="w-6" src="img/left.svg" alt="" />
-          </button>
-          <button class="flex items-center justify-center text-black text-[1rem]">
-            <img class="w-6" src="img/pause.svg" alt="" />
-          </button>
-          <button class="text-[#A0A0C0] hover:text-white text-[1rem]">
-            <img class="w-6" src="img/right.svg" alt="" />
-          </button>
-        </div>
-        <div class="flex items-center gap-2 w-full max-w-md">
-          <span class="text-[#6B6B8A] text-[1rem]">1:22</span>
-          <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full">
-            <div class="w-[40%] h-full bg-[#7B6BF5] rounded-full"></div>
-          </div>
-          <span class="text-[#6B6B8A] text-[1rem]">4:08</span>
-        </div>
-      </div>
+     <div class="hidden md:flex flex-col items-center flex-1 gap-1">
+       <div class="flex items-center gap-4">
+         <button class="text-[#A0A0C0] hover:text-white text-sm">
+           <img class="w-6" src="img/left.svg" alt="" />
+         </button>
+         <button class="flex items-center justify-center text-black text-[1rem]">
+           <img class="w-6" src="img/pause.svg" alt="" />
+         </button>
+         <button class="text-[#A0A0C0] hover:text-white text-[1rem]">
+           <img class="w-6" src="img/right.svg" alt="" />
+         </button>
+       </div>
+       <div class="flex items-center gap-2 w-full max-w-md">
+         <span class="text-[#6B6B8A] text-[1rem]">1:22</span>
+         <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full">
+           <div class="w-[40%] h-full bg-[#7B6BF5] rounded-full"></div>
+         </div>
+         <span class="text-[#6B6B8A] text-[1rem]">4:08</span>
+       </div>
+     </div>
 
-      <button class="md:hidden flex items-center justify-center text-black text-[1rem] shrink-0">
-        <img class="w-6" src="img/pause.svg" alt="" />
-      </button>
+     <button class="md:hidden flex items-center justify-center text-black text-[1rem] shrink-0">
+       <img class="w-6" src="img/pause.svg" alt="" />
+     </button>
 
-      <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
-        <span class="text-[#6B6B8A] text-[1rem]"><img class="w-6" src="img/volume-solid-full.svg" alt="" /></span>
-        <div class="w-20 h-1 bg-[#1E1B3A] rounded-full">
-          <div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
-        </div>
-      </div>
-    </footer>
-  </body>
+     <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
+       <span class="text-[#6B6B8A] text-[1rem]"><img class="w-6" src="img/volume-solid-full.svg" alt="" /></span>
+       <div class="w-20 h-1 bg-[#1E1B3A] rounded-full">
+         <div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div>
+       </div>
+     </div>
+   </footer>-->
+ </body>
 </html>
