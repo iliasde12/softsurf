@@ -122,6 +122,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = document.createElement("div");
         card.className = "bg-[#1E1B3A] rounded-xl p-3 flex flex-col gap-2 cursor-pointer hover:bg-[#2A2750] transition";
 
+        card.addEventListener("click", async () => {
+              const songId = song._id;
+              const name = song.name;
+              const artist = song.artists?.[0]?.name ?? "Onbekend";
+
+              console.log(`${name}: ${artist}`);
+
+              const res = await fetch(`/api/song/${songId}/playable`);
+              const playable = await res.json();
+
+              if (playable.youtubeId) {
+                playSong(playable.youtubeId, name, artist);
+              }
+        })
+
         const albumArt = document.createElement("img");
         albumArt.className = "w-full aspect-square rounded-lg object-cover";
         albumArt.src = albumImg;
@@ -162,6 +177,21 @@ document.addEventListener("DOMContentLoaded", () => {
         trackContainer.className = `grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center ${
             index % 2 === 0 ? "bg-[#1E1B3A]" : ""
         } hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition`;
+
+        trackContainer.addEventListener("click", async () => {
+          const songId = song._id;
+          const name = song.name;
+          const artist = song.artists?.[0]?.name ?? "Onbekend";
+
+          console.log(`${name}: ${artist}`);
+
+          const res = await fetch(`/api/song/${songId}/playable`);
+          const playable = await res.json();
+
+          if (playable.youtubeId) {
+            playSong(playable.youtubeId, name, artist);
+          }
+        })
 
         const number = document.createElement("span");
         number.className = "text-[#6B6B8A] text-sm text-center";
@@ -228,12 +258,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function updateMood(songId, mood) {
-    await fetch(`/song/${songId}/mood`, {
+    await fetch(`api/song/${songId}/mood`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ mood }),
     });
   }
+
 
   updateViewButtons();
   fetchCollectie();

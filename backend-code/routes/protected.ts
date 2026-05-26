@@ -10,7 +10,6 @@ import {
 } from "../helpers/spotify";
 import {
   GetSongs,
-  UpdateSongMood,
   GetSongsByMood,
   createPlaylist,
   GetPlaylists,
@@ -127,6 +126,12 @@ router.get("/account", async (req, res) => {
   });
 });
 
+router.get('/songs', async (req, res) => {
+  const userId = req.session.user?._id;
+  const songs = await GetSongs(userId);
+  res.render('songs', { songs, moods, currentPath: '/songs', user: req.session.user });
+});
+
 router.get("/collectie", async (req, res) => {
   const userId = req.session.user?._id;
   const songs = await GetSongs(userId);
@@ -173,14 +178,6 @@ router.get("/playlist/:id/save", async (req, res) => {
   res.redirect(`/playlist/songs/${req.params.id}`);
 });
 
-// kan de user de mood aanpassen in de song
-router.post("/song/:id/mood", async (req, res) => {
-  const mood = parseInt(req.body.mood);
-  const userId = req.session.user?._id;
-  const songId = req.params.id;
-  await UpdateSongMood(userId, songId, mood);
-  res.json({ success: true });
-});
 
 //leaderboard voor punten
 router.get("/leaderboard", async (req, res) => {
