@@ -268,7 +268,7 @@ export async function GetSongs(userId: ObjectId | undefined): Promise<any[]> {
   return await spotifySongCollection.aggregate([
     {
       $lookup: {
-        from: "artists",
+        from: "artisten",
         localField: "artist_ids",
         foreignField: "_id",
         as: "artists",
