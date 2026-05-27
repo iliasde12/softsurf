@@ -24,6 +24,7 @@ app.set("port", process.env.PORT || 3000);
 
 //routes voegen
 app.use(mainRoutes);
+//kan cors voegen voor zekerheid
 //beide zijn beschermd dus ze moeten ingelogd zijn en acces token komt ook vrij als ze het hebben
 app.use(secureMiddleware, spotifyMiddleware, protectedRoutes);
 app.use("/api", secureMiddleware, spotifyMiddleware, apiRoutes);
