@@ -1,7 +1,7 @@
 <header
   class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start"
 >
-  <button class="md:hidden text-white text-xl">☰</button>
+  <button id="menuBtn" class="md:hidden text-white text-xl">☰</button>
   <img
     src="/img/softsurf_logo.svg"
     alt="softsurf_logo"
@@ -9,3 +9,11 @@
   />
   <div class="md:hidden w-6"></div>
 </header>
+
+<script>
+  document.getElementById('menuBtn').addEventListener('click', () => {
+    const aside = document.querySelector('aside');
+    aside.classList.toggle('hidden');
+    aside.classList.toggle('flex');
+  });
+</script>
