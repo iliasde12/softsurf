@@ -1,104 +1,18 @@
-<!DOCTYPE html>
-<html lang="nl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SoftSurf – kies je app</title>
-
-    <link rel="stylesheet" href="https://use.typekit.net/halyard.css" />
-    <link rel="icon" type="image/x-icon" href="/img/softsurf_logo.svg" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="js/defaultUser.js" async></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ['"halyard-display"', "sans-serif"],
-              body: ['"halyard-text"', "sans-serif"],
-            },
-            colors: {
-              bg: "#0b0c1e",
-              accent: "#7c6fff",
-            },
-            keyframes: {
-              fadeUp: {
-                "0%": { opacity: "0", transform: "translateY(18px)" },
-                "100%": { opacity: "1", transform: "translateY(0)" },
-              },
-              slideDown: {
-                "0%": { opacity: "0", transform: "translateY(-10px)" },
-                "100%": { opacity: "1", transform: "translateY(0)" },
-              },
-            },
-            animation: {
-              "fade-up": "fadeUp 0.55s ease forwards",
-              "slide-down": "slideDown 0.4s ease forwards",
-            },
-          },
-        },
-      };
-    </script>
-
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
-
-    <style>
-      body {
-        font-family: "halyard-text", sans-serif;
-        background: #0b0c1e;
-      }
-
-      .theme-music {
-        background:
-          radial-gradient(ellipse at 30% 20%, #6c5ce7 0%, transparent 65%),
-          radial-gradient(ellipse at 80% 80%, #a29bfe 0%, transparent 60%),
-          #11142a;
-      }
-      .theme-game {
-        background:
-          radial-gradient(ellipse at 40% 30%, #2d6a4f 0%, transparent 65%),
-          radial-gradient(ellipse at 70% 75%, #52b788 0%, transparent 60%),
-          #11142a;
-      }
-      .theme-lego {
-        background:
-          radial-gradient(ellipse at 35% 25%, #7b2d00 0%, transparent 65%),
-          radial-gradient(ellipse at 75% 70%, #e07b39 0%, transparent 60%),
-          #11142a;
-      }
-
-      .card {
-        transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-      }
-      .card:hover {
-        transform: translateY(-6px) scale(1.015);
-      }
-
-      .delay-1 {
-        animation-delay: 0.1s;
-        opacity: 0;
-      }
-      .delay-2 {
-        animation-delay: 0.2s;
-        opacity: 0;
-      }
-      .delay-3 {
-        animation-delay: 0.3s;
-        opacity: 0;
-      }
-      .delay-4 {
-        animation-delay: 0.4s;
-        opacity: 0;
-      }
-    </style>
-  </head>
+<%- include('partials/head') %>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+  body { font-family: "halyard-text", sans-serif; background: #0b0c1e; }
+  .theme-music { background: radial-gradient(ellipse at 30% 20%, #6c5ce7 0%, transparent 65%), radial-gradient(ellipse at 80% 80%, #a29bfe 0%, transparent 60%), #11142a; }
+  .theme-game { background: radial-gradient(ellipse at 40% 30%, #2d6a4f 0%, transparent 65%), radial-gradient(ellipse at 70% 75%, #52b788 0%, transparent 60%), #11142a; }
+  .theme-lego { background: radial-gradient(ellipse at 35% 25%, #7b2d00 0%, transparent 65%), radial-gradient(ellipse at 75% 70%, #e07b39 0%, transparent 60%), #11142a; }
+  .card { transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1); }
+  .card:hover { transform: translateY(-6px) scale(1.015); }
+  .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .delay-3 { animation-delay: 0.3s; opacity: 0; }
+  .delay-4 { animation-delay: 0.4s; opacity: 0; }
+</style>
 
   <body class="min-h-screen text-white overflow-x-hidden">
     <!-- NAVBAR -->
