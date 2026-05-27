@@ -1,191 +1,151 @@
-<!doctype html>
-<html lang="nl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
-  <script src="/js/game.js" defer></script>
-  <title>Raad het Nummer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['"halyard-display"', "sans-serif"],
-            body: ['"halyard-text"', "sans-serif"],
-          },
-          colors: {
-            base: "#0f0e17",
-            surface: "#1a1828",
-            card: "#221f33",
-            border: "#2e2b42",
-            accent: "#7c6aff",
-            green: "#4ade80",
-            red: "#f87171",
-            muted: "#6b6889",
-            light: "#e8e6f0",
-          },
-          keyframes: {
-            fadeUp: {
-              "0%": { opacity: "0", transform: "translateY(14px)" },
-              "100%": { opacity: "1", transform: "translateY(0)" },
-            },
-          },
-          animation: {
-            fadeUp: "fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both",
-          },
-        },
-      },
-    };
-  </script>
-</head>
+<%- include('partials/head') %>
+<script src="/js/game.js" defer></script>
 
 <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
-<!-- HEADER -->
-<header class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start">
-  <button class="md:hidden text-white text-xl">☰</button>
-  <img src="/img/softsurf_logo.svg" alt="softsurf_logo" class="w-28 md:w-30 mx-auto md:mx-0" />
-  <div class="md:hidden w-6"></div>
-</header>
+  <%- include('partials/header') %>
 
-<div class="flex flex-1 overflow-hidden">
-  <%- include('partials/aside') %>
+  <div class="flex flex-1 overflow-hidden">
+    <%- include('partials/aside') %>
 
-  <main class="flex-1 p-4 md:p-8 overflow-y-auto">
-    <div class="flex flex-col items-center max-w-xl mx-auto">
+    <main class="flex-1 p-4 md:p-8 overflow-y-auto">
+      <div class="flex flex-col items-center max-w-xl mx-auto">
+        <!-- ═══════════════════════════════ START SCHERM ═══════════════════════════════ -->
+        <div id="startScherm" class="flex flex-col items-center animate-fadeUp w-full">
+          <div class="text-6xl mb-6">🎵</div>
+          <h1 class="font-extrabold tracking-tight mb-2 text-center" style="font-size: 2rem">Raad het Nummer</h1>
+          <p class="mb-10 text-center text-muted" style="font-size: 1rem">Luister naar een fragment en raad welk nummer het is</p>
 
-      <!-- ═══════════════════════════════ START SCHERM ═══════════════════════════════ -->
-      <div id="startScherm" class="flex flex-col items-center animate-fadeUp w-full">
-        <div class="text-6xl mb-6">🎵</div>
-        <h1 class="font-extrabold tracking-tight mb-2 text-center" style="font-size:2rem">Raad het Nummer</h1>
-        <p class="mb-10 text-center text-muted" style="font-size:1rem">Luister naar een fragment en raad welk nummer het is</p>
-
-        <div class="w-full rounded-2xl p-8 mb-8 flex flex-col gap-4" style="background:#1a1730;border:1px solid #2a2648">
-          <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg" style="background:#2a2648">🎧</div>
-            <div>
-              <p class="font-semibold text-light">Luister naar het fragment</p>
-              <p class="text-muted text-sm">Klik op de vinyl om de muziek te starten</p>
+          <div class="w-full rounded-2xl p-8 mb-8 flex flex-col gap-4" style="background: #1a1730; border: 1px solid #2a2648">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg" style="background: #2a2648">🎧</div>
+              <div>
+                <p class="font-semibold text-light">Luister naar het fragment</p>
+                <p class="text-muted text-sm">Klik op de vinyl om de muziek te starten</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg" style="background: #2a2648">🔍</div>
+              <div>
+                <p class="font-semibold text-light">Raad het nummer</p>
+                <p class="text-muted text-sm">Typ de naam of klik een suggestie</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg" style="background: #2a2648">🏆</div>
+              <div>
+                <p class="font-semibold text-light">Bouw je streak op</p>
+                <p class="text-muted text-sm">Hoe meer je raadt, hoe hoger je score</p>
+              </div>
             </div>
           </div>
-          <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg" style="background:#2a2648">🔍</div>
-            <div>
-              <p class="font-semibold text-light">Raad het nummer</p>
-              <p class="text-muted text-sm">Typ de naam of klik een suggestie</p>
+
+          <button
+            id="startBtn"
+            class="w-full rounded-full py-4 font-bold text-white text-lg transition-transform hover:scale-105"
+            style="background: linear-gradient(135deg, #7c6aff, #a855f7); border: none; cursor: pointer">
+            Start het spel
+          </button>
+        </div>
+
+        <!-- ═══════════════════════════════ GAME SCHERM ════════════════════════════════ -->
+        <div id="gameScherm" class="hidden flex-col items-center animate-fadeUp w-full">
+          <h1 class="font-extrabold tracking-tight mb-2 text-center" style="font-size: 2rem">Raad het Nummer</h1>
+          <p class="mb-8 text-center text-muted" style="font-size: 1rem">Luister naar een preview en raad welk nummer het is</p>
+
+          <!-- Stats -->
+          <div class="flex gap-10 mb-8">
+            <div class="text-center">
+              <p id="statGoed" class="font-extrabold" style="font-size: 2.25rem; color: #5efca0; line-height: 1">0</p>
+              <p style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #5b5a7a; margin-top: 0.35rem; font-weight: 500">Goed</p>
+            </div>
+            <div class="text-center">
+              <p id="statTotaal" class="font-extrabold" style="font-size: 2.25rem; color: #a79bfa; line-height: 1">0</p>
+              <p style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #5b5a7a; margin-top: 0.35rem; font-weight: 500">Totaal</p>
+            </div>
+            <div class="text-center">
+              <p id="statReeks" class="font-extrabold" style="font-size: 2.25rem; color: #ff6b8a; line-height: 1">0</p>
+              <p style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #5b5a7a; margin-top: 0.35rem; font-weight: 500">Reeks</p>
             </div>
           </div>
-          <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg" style="background:#2a2648">🏆</div>
-            <div>
-              <p class="font-semibold text-light">Bouw je streak op</p>
-              <p class="text-muted text-sm">Hoe meer je raadt, hoe hoger je score</p>
+
+          <!-- Vinyl Card -->
+          <div class="w-full rounded-2xl flex flex-col items-center px-8 py-8 mb-4" style="background: #1a1730; border: 1px solid #2a2648">
+            <div class="relative mb-6" style="width: 10rem; height: 10rem">
+              <div id="vinylDisc" class="rounded-full flex items-center justify-center relative" style="width: 10rem; height: 10rem; background: #f07090">
+                <div class="absolute inset-0 rounded-full pointer-events-none" style="border: 6px solid #e0607f; opacity: 0.3"></div>
+                <div class="absolute rounded-full pointer-events-none" style="inset: 1rem; border: 4px solid #e0607f; opacity: 0.2"></div>
+                <div class="rounded-full" style="width: 2.5rem; height: 2.5rem; background: #0d0b1e"></div>
+              </div>
+              <button
+                id="playBtn"
+                class="absolute rounded-full flex items-center justify-center z-10"
+                style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 2.75rem; height: 2.75rem; background: rgba(255, 255, 255, 0.92); border: none; cursor: pointer">
+                <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#0D0B1E">
+                  <polygon points="5,3 19,12 5,21" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Hint dots -->
+            <div class="flex gap-2 mb-2" id="hintDots">
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #7b6bf5"></div>
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #7b6bf5"></div>
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #7b6bf5"></div>
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #2e2b4e"></div>
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #2e2b4e"></div>
+              <div class="rounded-full" style="width: 0.65rem; height: 0.65rem; background: #2e2b4e"></div>
+            </div>
+
+            <p id="artiestLabel" class="mb-5" style="font-size: 1rem; color: #5b5a7a">Artiest verborgen</p>
+
+            <div class="w-full rounded-full overflow-hidden" style="height: 3px; background: #2a2648">
+              <div id="progressBar" class="rounded-full" style="height: 100%; width: 0%; background: #7b6bf5; transition: width 0.2s"></div>
             </div>
           </div>
+
+          <!-- Feedback banner (verborgen) -->
+          <div id="feedbackBanner" class="hidden w-full rounded-xl px-5 py-4 mb-4 text-center font-semibold text-lg"></div>
+
+          <!-- Suggesties -->
+          <div id="suggestiesContainer" class="w-full rounded-2xl overflow-hidden" style="background: #1a1730; border: 1px solid #2a2648"></div>
+
+          <!-- Volgende ronde knop (verborgen) -->
+          <button
+            id="volgendeBtn"
+            class="hidden w-full mt-4 rounded-full py-3 font-bold text-white transition-transform hover:scale-105"
+            style="background: linear-gradient(135deg, #7c6aff, #a855f7); border: none; cursor: pointer">
+            Volgend nummer →
+          </button>
         </div>
 
-        <button id="startBtn" class="w-full rounded-full py-4 font-bold text-white text-lg transition-transform hover:scale-105"
-                style="background:linear-gradient(135deg,#7c6aff,#a855f7);border:none;cursor:pointer;">
-          Start het spel
-        </button>
-      </div>
+        <!-- ═══════════════════════════════ EINDE SCHERM ═══════════════════════════════ -->
+        <div id="eindeScherm" class="hidden flex-col items-center animate-fadeUp w-full text-center">
+          <div class="text-6xl mb-6">🏆</div>
+          <h1 class="font-extrabold text-3xl mb-2">Spel afgelopen!</h1>
+          <p class="text-muted mb-8">Hier zijn je resultaten</p>
 
-      <!-- ═══════════════════════════════ GAME SCHERM ════════════════════════════════ -->
-      <div id="gameScherm" class="hidden flex-col items-center animate-fadeUp w-full">
-
-        <h1 class="font-extrabold tracking-tight mb-2 text-center" style="font-size:2rem">Raad het Nummer</h1>
-        <p class="mb-8 text-center text-muted" style="font-size:1rem">Luister naar een preview en raad welk nummer het is</p>
-
-        <!-- Stats -->
-        <div class="flex gap-10 mb-8">
-          <div class="text-center">
-            <p id="statGoed" class="font-extrabold" style="font-size:2.25rem;color:#5efca0;line-height:1">0</p>
-            <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:#5b5a7a;margin-top:0.35rem;font-weight:500">Goed</p>
-          </div>
-          <div class="text-center">
-            <p id="statTotaal" class="font-extrabold" style="font-size:2.25rem;color:#a79bfa;line-height:1">0</p>
-            <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:#5b5a7a;margin-top:0.35rem;font-weight:500">Totaal</p>
-          </div>
-          <div class="text-center">
-            <p id="statReeks" class="font-extrabold" style="font-size:2.25rem;color:#ff6b8a;line-height:1">0</p>
-            <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:#5b5a7a;margin-top:0.35rem;font-weight:500">Reeks</p>
-          </div>
-        </div>
-
-        <!-- Vinyl Card -->
-        <div class="w-full rounded-2xl flex flex-col items-center px-8 py-8 mb-4" style="background:#1a1730;border:1px solid #2a2648">
-          <div class="relative mb-6" style="width:10rem;height:10rem">
-            <div id="vinylDisc" class="rounded-full flex items-center justify-center relative" style="width:10rem;height:10rem;background:#f07090">
-              <div class="absolute inset-0 rounded-full pointer-events-none" style="border:6px solid #e0607f;opacity:0.3"></div>
-              <div class="absolute rounded-full pointer-events-none" style="inset:1rem;border:4px solid #e0607f;opacity:0.2"></div>
-              <div class="rounded-full" style="width:2.5rem;height:2.5rem;background:#0d0b1e"></div>
+          <div class="w-full rounded-2xl p-8 mb-8 flex flex-col gap-4" style="background: #1a1730; border: 1px solid #2a2648">
+            <div class="flex justify-between items-center">
+              <span class="text-muted">Goed geraden</span>
+              <span id="eindeGoed" class="font-bold text-xl" style="color: #5efca0">0</span>
             </div>
-            <button id="playBtn" class="absolute rounded-full flex items-center justify-center z-10"
-                    style="top:50%;left:50%;transform:translate(-50%,-50%);width:2.75rem;height:2.75rem;background:rgba(255,255,255,0.92);border:none;cursor:pointer;">
-              <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#0D0B1E">
-                <polygon points="5,3 19,12 5,21" />
-              </svg>
-            </button>
+            <div class="flex justify-between items-center">
+              <span class="text-muted">Totaal gespeeld</span>
+              <span id="eindeTotaal" class="font-bold text-xl" style="color: #a79bfa">0</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-muted">Beste reeks</span>
+              <span id="eindeReeks" class="font-bold text-xl" style="color: #ff6b8a">0</span>
+            </div>
           </div>
 
-          <!-- Hint dots -->
-          <div class="flex gap-2 mb-2" id="hintDots">
-            <div class="rounded-full" style="width:0.65rem;height:0.65rem;background:#7b6bf5"></div>
-            <div class="rounded-full" style="width:0.65rem;height:0.65rem;background:#7b6bf5"></div>
-            <div class="rounded-full" style="width:0.65rem;height:0.65rem;background:#7b6bf5"></div>
-            <div class="rounded-full" style="width:0.65rem;height:0.65rem;background:#2e2b4e"></div>
-            <div class="rounded-full" style="width:0.65rem;height:0.65rem;background:#2e2b4e"></div>
-            <div class="rounded-full" style="width:0.65rem;height:0.65rem;background:#2e2b4e"></div>
-          </div>
-
-          <p id="artiestLabel" class="mb-5" style="font-size:1rem;color:#5b5a7a">Artiest verborgen</p>
-
-          <div class="w-full rounded-full overflow-hidden" style="height:3px;background:#2a2648">
-            <div id="progressBar" class="rounded-full" style="height:100%;width:0%;background:#7b6bf5;transition:width 0.2s"></div>
-          </div>
+          <button
+            id="opnieuwBtn"
+            class="w-full rounded-full py-4 font-bold text-white text-lg transition-transform hover:scale-105"
+            style="background: linear-gradient(135deg, #7c6aff, #a855f7); border: none; cursor: pointer">
+            Opnieuw spelen
+          </button>
         </div>
-
-        <!-- Feedback banner (verborgen) -->
-        <div id="feedbackBanner" class="hidden w-full rounded-xl px-5 py-4 mb-4 text-center font-semibold text-lg"></div>
-
-
-
-        <!-- Suggesties -->
-        <div id="suggestiesContainer" class="w-full rounded-2xl overflow-hidden" style="background:#1a1730;border:1px solid #2a2648"></div>
-
-        <!-- Volgende ronde knop (verborgen) -->
-        <button id="volgendeBtn" class="hidden w-full mt-4 rounded-full py-3 font-bold text-white transition-transform hover:scale-105"
-                style="background:linear-gradient(135deg,#7c6aff,#a855f7);border:none;cursor:pointer;">
-          Volgend nummer →
-        </button>
-      </div>
-
-      <!-- ═══════════════════════════════ EINDE SCHERM ═══════════════════════════════ -->
-      <div id="eindeScherm" class="hidden flex-col items-center animate-fadeUp w-full text-center">
-        <div class="text-6xl mb-6">🏆</div>
-        <h1 class="font-extrabold text-3xl mb-2">Spel afgelopen!</h1>
-        <p class="text-muted mb-8">Hier zijn je resultaten</p>
-
-        <div class="w-full rounded-2xl p-8 mb-8 flex flex-col gap-4" style="background:#1a1730;border:1px solid #2a2648">
-          <div class="flex justify-between items-center">
-            <span class="text-muted">Goed geraden</span>
-            <span id="eindeGoed" class="font-bold text-xl" style="color:#5efca0">0</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-muted">Totaal gespeeld</span>
-            <span id="eindeTotaal" class="font-bold text-xl" style="color:#a79bfa">0</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-muted">Beste reeks</span>
-            <span id="eindeReeks" class="font-bold text-xl" style="color:#ff6b8a">0</span>
-          </div>
-        </div>
-
-        <button id="opnieuwBtn" class="w-full rounded-full py-4 font-bold text-white text-lg transition-transform hover:scale-105"
-                style="background:linear-gradient(135deg,#7c6aff,#a855f7);border:none;cursor:pointer;">
-          Opnieuw spelen
-        </button>
       </div>
 
     </div>
@@ -221,10 +181,10 @@
       <span class="text-[#6B6B8A] text-[1rem]">4:08</span>
     </div>
   </div>
-  <button class="md:hidden flex items-center justify-center shrink-0"><img class="w-6" src="img/pause.svg" alt="" /></button>
-  <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
-    <span class="text-[#6B6B8A]"><img class="w-6" src="img/volume-solid-full.svg" alt="" /></span>
-    <div class="w-20 h-1 bg-[#1E1B3A] rounded-full"><div class="w-[70%] h-full bg-[#7B6BF5] rounded-full"></div></div>
+
+  <!-- YouTube container (verborgen, buiten scherm) -->
+  <div id="ytContainer" style="position: fixed; bottom: -9999px; left: -9999px; width: 1px; height: 1px">
+    <div id="ytPlayer"></div>
   </div>
 </footer>-->
 </body>

@@ -21,25 +21,13 @@
               nummers
             </p>
           </div>
-          <div class="flex gap-2 mt-1">
-            <button
-              class="bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full"
-            >
-              Lijst
-            </button>
-            <button
-              class="border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition"
-            >
-              Raster
-            </button>
-          </div>
         </div>
 
         <!-- Search + filters -->
 
         <!-- hier komt generate -->
-        <section class="flex items-center justify-between bg-[#2A2650] mb-6 w-full px-6 py-4 rounded-2xl gap-6 animate-fadeUp">
-          <div class="flex gap-4">
+        <section class="flex flex-col md:flex-row md:items-center md:justify-between bg-[#2A2650] mb-6 w-full px-6 py-4 rounded-2xl gap-4 animate-fadeUp">
+          <div class="flex flex-wrap gap-3">
 
             <div class="flex flex-col gap-1 bg-[#4d467a] px-5 py-3 rounded-xl shadow-[0_4px_15px_#0000005a]">
               <span class="text-zinc-400 text-[11px] uppercase tracking-widest">Stemming</span>
@@ -79,18 +67,13 @@
 
           <button
                   id="generateBtn"
-                  class="bg-[#934c99] hover:brightness-110 transition text-white text-sm font-semibold px-6 py-3 rounded-xl shadow-[0_4px_15px_#934c9966] whitespace-nowrap cursor-pointer"
+                  class="bg-[#934c99] hover:brightness-110 transition text-white text-sm font-semibold px-6 py-3 rounded-xl shadow-[0_4px_15px_#934c9966] whitespace-nowrap cursor-pointer w-full md:w-auto"
           >
             ✦ Genereer afspeellijst
           </button>
         </section>
         <section class="flex flex-row justify-between mb-4">
           <h2><%= playlists.length + customPlaylists.length %> afspeelijsten</h2>
-          <!-- <p
-             class="mr-5 pr-2.5 pl-2.5 pt-1 pb-1 rounded-[40px] border-[3px] border-[#7B6BF5] hover:bg-[#7B6BF5]"
-           >
-             Alles Opslaan
-           </p>-->
           <button
                   class="bg-[#934c99] hover:brightness-110 transition text-white text-sm font-semibold px-6 py-3 rounded-xl shadow-[0_4px_15px_#934c9966] whitespace-nowrap cursor-pointer"
             id="maak-playlist"
@@ -151,19 +134,6 @@
           </div>
         </div>
 
-         <!-- Table header (hidden on mobile)
-         <div
-           class="hidden md:grid grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 text-[#6B6B8A] text-base uppercase tracking-widest mb-2 px-2"
-         >
-           <span class="text-white">#</span>
-           <span class="text-white">Titel</span>
-           <span class="text-white">Label</span>
-           <span class="text-white">Datum</span>
-           <span class="text-white">Pop</span>
-           <span class="text-white"></span>
-         </div>-->
-
-
         <div class="grid grid-cols-2 animate-fadeUp md:grid-cols-3 lg:grid-cols-4 gap-4" id="playlistsContainer">
           <!-- Spotify playlists -->
           <% playlists.forEach((playlist) => { %>
@@ -193,7 +163,6 @@
               <!-- Footer -->
               <div class="flex items-center justify-between mt-auto">
                 <span class="text-white/40 text-xs"><%= playlist.items.total %> nummers</span>
-                <!-- <span class="text-[#E91E8C] text-sm">♥</span>-->
               </div>
 
             </div>
@@ -225,7 +194,6 @@
                   <!-- Footer -->
                   <div class="flex items-center justify-between mt-auto">
                     <span class="text-white/40 text-xs"><%= playlist.songs?.length || 0 %> nummers</span>
-                    <!-- <span class="text-[#E91E8C] text-sm">♥</span>-->
                   </div>
 
                 </div>
