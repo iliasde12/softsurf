@@ -99,16 +99,20 @@ function togglePlay() {
 // luistert naar statuswijzigingen van de player en update het play/pause icoon
 function onPlayerStateChange(event) {
     const pauseImg = document.getElementById('pauseBtn');
+    const pauseImgMobile = document.getElementById('pauseBtnMobile');
     if (event.data === YT.PlayerState.PLAYING) {
         isPlaying = true;
-        pauseImg.src = "/img/pause.svg";
+        if (pauseImg) pauseImg.src = "/img/pause.svg";
+        if (pauseImgMobile) pauseImgMobile.src = "/img/pause.svg";
     } else if (event.data === YT.PlayerState.ENDED) {
         isPlaying = false;
-        pauseImg.src = "/img/play.svg";
+        if (pauseImg) pauseImg.src = "/img/play.svg";
+        if (pauseImgMobile) pauseImgMobile.src = "/img/play.svg";
         nextSong();
     } else {
         isPlaying = false;
-        pauseImg.src = "/img/play.svg";
+        if (pauseImg) pauseImg.src = "/img/play.svg";
+        if (pauseImgMobile) pauseImgMobile.src = "/img/play.svg";
     }
 }
 
@@ -152,17 +156,28 @@ function saveQueue() {
     localStorage.setItem('queueIndex', queueIndex.toString());
 }
 
-// update elke seconde de progressbalk en tijdweergave
+// update elke seconde de progressbalk en tijdweergave (desktop + mobiel)
 setInterval(() => {
     if (!player || !player.getCurrentTime) return;
     const current = player.getCurrentTime();
     const duration = player.getDuration();
     if (!duration) return;
     const pct = (current / duration) * 100;
+    const formattedCurrent = formatTime(current);
+    const formattedDuration = formatTime(duration);
 
+    // Desktop
     document.getElementById('progressBar').style.width = `${pct}%`;
-    document.getElementById('currentTime').textContent = formatTime(current);
-    document.getElementById('duration').textContent = formatTime(duration);
+    document.getElementById('currentTime').textContent = formattedCurrent;
+    document.getElementById('duration').textContent = formattedDuration;
+
+    // Mobiel
+    const progressBarMobile = document.getElementById('progressBarMobile');
+    const currentTimeMobile = document.getElementById('currentTimeMobile');
+    const durationMobile = document.getElementById('durationMobile');
+    if (progressBarMobile) progressBarMobile.style.width = `${pct}%`;
+    if (currentTimeMobile) currentTimeMobile.textContent = formattedCurrent;
+    if (durationMobile) durationMobile.textContent = formattedDuration;
 }, 1000);
 
 // zet seconden om naar een leesbaar tijdformaat zoals 3:45
@@ -173,10 +188,21 @@ function formatTime(seconds) {
     return `${m}:${s}`;
 }
 
-// springt naar het punt in de song waar de gebruiker op de progressbalk klikt
+// springt naar het punt in de song waar de gebruiker op de progressbalk klikt (desktop)
 function seekTo(event) {
     if (!player) return;
     const track = document.getElementById('progressTrack');
+    const rect = track.getBoundingClientRect();
+    const pct = Math.min(Math.max((event.clientX - rect.left) / rect.width, 0), 1);
+    const duration = player.getDuration();
+    if (!duration) return;
+    player.seekTo(pct * duration, true);
+}
+
+// springt naar het punt in de song waar de gebruiker op de mobiele progressbalk klikt
+function seekToMobile(event) {
+    if (!player) return;
+    const track = document.getElementById('progressTrackMobile');
     const rect = track.getBoundingClientRect();
     const pct = Math.min(Math.max((event.clientX - rect.left) / rect.width, 0), 1);
     const duration = player.getDuration();

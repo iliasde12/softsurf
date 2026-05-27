@@ -11,9 +11,17 @@
 </header>
 
 <script>
-  document.getElementById('menuBtn').addEventListener('click', () => {
+  function toggleMenu() {
     const aside = document.querySelector('aside');
     aside.classList.toggle('hidden');
     aside.classList.toggle('flex');
+  }
+
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
+
+  // close button inside the aside
+  document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.getElementById('closeMenuBtn');
+    if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
   });
 </script>
