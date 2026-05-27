@@ -193,26 +193,3 @@ export async function searchTracks(
       }))
   );
 }
-
-//getsimilartracks voor games om verschillende voorbeelden te zien
-export async function getSimilarTracks(
-    accessToken: string,
-    artist: string,
-    excludeId: string,  // zodat het echte nummer er niet tussen zit dus id
-    limit = 3
-){
-  const res = await fetch(
-      `https://api.spotify.com/v1/search?q=artist:${encodeURIComponent(artist)}&type=track&limit=10`,
-      { headers: { Authorization: `Bearer ${accessToken}` } }
-  );
-
-  const data = await res.json();
-
-  return data.tracks.items
-      .filter((track: SpotifyTrack) => track.id !== excludeId)
-      .slice(0, limit)
-      .map((track: SpotifyTrack) => ({
-        title: track.name,
-        artist: track.artists[0].name,
-      }));
-}
