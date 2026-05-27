@@ -16,7 +16,7 @@ import{ CreateSong,
     UpdateSongMood} from "../database/database";
 import {  GetArtistLastFm , SearchArtistLastFm } from "../helpers/lastFm";
 import { moods } from "../interfaces/mood";
-import { GetTrackSpotify,searchTracks } from "../helpers/spotify";
+import { GetTrackSpotify,searchTracks,GetArtistImageSpotify,GetTrackDetails,searchSpotifyTracks } from "../helpers/spotify";
 import { ObjectId  } from "mongodb";
 import { generatePlaylistSuggestions, generatePlaylistName } from "../helpers/claude";
 import { SpotifyTrack } from "../interfaces/index";
@@ -402,16 +402,65 @@ router.post("/song/:id/favorite", async (req, res) => {
 //voor de vergelijkingen
 // EERST zoek route
 router.get("/vergelijk/artiest/zoek", async (req, res) => {
-    const query = req.query.q as string;
-    if (!query) return res.json([]);
-    const artists = await SearchArtistLastFm(query);
-    res.json(artists);
+  const accessToken = res.locals.spotifyToken;
+  const q = req.query.q as string;
+
+  const results = await SearchArtistLastFm(q); // last.fm search
+
+  if (accessToken) {
+    const withImages = await Promise.all(results.map(async (artist: any) => {
+      const spotifyImage = await GetArtistImageSpotify(accessToken, artist.name);
+      return { ...artist, image: spotifyImage ?? artist.image };
+    }));
+    return res.json(withImages);
+  }
+
+  res.json(results);
 });
+
 
 // DAN pas de :name route
 router.get("/vergelijk/artiest/:name", async (req, res) => {
-    const artistName = decodeURIComponent(req.params.name);
-    const data = await GetArtistLastFm(artistName);
-    res.json(data);
+  const accessToken = res.locals.spotifyToken;
+  const artistName = req.params.name;
+
+  const artistData = await GetArtistLastFm(artistName);
+
+  let image = artistData.image; // last.fm image als fallback
+
+  if (accessToken) {
+    const spotifyImage = await GetArtistImageSpotify(accessToken, artistName);
+    if (spotifyImage) image = spotifyImage; // alleen vervangen als spotify image beschikbaar is
+  }
+
+  res.json({ ...artistData, image });
 });
+
+// zoeken
+router.get("/vergelijk/nummer/zoek", async (req, res) => {
+  const accessToken = res.locals.spotifyToken;
+  const q = req.query.q as string;
+  if (!accessToken) return res.status(401).json({ error: "Niet ingelogd" });
+
+  const tracks = await searchSpotifyTracks(q, accessToken);
+  const results = tracks.map((t: any) => ({
+    id: t.id,
+    name: t.name,
+    artist: t.artists?.map((a: any) => a.name).join(", "),
+    image: t.album?.images?.[0]?.url ?? null,
+  }));
+
+  res.json(results);
+});
+
+// details
+router.get("/vergelijk/nummer/:id", async (req, res) => {
+  const accessToken = res.locals.spotifyToken;
+  if (!accessToken) return res.status(401).json({ error: "Niet ingelogd" });
+
+  const track = await GetTrackDetails(accessToken, req.params.id);
+  res.json(track);
+});
+
+
 export default router;

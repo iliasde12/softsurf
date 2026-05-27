@@ -48,10 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
             item.className = "flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-accent/10 transition";
 
             const img = document.createElement("img");
-            const imgUrl = Array.isArray(artist.image)
-                ? artist.image.find(i => i.size === "medium")?.["#text"]
-                : null;
-            img.src = imgUrl && imgUrl !== "" ? imgUrl : "https://placehold.co/36x36/1a1828/6b6889?text=?";
+            const imgUrl = artist.image && artist.image !== ""
+                ? artist.image
+                : "https://placehold.co/36x36/1a1828/6b6889?text=?";
+            img.src = imgUrl;
             img.className = "w-9 h-9 rounded-lg object-cover shrink-0";
 
             const name = document.createElement("span");
@@ -109,11 +109,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 : "https://placehold.co/80x80/1a1828/6b6889?text=?";
         }
 
-        document.getElementById(`listeners-${slot}-artist`).textContent = formatNumber(artist.listeners);
-        document.getElementById(`playcount-${slot}-artist`).textContent = formatNumber(artist.playcount);
+        // Waarden altijd tonen
+        const listenersEl = document.getElementById(`listeners-${slot}-artist`);
+        const playcountEl = document.getElementById(`playcount-${slot}-artist`);
+        const similarEl = document.getElementById(`similar-${slot}-artist`);
+
+        listenersEl.textContent = formatNumber(artist.listeners);
+        playcountEl.textContent = formatNumber(artist.playcount);
         document.getElementById(`toptrack-${slot}-artist`).textContent = artist.topTrack;
-        document.getElementById(`similar-${slot}-artist`).textContent = artist.similarCount;
+        similarEl.textContent = artist.similarCount;
         document.getElementById(`genre-${slot}-artist`).textContent = artist.genre;
+
+        // Icons resetten naar neutraal als maar 1 artiest
+        const other = slot === "eerste" ? selectedArtists[1] : selectedArtists[0];
+        if (!other) {
+            [`listeners`, `playcount`, `similar`].forEach(stat => {
+                const icon = document.getElementById(`icon-${stat}-${slot}`);
+                if (icon) {
+                    icon.innerHTML = `<span id="${stat}-${slot}-artist">${icon.querySelector("span")?.textContent ?? ""}</span>`;
+                    icon.className = "flex items-center gap-1.5 text-[1rem] font-semibold text-muted";
+                }
+            });
+        }
     }
 
     function renderSummary(a1, a2) {
@@ -121,9 +138,13 @@ document.addEventListener("DOMContentLoaded", () => {
         updateStatIcon("playcount", a1.playcount >= a2.playcount);
         updateStatIcon("similar", a1.similarCount >= a2.similarCount);
 
-        updateProgressBar("listeners", a1.listeners, a2.listeners, Math.max(a1.listeners, a2.listeners));
-        updateProgressBar("playcount", a1.playcount, a2.playcount, Math.max(a1.playcount, a2.playcount));
-        updateProgressBar("similar", a1.similarCount, a2.similarCount, Math.max(a1.similarCount, a2.similarCount));
+        const maxListeners = Math.max(a1.listeners, a2.listeners) || 1;
+        const maxPlaycount = Math.max(a1.playcount, a2.playcount) || 1;
+        const maxSimilar = Math.max(a1.similarCount, a2.similarCount) || 1;
+
+        updateProgressBar("listeners", a1.listeners, a2.listeners, maxListeners);
+        updateProgressBar("playcount", a1.playcount, a2.playcount, maxPlaycount);
+        updateProgressBar("similar", a1.similarCount, a2.similarCount, maxSimilar);
 
         const winner = a1.listeners >= a2.listeners ? a1.name : a2.name;
         const loser = a1.listeners >= a2.listeners ? a2.name : a1.name;
@@ -140,15 +161,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const icon2 = document.getElementById(`icon-${stat}-tweede`);
         if (!icon1 || !icon2) return;
 
+        const val1 = document.getElementById(`${stat}-eerste-artist`)?.textContent ?? "";
+        const val2 = document.getElementById(`${stat}-tweede-artist`)?.textContent ?? "";
+
         if (firstWins) {
-            icon1.innerHTML = greenCheck();
+            icon1.innerHTML = greenCheck() + `<span id="${stat}-eerste-artist">${val1}</span>`;
             icon1.className = "flex items-center gap-1.5 text-[1rem] font-semibold text-green";
-            icon2.innerHTML = redCross();
+            icon2.innerHTML = redCross() + `<span id="${stat}-tweede-artist">${val2}</span>`;
             icon2.className = "flex items-center gap-1.5 text-base font-semibold text-red";
         } else {
-            icon1.innerHTML = redCross();
+            icon1.innerHTML = redCross() + `<span id="${stat}-eerste-artist">${val1}</span>`;
             icon1.className = "flex items-center gap-1.5 text-base font-semibold text-red";
-            icon2.innerHTML = greenCheck();
+            icon2.innerHTML = greenCheck() + `<span id="${stat}-tweede-artist">${val2}</span>`;
             icon2.className = "flex items-center gap-1.5 text-[1rem] font-semibold text-green";
         }
     }
