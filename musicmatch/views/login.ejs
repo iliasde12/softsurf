@@ -34,6 +34,13 @@
         </div>
 
         <form method="post" action="/login" id="form">
+
+          <% if (locals.error) { %>
+            <div class="bg-red/20 text-red border border-red/30 rounded-xl px-4 py-3 mb-4 text-sm">
+              <%= error %>
+            </div>
+          <% } %>
+
           <div class="form-input">
             <label for="email">E-MAILADRES</label>
             <input
