@@ -1,47 +1,77 @@
-<footer class="bg-[#100E22] h-16 flex items-center px-4 md:px-6 gap-4 border-t border-[#1E1B3A] shrink-0">
+<footer class="bg-[#100E22] px-4 md:px-6 border-t border-[#1E1B3A] shrink-0">
   <div id="ytPlayer"></div>
 
-  <div class="flex items-center gap-3 flex-1 md:w-[20%] md:flex-none">
-    <div class="w-10 h-10 bg-[#2A1B4A] rounded-lg overflow-hidden flex items-center justify-center shrink-0">
-      <img id="playerThumb" src="" alt="" class="w-full h-full object-cover hidden" />
-      <span id="playerThumbFallback" class="text-sm">🎵</span>
-    </div>
-    <div>
-      <p id="playerName" class="text-white text-[1rem] font-semibold">Geen nummer</p>
-      <p id="playerArtist" class="text-white/75 text-[15px]"></p>
-    </div>
-  </div>
+  <!-- Hoofdrij: altijd zichtbaar -->
+  <div class="flex items-center gap-3 h-14 md:h-16">
 
-  <div class="hidden md:flex flex-col items-center flex-1 gap-1">
-    <div class="flex items-center gap-4">
-      <button onclick="prevSong()" class="text-[#A0A0C0] hover:text-white text-sm">
-        <img class="w-6" src="/img/left.svg" alt="" />
+    <!-- Nummer info -->
+    <div class="flex items-center gap-3 flex-1 min-w-0 md:flex-none md:w-[20%]">
+      <div class="w-9 h-9 md:w-10 md:h-10 bg-[#2A1B4A] rounded-lg overflow-hidden flex items-center justify-center shrink-0">
+        <img id="playerThumb" src="" alt="" class="w-full h-full object-cover hidden" />
+        <span id="playerThumbFallback" class="text-sm">🎵</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p id="playerName" class="text-white text-sm md:text-[1rem] font-semibold truncate">Geen nummer</p>
+        <p id="playerArtist" class="text-white/75 text-xs md:text-[15px] truncate"></p>
+      </div>
+    </div>
+
+    <!-- Desktop: knoppen + progress bar (gecentreerd) -->
+    <div class="hidden md:flex flex-col items-center flex-1 gap-1">
+      <div class="flex items-center gap-4">
+        <button onclick="prevSong()" class="text-[#A0A0C0] hover:text-white">
+          <img class="w-6" src="/img/left.svg" alt="" />
+        </button>
+        <button onclick="togglePlay()" class="flex items-center justify-center">
+          <img id="pauseBtn" class="w-6" src="/img/play.svg" alt="" />
+        </button>
+        <button onclick="nextSong()" class="text-[#A0A0C0] hover:text-white">
+          <img class="w-6" src="/img/right.svg" alt="" />
+        </button>
+      </div>
+      <div class="flex items-center gap-2 w-full max-w-md">
+        <span id="currentTime" class="text-[#6B6B8A] text-[1rem]">0:00</span>
+        <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full relative cursor-pointer" id="progressTrack" onclick="seekTo(event)">
+          <div id="progressBar" class="w-0 h-full bg-[#7B6BF5] rounded-full pointer-events-none"></div>
+        </div>
+        <span id="duration" class="text-[#6B6B8A] text-[1rem]">0:00</span>
+      </div>
+    </div>
+
+    <!-- Mobile: prev / play-pause / next -->
+    <div class="flex md:hidden items-center gap-4 shrink-0">
+      <button onclick="prevSong()">
+        <img class="w-5" src="/img/left.svg" alt="vorige" />
       </button>
       <button onclick="togglePlay()" class="flex items-center justify-center">
-        <img id="pauseBtn" class="w-6" src="/img/play.svg" alt="" />
+        <img id="pauseBtnMobile" class="w-5" src="/img/play.svg" alt="play" />
       </button>
-      <button onclick="nextSong()" class="text-[#A0A0C0] hover:text-white text-[1rem]">
-        <img class="w-6" src="/img/right.svg" alt="" />
+      <button onclick="nextSong()">
+        <img class="w-5" src="/img/right.svg" alt="volgende" />
       </button>
     </div>
 
-    <div class="flex items-center gap-2 w-full max-w-md">
-      <span id="currentTime" class="text-[#6B6B8A] text-[1rem]">0:00</span>
-      <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full relative cursor-pointer" id="progressTrack" onclick="seekTo(event)">
-        <div id="progressBar" class="w-0 h-full bg-[#7B6BF5] rounded-full pointer-events-none"></div>
+    <!-- Volume (alleen desktop) -->
+    <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
+      <button onclick="toggleMute()" class="text-[#6B6B8A] hover:text-white">
+        <img id="volIcon" class="w-6" src="/img/volume-solid-full.svg" alt="" />
+      </button>
+      <div class="w-20 h-1 bg-[#1E1B3A] rounded-full relative cursor-pointer" id="volumeTrack" onclick="setVolume(event)">
+        <div id="volumeBar" class="w-[70%] h-full bg-[#7B6BF5] rounded-full pointer-events-none"></div>
       </div>
-      <span id="duration" class="text-[#6B6B8A] text-[1rem]">0:00</span>
     </div>
+
   </div>
 
-  <div class="hidden md:flex items-center gap-2 w-[20%] justify-end">
-    <button onclick="toggleMute()" class="text-[#6B6B8A] hover:text-white">
-      <img id="volIcon" class="w-6" src="/img/volume-solid-full.svg" alt=""/>
-    </button>
-    <div class="w-20 h-1 bg-[#1E1B3A] rounded-full relative cursor-pointer" id="volumeTrack" onclick="setVolume(event)">
-      <div id="volumeBar" class="w-[70%] h-full bg-[#7B6BF5] rounded-full pointer-events-none"></div>
+  <!-- Progress bar rij (alleen mobiel) -->
+  <div class="flex md:hidden items-center gap-2 pb-2">
+    <span id="currentTimeMobile" class="text-[#6B6B8A] text-xs w-8 text-right shrink-0">0:00</span>
+    <div class="flex-1 h-1 bg-[#1E1B3A] rounded-full relative cursor-pointer" id="progressTrackMobile" onclick="seekToMobile(event)">
+      <div id="progressBarMobile" class="w-0 h-full bg-[#7B6BF5] rounded-full pointer-events-none"></div>
     </div>
+    <span id="durationMobile" class="text-[#6B6B8A] text-xs w-8 shrink-0">0:00</span>
   </div>
+
 </footer>
 
 <script src="https://www.youtube.com/iframe_api"></script>

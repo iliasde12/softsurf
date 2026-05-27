@@ -1,49 +1,31 @@
 import express, { Router } from "express";
 import authSpotifyRouter from "./authSpotify";
 
-import {
-  GetPlaylistsSpotify,
-  GetPlaylist,
-  GetPlaylistSongs,
-  GetCurrentUser,
-  savePlaylistSongs,
-} from "../helpers/spotify";
-import {
-  GetSongs,
-  GetSongsByMood,
-  createPlaylist,
-  GetPlaylists,
-  GetPlaylistById,
-  GetSongsByIds,
-    userCollection,
-  GetFavorites,
-  editUser
-} from "../database/database";
+import { GetPlaylistsSpotify, GetPlaylist, GetPlaylistSongs, GetCurrentUser, savePlaylistSongs } from "../helpers/spotify";
+import { GetSongs, GetSongsByMood, createPlaylist, GetPlaylists, GetPlaylistById, GetSongsByIds, userCollection, GetFavorites, editUser } from "../database/database";
 import { moods } from "../interfaces/mood";
 
-import multer from 'multer';
-import path from 'path';
-import {ObjectId} from "mongodb";
+import multer from "multer";
+import path from "path";
+import { ObjectId } from "mongodb";
 
 const storage = multer.diskStorage({
-  destination: path.join(__dirname, '../public/uploads/'),
+  destination: path.join(__dirname, "../public/uploads/"),
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
     cb(null, Date.now() + ext);
-  }
+  },
 });
 
 const upload = multer({ storage });
 const router: Router = express.Router();
 
-
-
 router.get("/playlists", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
   const userId = req.session.user?._id;
 
-  let myPlaylists:any = [];
-  let myCustomPlaylists:any = [];
+  let myPlaylists: any = [];
+  let myCustomPlaylists: any = [];
 
   // Altijd uit database halen
   if (userId) {
@@ -52,14 +34,9 @@ router.get("/playlists", async (req, res) => {
 
   // Alleen spotify als er een token is
   if (accessToken) {
-    const [data, user] = await Promise.all([
-      GetPlaylistsSpotify(accessToken),
-      GetCurrentUser(accessToken),
-    ]);
+    const [data, user] = await Promise.all([GetPlaylistsSpotify(accessToken), GetCurrentUser(accessToken)]);
 
-    myPlaylists = (data ?? []).filter(
-        (p: { owner: { id: any } }) => p.owner.id === user.id,
-    );
+    myPlaylists = (data ?? []).filter((p: { owner: { id: any } }) => p.owner.id === user.id);
   }
 
   res.render("playlist", {
@@ -69,55 +46,42 @@ router.get("/playlists", async (req, res) => {
   });
 });
 
-router.post("/playlist/create", upload.single('image'), async (req, res) => {
+router.post("/playlist/create", upload.single("image"), async (req, res) => {
   const { name, description, songs } = req.body;
   const image = req.file ? req.file.filename : undefined;
   const songsList: ObjectId[] = songs
-      ? JSON.parse(songs).map((id: string) => new ObjectId(id))  // ← strings naar ObjectId
-      : [];
+    ? JSON.parse(songs).map((id: string) => new ObjectId(id)) // ← strings naar ObjectId
+    : [];
   const userId = req.session.user?._id;
 
-  console.log("songs: ", songsList);
-
-  if (!userId) return res.redirect('/login');
+  if (!userId) return res.redirect("/login");
 
   try {
-    await createPlaylist(
-        userId,
-        name,
-        description,
-        image,
-        songsList
-    );
+    await createPlaylist(userId, name, description, image, songsList);
   } catch (e) {
     console.log(e);
   }
 
-  res.redirect('/playlists');
+  res.redirect("/playlists");
 });
 
 router.get("/playlist/songs/:id", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
   const playlistId = req.params.id;
 
-
-  if (playlistId.startsWith('db_')) {
-    const realId = playlistId.replace('db_', '');
+  if (playlistId.startsWith("db_")) {
+    const realId = playlistId.replace("db_", "");
     const userId = new ObjectId(req.session.user?._id);
     const playlist = await GetPlaylistById(new ObjectId(realId), userId);
 
     const songIds = (playlist?.songs || []) as unknown as ObjectId[];
-    //data uit databnak moet naam veranderen later
     const songs = await GetSongsByIds(userId, songIds);
-
-    //console.log(songs);
 
     return res.render("playlistsongs", { songs, playlist, user: req.session.user });
   }
 
   const songs = await GetPlaylistSongs(accessToken, playlistId);
   const playlist = await GetPlaylist(accessToken, playlistId);
-  console.log(songs);
 
   res.render("playlistsongs", { songs, playlist });
 });
@@ -126,22 +90,14 @@ router.get("/account", async (req, res) => {
   const userId = new ObjectId(req.session.user?._id);
   const accessToken = res.locals.spotifyToken;
 
-  const [mongoPlaylists, favorites] = await Promise.all([
-    GetPlaylists(userId),
-    GetFavorites(userId),
-  ]);
+  const [mongoPlaylists, favorites] = await Promise.all([GetPlaylists(userId), GetFavorites(userId)]);
 
   let spotifyPlaylistCount = 0;
 
   if (accessToken) {
-    const [data, spotifyUser] = await Promise.all([
-      GetPlaylistsSpotify(accessToken),
-      GetCurrentUser(accessToken),
-    ]);
+    const [data, spotifyUser] = await Promise.all([GetPlaylistsSpotify(accessToken), GetCurrentUser(accessToken)]);
 
-    const myPlaylists = (data ?? []).filter(
-        (p: { owner: { id: any } }) => p.owner.id === spotifyUser.id
-    );
+    const myPlaylists = (data ?? []).filter((p: { owner: { id: any } }) => p.owner.id === spotifyUser.id);
 
     spotifyPlaylistCount = myPlaylists.length;
   }
@@ -162,7 +118,10 @@ router.post("/account/update", async (req, res) => {
   try {
     await editUser(userId, username, email);
     req.session.user = {
-      ...req.session.user, username, email, updatedAt: new Date()
+      ...req.session.user,
+      username,
+      email,
+      updatedAt: new Date(),
     };
     //kan flash message voegen voor return
     res.redirect("/account");
@@ -171,7 +130,7 @@ router.post("/account/update", async (req, res) => {
   }
 });
 
-//passowrd
+//password
 router.post("/account/password", async (req, res) => {
   const userId = new ObjectId(req.session.user?._id);
   const { wachtwoord, herhaalWachtwoord } = req.body;
@@ -186,11 +145,10 @@ router.post("/account/password", async (req, res) => {
   }
 });
 
-
-router.get('/songs', async (req, res) => {
+router.get("/songs", async (req, res) => {
   const userId = req.session.user?._id;
   const songs = await GetSongs(userId);
-  res.render('songs', { songs, moods, currentPath: '/songs', user: req.session.user });
+  res.render("songs", { songs, moods, currentPath: "/songs", user: req.session.user });
 });
 
 router.get("/collectie", async (req, res) => {
@@ -226,10 +184,6 @@ router.get("/search", (req, res) => {
   res.render("search");
 });
 
-
-
-//tijdelijke router om songs van api op teslagen in mongodb
-//je moet gewoon id meegeven van een playlist waar wij aan kunnen
 router.get("/playlist/:id/save", async (req, res) => {
   const accessToken = res.locals.spotifyToken;
   const playlistId = req.params.id;
@@ -239,29 +193,27 @@ router.get("/playlist/:id/save", async (req, res) => {
   res.redirect(`/playlist/songs/${req.params.id}`);
 });
 
-
 //leaderboard voor punten
 router.get("/leaderboard", async (req, res) => {
   const userId = req.session.user?._id;
   if (!userId) return res.redirect("/login");
 
   try {
-    const topUsers = await userCollection.find(
+    const topUsers = await userCollection
+      .find(
         {},
         {
           sort: { totalScore: -1 },
           limit: 10,
-          projection: { username: 1, avatar: 1, totalScore: 1, gamesPlayed: 1, bestStreak: 1 }
-        }
-    ).toArray();
+          projection: { username: 1, avatar: 1, totalScore: 1, gamesPlayed: 1, bestStreak: 1 },
+        },
+      )
+      .toArray();
 
-    const currentUser = await userCollection.findOne(
-        { _id: new ObjectId(userId) },
-        { projection: { username: 1, avatar: 1, totalScore: 1, gamesPlayed: 1, bestStreak: 1 } }
-    );
+    const currentUser = await userCollection.findOne({ _id: new ObjectId(userId) }, { projection: { username: 1, avatar: 1, totalScore: 1, gamesPlayed: 1, bestStreak: 1 } });
 
     // Rank van huidige gebruiker berekenen
-    const userRank = await userCollection.countDocuments({ totalScore: { $gt: currentUser?.totalScore ?? 0 } }) + 1;
+    const userRank = (await userCollection.countDocuments({ totalScore: { $gt: currentUser?.totalScore ?? 0 } })) + 1;
 
     return res.render("leaderboard", {
       topUsers,

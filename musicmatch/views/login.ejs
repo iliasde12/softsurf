@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="nl-BE">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="css/register.css" />
-    <link rel="stylesheet" href="css/login.css" />
-    <link rel="icon" type="image/x-icon" href="/img/softsurf_logo.svg" />
-    <title>SoftSurf</title>
-    <script src="js/login.js" type="module" async></script>
-  </head>
-  <body>
+<%- include('partials/head') %>
+<link rel="stylesheet" href="/css/register.css" />
+<link rel="stylesheet" href="/css/login.css" />
+<script src="/js/login.js" type="module" async></script>
+<body>
     <!-- NAVBAR -->
     <header
       class="sticky top-0 z-50 flex items-center px-6 py-2 border-b border-white/[0.07] bg-[#0b0c1e]/85 backdrop-blur-md animate-slide-down"
@@ -69,7 +61,5 @@
         </form>
       </div>
     </main>
-    <aside></aside>
-    <footer></footer>
   </body>
 </html>
