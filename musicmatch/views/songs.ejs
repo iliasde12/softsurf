@@ -96,15 +96,12 @@
       </main>
     </div>
 
-    <!-- FOOTER -->
     <script>
       document.querySelectorAll('.playable-song').forEach(card => {
         card.addEventListener('click', async () => {
           const songId = card.dataset.songId;
           const name = card.dataset.songName;
           const artist = card.dataset.songArtist;
-
-          console.log(`${name}: ${artist}`);
 
           const res = await fetch(`/api/song/${songId}/playable`);
           const playable = await res.json();
