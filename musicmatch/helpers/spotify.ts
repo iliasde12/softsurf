@@ -163,3 +163,59 @@ export async function searchTracks(suggestions: { title: string; artist: string 
     })),
   );
 }
+
+export async function GetArtistImageSpotify(accessToken: string, artistName: string): Promise<string | null> {
+  try {
+    const res = await fetch(
+        `https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist&limit=1`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        }
+    );
+    const data = await res.json();
+    const image = data.artists?.items?.[0]?.images?.[0]?.url ?? null;
+    return image;
+  } catch (e) {
+    console.error("GetArtistImageSpotify error:", e);
+    return null;
+  }
+}
+
+
+export async function GetTrackDetails(accessToken: string, trackId: string) {
+  try {
+    const [track, artist] = await Promise.all([
+      fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      }).then(r => r.json()),
+      // audio features voor extra stats
+      fetch(`https://api.spotify.com/v1/audio-features/${trackId}`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      }).then(r => r.json()),
+    ]);
+
+    const artistId = track.artists?.[0]?.id;
+    const artistData = artistId
+        ? await fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        }).then(r => r.json())
+        : null;
+
+    return {
+      id: track.id,
+      name: track.name,
+      artist: track.artists?.map((a: any) => a.name).join(", "),
+      album: track.album?.name,
+      year: track.album?.release_date?.split("-")[0],
+      image: track.album?.images?.[0]?.url ?? null,
+      popularity: track.popularity,
+      duration: Math.floor(track.duration_ms / 60000) + ":" + String(Math.floor((track.duration_ms % 60000) / 1000)).padStart(2, "0"),
+      duration_ms: track.duration_ms,
+      genre: artistData?.genres?.[0] ?? "Onbekend",
+      explicit: track.explicit,
+    };
+  } catch (e) {
+    console.error("GetTrackDetails error:", e);
+    return null;
+  }
+}
