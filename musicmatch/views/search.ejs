@@ -1,47 +1,4 @@
-<!doctype html>
-<html lang="nl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="./img/softsurf_logo.svg" />
-    <script src="js/search.js" defer></script>
-    <title>Zoeken</title>
-
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ['"halyard-display"', "sans-serif"],
-              body: ['"halyard-text"', "sans-serif"],
-            },
-            colors: {
-              base: "#0f0e17",
-              surface: "#1a1828",
-              card: "#221f33",
-              border: "#2e2b42",
-              accent: "#7c6aff",
-              green: "#4ade80",
-              red: "#f87171",
-              muted: "#6b6889",
-              light: "#e8e6f0",
-            },
-            keyframes: {
-              fadeUp: {
-                "0%": { opacity: "0", transform: "translateY(14px)" },
-                "100%": { opacity: "1", transform: "translateY(0)" },
-              },
-            },
-            animation: {
-              fadeUp: "fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both",
-            },
-          },
-        },
-      };
-    </script>
-  </head>
+<%- include('partials/head') %>
 
   <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
     <!-- HEADER -->
