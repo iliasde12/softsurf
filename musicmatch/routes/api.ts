@@ -1,24 +1,23 @@
 import { searchSongsDbSpotify } from "../helpers/search";
-import express, { Router } from "express";
-import {
-  CreateSong,
-  playlistCollection,
-  GetPlaylists,
-  songPlayableCollection,
-  GetSongsByIds,
-  CreateSongPlayable,
-  createPlaylist,
-  spotifySongCollection,
-  userCollection,
-  gameSessionCollection,
-  guessCollection,
-  ToggleFavorite,
-  GetFavorites,
-  UpdateSongMood,
-} from "../database/database";
+import express, {Router} from "express";
+import{ CreateSong,
+    playlistCollection,
+    GetPlaylists,
+    songPlayableCollection,
+    GetSongsByIds,
+    CreateSongPlayable,
+    createPlaylist ,
+    spotifySongCollection,
+    userCollection,
+    gameSessionCollection,
+    guessCollection,
+    ToggleFavorite,
+    GetFavorites,
+    UpdateSongMood} from "../database/database";
+import {  GetArtistLastFm , SearchArtistLastFm } from "../helpers/lastFm";
 import { moods } from "../interfaces/mood";
-import { GetTrackSpotify, searchTracks } from "../helpers/spotify";
-import { ObjectId } from "mongodb";
+import { GetTrackSpotify,searchTracks } from "../helpers/spotify";
+import { ObjectId  } from "mongodb";
 import { generatePlaylistSuggestions, generatePlaylistName } from "../helpers/claude";
 import { SpotifyTrack } from "../interfaces/index";
 import path from "path";
@@ -399,4 +398,20 @@ router.post("/song/:id/favorite", async (req, res) => {
   res.json({ isFavorite });
 });
 
+
+//voor de vergelijkingen
+// EERST zoek route
+router.get("/vergelijk/artiest/zoek", async (req, res) => {
+    const query = req.query.q as string;
+    if (!query) return res.json([]);
+    const artists = await SearchArtistLastFm(query);
+    res.json(artists);
+});
+
+// DAN pas de :name route
+router.get("/vergelijk/artiest/:name", async (req, res) => {
+    const artistName = decodeURIComponent(req.params.name);
+    const data = await GetArtistLastFm(artistName);
+    res.json(data);
+});
 export default router;
