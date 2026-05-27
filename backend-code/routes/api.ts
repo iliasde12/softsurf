@@ -382,15 +382,33 @@ router.post("/game/session/end", async (req, res) => {
 
 
 //favoriet
+//moet voor spotify voegen
 router.post('/song/:id/favorite', async (req, res) => {
     const userId = req.session.user?._id;
     if (!userId) return res.status(401).json({ error: 'Niet ingelogd' });
 
-    const songId = new ObjectId(req.params.id);
-    const isFavorite = await ToggleFavorite(new ObjectId(userId), songId);
+    const rawId = req.params.id;
+    const isSpotify = req.body.isSpotify ?? false;
+    let songId: ObjectId;
 
+    if (isSpotify) {
+        const accessToken = res.locals.spotifyToken;
+        if (!accessToken) return res.status(401).json({ error: 'Geen access token' });
+        const spotifySong = await GetTrackSpotify(accessToken, rawId);
+        if (!spotifySong) return res.status(404).json({ error: 'Song niet gevonden' });
+        const insertedId = await CreateSong(spotifySong);
+        console.log("insertedId:", insertedId);
+        console.log("spotifySong:", JSON.stringify(spotifySong, null, 2));
+        if (!insertedId) return res.status(500).json({ error: 'Song opslaan mislukt' });
+        songId = insertedId;
+    } else {
+        songId = new ObjectId(rawId);
+    }
+
+    const isFavorite = await ToggleFavorite(new ObjectId(userId), songId);
     res.json({ isFavorite });
 });
+
 
 
 export default router;
