@@ -1,0 +1,12 @@
+# Dependencies
+node_modules
+
+# Environment secrets — NEVER commit this
+.env
+
+# User uploads (runtime files, not source)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Tailwind build output
+public/css/output.css
