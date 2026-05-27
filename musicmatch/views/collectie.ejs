@@ -2,12 +2,7 @@
 <script src="/js/collectie.js" defer></script>
 
   <body class="flex flex-col h-screen bg-[#0D0B1E] text-white overflow-hidden">
-    <!-- HEADER -->
-    <header class="bg-[#100E22] h-16 flex items-center px-4 w-full shrink-0 justify-between md:justify-start">
-      <button class="md:hidden text-white text-xl">☰</button>
-      <img src="/img/softsurf_logo.svg" alt="softsurf_logo" class="w-28 md:w-30 mx-auto md:mx-0" />
-      <div class="md:hidden w-6"></div>
-    </header>
+    <%- include('partials/header') %>
 
     <div class="flex flex-1 overflow-hidden">
       <%- include('partials/aside') %>
