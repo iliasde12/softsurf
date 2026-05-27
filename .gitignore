@@ -1,7 +1,7 @@
-/.idea
+.idea/
 node_modules# IDE
-/.idea
-/.vscode
+
+.vscode/
 *.code-workspace
 
 # OS
