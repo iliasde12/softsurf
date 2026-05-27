@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
+
     const data = await res.json();
     return data.isFavorite;
   }
