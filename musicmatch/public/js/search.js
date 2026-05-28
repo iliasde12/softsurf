@@ -15,11 +15,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const rasterBtn = document.getElementById("rasterBtn");
 
     if (viewMode === "lijst") {
-      lijstBtn.className = "bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full";
-      rasterBtn.className = "border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition";
+      lijstBtn.className =
+        "bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full";
+      rasterBtn.className =
+        "border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition";
     } else {
-      rasterBtn.className = "bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full";
-      lijstBtn.className = "border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition";
+      rasterBtn.className =
+        "bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full";
+      lijstBtn.className =
+        "border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition";
     }
   }
 
@@ -41,12 +45,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchQuery = query || "Top hits 2026";
 
     const newUrl = query
-        ? `${window.location.pathname}?q=${encodeURIComponent(query)}`
-        : window.location.pathname;
+      ? `${window.location.pathname}?q=${encodeURIComponent(query)}`
+      : window.location.pathname;
     window.history.replaceState(null, "", newUrl);
 
     try {
-      const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+      const response = await fetch(
+        `/api/search?q=${encodeURIComponent(searchQuery)}`,
+      );
       const { fromDB, fromSpotify } = await response.json();
 
       const normalizedDB = fromDB.map((song) => ({
@@ -56,7 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
         popularity: song.popularity ?? 0,
         artists: [{ name: song.album?.artists?.[0]?.name ?? "Onbekend" }],
         album: {
-          images: [{ url: song.album?.images?.[0]?.url ?? "./img/default.svg" }],
+          images: [
+            { url: song.album?.images?.[0]?.url ?? "./img/default.svg" },
+          ],
           release_date: song.album?.release_date ?? "",
         },
       }));
@@ -134,7 +142,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (viewMode === "raster") {
         const card = document.createElement("div");
-        card.className = "bg-[#1E1B3A] rounded-xl p-3 flex flex-col gap-2 cursor-pointer hover:bg-[#2A2750] transition";
+        card.className =
+          "bg-[#1E1B3A] rounded-xl p-3 flex flex-col gap-2 cursor-pointer hover:bg-[#2A2750] transition";
         card.dataset.songId = trackId;
         card.dataset.songName = song.name;
         card.dataset.songArtist = artistName;
@@ -168,10 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
         bottom.append(addBtn, heart);
         card.append(albumArt, trackName, artistEl, bottom);
         containerPlaylist.appendChild(card);
-
       } else {
         const trackContainer = document.createElement("div");
-        trackContainer.className = `grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center ${index % 2 === 0 ? "bg-[#1E1B3A]" : ""} hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition`;
+        trackContainer.className = `grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_40px] gap-2 items-center ${index % 2 === 0 ? "bg-[#1E1B3A]" : ""} hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition`;
         trackContainer.dataset.songId = trackId;
         trackContainer.dataset.songName = song.name;
         trackContainer.dataset.songArtist = artistName;
@@ -212,8 +220,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const date = document.createElement("span");
         date.className = "hidden md:block text-[#6B6B8A] text-xs";
         date.textContent = song.album.release_date
-            ? new Date(song.album.release_date).toLocaleDateString("nl-NL", { day: "numeric", month: "short" })
-            : "";
+          ? new Date(song.album.release_date).toLocaleDateString("nl-NL", {
+              day: "numeric",
+              month: "short",
+            })
+          : "";
 
         const popularity = document.createElement("span");
         popularity.className = "hidden md:block text-[#A0A0C0] text-xs";
@@ -228,23 +239,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Event delegation voor player
-  document.getElementById("containerSongs").addEventListener("click", async (e) => {
-    if (e.target.closest("[data-add-btn]")) return;
+  document
+    .getElementById("containerSongs")
+    .addEventListener("click", async (e) => {
+      if (e.target.closest("[data-add-btn]")) return;
 
-    const card = e.target.closest("[data-song-id]");
-    if (!card) return;
+      const card = e.target.closest("[data-song-id]");
+      if (!card) return;
 
-    const songId = card.dataset.songId;
-    const name = card.dataset.songName;
-    const artist = card.dataset.songArtist;
+      const songId = card.dataset.songId;
+      const name = card.dataset.songName;
+      const artist = card.dataset.songArtist;
 
-    const res = await fetch(`/api/song/${songId}/playable`);
-    const playable = await res.json();
+      const res = await fetch(`/api/song/${songId}/playable`);
+      const playable = await res.json();
 
-    if (playable.youtubeId) {
-      playSong(playable.youtubeId, name, artist);
-    }
-  });
+      if (playable.youtubeId) {
+        playSong(playable.youtubeId, name, artist);
+      }
+    });
 
   async function openPlaylistModal(trackId) {
     const res = await fetch("/api/playlists");
@@ -254,7 +267,8 @@ document.addEventListener("DOMContentLoaded", () => {
     list.innerHTML = "";
     playlists.forEach((playlist) => {
       const div = document.createElement("div");
-      div.className = "text-white bg-[#2A2750] rounded-xl px-4 py-2 cursor-pointer hover:bg-[#33306b]";
+      div.className =
+        "text-white bg-[#2A2750] rounded-xl px-4 py-2 cursor-pointer hover:bg-[#33306b]";
       div.textContent = playlist.name;
       div.addEventListener("click", async () => {
         await addSongToPlaylist(playlist._id, trackId);
@@ -302,9 +316,11 @@ document.addEventListener("DOMContentLoaded", () => {
     shazamResult = null;
     stopShazamRecording();
     shazamRing.textContent = "🎵";
-    shazamRing.className = "w-20 h-20 rounded-full border-2 border-accent/30 bg-accent/10 flex items-center justify-center mx-auto mb-5 text-3xl transition-all duration-300";
+    shazamRing.className =
+      "w-20 h-20 rounded-full border-2 border-accent/30 bg-accent/10 flex items-center justify-center mx-auto mb-5 text-3xl transition-all duration-300";
     shazamTitle.textContent = "Muziek herkennen";
-    shazamSub.textContent = "Druk op starten en houd je apparaat bij de muziek.";
+    shazamSub.textContent =
+      "Druk op starten en houd je apparaat bij de muziek.";
     shazamTimerEl.classList.add("hidden");
     shazamResultBox.classList.add("hidden");
     shazamStartBtn.classList.remove("hidden");
@@ -314,9 +330,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setShazamRing(state) {
-    const base = "w-20 h-20 rounded-full border-2 flex items-center justify-center mx-auto mb-5 text-3xl transition-all duration-300";
+    const base =
+      "w-20 h-20 rounded-full border-2 flex items-center justify-center mx-auto mb-5 text-3xl transition-all duration-300";
     if (state === "listening") {
-      shazamRing.className = base + " border-pink-500 bg-pink-500/10 animate-pulse";
+      shazamRing.className =
+        base + " border-pink-500 bg-pink-500/10 animate-pulse";
       shazamRing.textContent = "🎤";
     } else if (state === "processing") {
       shazamRing.className = base + " border-yellow-500 bg-yellow-500/10";
@@ -349,9 +367,10 @@ document.addEventListener("DOMContentLoaded", () => {
   async function startShazam() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mimeType = ["audio/webm;codecs=opus", "audio/webm", "audio/ogg", "audio/mp4"].find(
-          (m) => MediaRecorder.isTypeSupported(m)
-      ) || "";
+      const mimeType =
+        ["audio/webm;codecs=opus", "audio/webm", "audio/ogg", "audio/mp4"].find(
+          (m) => MediaRecorder.isTypeSupported(m),
+        ) || "";
       shazamRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
       shazamChunks = [];
       shazamRecorder.ondataavailable = (e) => {
@@ -362,7 +381,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setShazamRing("listening");
       shazamTitle.textContent = "Luisteren...";
-      shazamSub.textContent = "Houd je apparaat bij de muziek. Stopt na 4 seconden.";
+      shazamSub.textContent =
+        "Houd je apparaat bij de muziek. Stopt na 4 seconden.";
       shazamTimerEl.classList.remove("hidden");
       shazamStartBtn.classList.add("hidden");
 
@@ -374,7 +394,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (shazamSeconds >= 4) stopShazamRecording();
       }, 1000);
     } catch (e) {
-      shazamSub.textContent = "Microfoon toegang geweigerd. Sta dit toe in je browser.";
+      shazamSub.textContent =
+        "Microfoon toegang geweigerd. Sta dit toe in je browser.";
     }
   }
 
@@ -396,7 +417,9 @@ document.addEventListener("DOMContentLoaded", () => {
     shazamTimerEl.classList.add("hidden");
 
     try {
-      const blob = new Blob(shazamChunks, { type: shazamRecorder.mimeType || "audio/webm" });
+      const blob = new Blob(shazamChunks, {
+        type: shazamRecorder.mimeType || "audio/webm",
+      });
       const arrayBuffer = await blob.arrayBuffer();
 
       const audioCtx = new AudioContext({ sampleRate: 44100 });
@@ -406,7 +429,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const bytes = new Uint8Array(pcmBuffer);
       let binary = "";
-      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+      for (let i = 0; i < bytes.length; i++)
+        binary += String.fromCharCode(bytes[i]);
       const base64Audio = btoa(binary);
 
       const res = await fetch("/api/shazam/detect", {
@@ -443,7 +467,8 @@ document.addEventListener("DOMContentLoaded", () => {
         setShazamRing("idle");
       } else {
         shazamTitle.textContent = "Niet herkend";
-        shazamSub.textContent = "Probeer opnieuw met de muziek dichter bij je microfoon.";
+        shazamSub.textContent =
+          "Probeer opnieuw met de muziek dichter bij je microfoon.";
         shazamStartBtn.classList.remove("hidden");
         shazamStartBtn.textContent = "↺ Opnieuw";
         shazamStartBtn.onclick = shazamReset;
@@ -451,7 +476,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (err) {
       shazamTitle.textContent = "Fout opgetreden";
-      shazamSub.textContent = "Controleer je internetverbinding en probeer opnieuw.";
+      shazamSub.textContent =
+        "Controleer je internetverbinding en probeer opnieuw.";
       shazamStartBtn.classList.remove("hidden");
       shazamStartBtn.textContent = "↺ Opnieuw";
       shazamStartBtn.onclick = shazamReset;

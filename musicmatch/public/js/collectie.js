@@ -40,11 +40,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateViewButtons() {
     if (viewMode === "lijst") {
-      lijstBtn.className = "bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full";
-      rasterBtn.className = "border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition";
+      lijstBtn.className =
+        "bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full";
+      rasterBtn.className =
+        "border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition";
     } else {
-      rasterBtn.className = "bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full";
-      lijstBtn.className = "border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition";
+      rasterBtn.className =
+        "bg-[#7B6BF5] text-white text-xs px-3 py-1 rounded-full";
+      lijstBtn.className =
+        "border border-[#3A3760] text-[#A0A0C0] text-xs px-3 py-1 rounded-full hover:bg-[#1E1B3A] transition";
     }
   }
 
@@ -63,9 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (searchInput) {
     searchInput.addEventListener("input", () => {
       const q = searchInput.value.toLowerCase();
-      const filtered = allSongs.filter(song =>
+      const filtered = allSongs.filter(
+        (song) =>
           song.name?.toLowerCase().includes(q) ||
-          song.album?.artists?.[0]?.name?.toLowerCase().includes(q)
+          song.album?.artists?.[0]?.name?.toLowerCase().includes(q),
       );
       showSongs(filtered);
     });
@@ -73,7 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function buildMoodSelect(song) {
     const select = document.createElement("select");
-    select.className = "bg-[#2A2750] text-white text-xs rounded-full px-2 py-1 border-none cursor-pointer";
+    select.className =
+      "bg-[#2A2750] text-white text-xs rounded-full px-2 py-1 border-none cursor-pointer";
 
     select.addEventListener("click", (e) => e.stopPropagation());
     select.addEventListener("change", () => updateMood(song._id, select.value));
@@ -101,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
     containerPlaylist.textContent = "";
 
     if (viewMode === "raster") {
-      containerPlaylist.className = "grid grid-cols-2 md:grid-cols-4 gap-4 animate-fadeUp";
+      containerPlaylist.className =
+        "grid grid-cols-2 md:grid-cols-4 gap-4 animate-fadeUp";
     } else {
       containerPlaylist.className = "flex flex-col gap-1 animate-fadeUp";
     }
@@ -121,22 +128,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (viewMode === "raster") {
         const card = document.createElement("div");
-        card.className = "bg-[#1E1B3A] rounded-xl p-3 flex flex-col gap-2 cursor-pointer hover:bg-[#2A2750] transition";
+        card.className =
+          "bg-[#1E1B3A] rounded-xl p-3 flex flex-col gap-2 cursor-pointer hover:bg-[#2A2750] transition";
 
         card.addEventListener("click", async () => {
-              const songId = song._id;
-              const name = song.name;
-              const artist = song.artists?.[0]?.name ?? "Onbekend";
+          const songId = song._id;
+          const name = song.name;
+          const artist = song.artists?.[0]?.name ?? "Onbekend";
 
-              console.log(`${name}: ${artist}`);
+          console.log(`${name}: ${artist}`);
 
-              const res = await fetch(`/api/song/${songId}/playable`);
-              const playable = await res.json();
+          const res = await fetch(`/api/song/${songId}/playable`);
+          const playable = await res.json();
 
-              if (playable.youtubeId) {
-                playSong(playable.youtubeId, name, artist);
-              }
-        })
+          if (playable.youtubeId) {
+            playSong(playable.youtubeId, name, artist);
+          }
+        });
 
         const albumArt = document.createElement("img");
         albumArt.className = "w-full aspect-square rounded-lg object-cover";
@@ -172,11 +180,10 @@ document.addEventListener("DOMContentLoaded", () => {
         bottom.append(/*popularity,*/ heart);
         card.append(albumArt, trackName, artistEl, moodSelect, bottom);
         containerPlaylist.appendChild(card);
-
       } else {
         const trackContainer = document.createElement("div");
-        trackContainer.className = `grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_80px_40px] gap-2 items-center ${
-            index % 2 === 0 ? "bg-[#1E1B3A]" : ""
+        trackContainer.className = `grid grid-cols-[40px_1fr_40px] md:grid-cols-[40px_1fr_160px_100px_40px] gap-2 items-center ${
+          index % 2 === 0 ? "bg-[#1E1B3A]" : ""
         } hover:bg-[#1E1B3A] rounded-xl px-2 py-2 cursor-pointer transition`;
 
         trackContainer.addEventListener("click", async () => {
@@ -192,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (playable.youtubeId) {
             playSong(playable.youtubeId, name, artist);
           }
-        })
+        });
 
         const number = document.createElement("span");
         number.className = "text-[#6B6B8A] text-sm text-center";
@@ -226,8 +233,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const date = document.createElement("span");
         date.className = "hidden md:block text-[#6B6B8A] text-xs";
         date.textContent = release
-            ? new Date(release).toLocaleDateString("nl-NL", { day: "numeric", month: "short" })
-            : "";
+          ? new Date(release).toLocaleDateString("nl-NL", {
+              day: "numeric",
+              month: "short",
+            })
+          : "";
 
         /*const popularity = document.createElement("span");
         popularity.className = "hidden md:block text-[#A0A0C0] text-xs";
@@ -240,7 +250,13 @@ document.addEventListener("DOMContentLoaded", () => {
         //nieuwe die werkt
         const heart = buildHeart(song);
 
-        trackContainer.append(number, infoWrapper, labelWrapper, date, /*popularity,*/ heart);
+        trackContainer.append(
+          number,
+          infoWrapper,
+          labelWrapper,
+          date,
+          /*popularity,*/ heart,
+        );
         containerPlaylist.appendChild(trackContainer);
       }
     });
@@ -265,7 +281,6 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify({ mood }),
     });
   }
-
 
   updateViewButtons();
   fetchCollectie();
