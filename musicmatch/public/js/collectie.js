@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
         number.textContent = String(index + 1);
 
         const infoWrapper = document.createElement("div");
-        infoWrapper.className = "flex items-center gap-3";
+        infoWrapper.className = "flex items-center gap-3 min-w-0";
 
         const albumArt = document.createElement("img");
         albumArt.className = "w-9 h-9 rounded-lg object-cover shrink-0";
@@ -214,13 +214,14 @@ document.addEventListener("DOMContentLoaded", () => {
         albumArt.alt = song.name ?? "";
 
         const textDiv = document.createElement("div");
+        textDiv.className = "min-w-0";
 
         const trackName = document.createElement("p");
-        trackName.className = "text-white text-sm font-semibold";
+        trackName.className = "text-white text-sm font-semibold truncate";
         trackName.textContent = song.name ?? "";
 
         const artistEl = document.createElement("p");
-        artistEl.className = "text-[#6B6B8A] text-xs";
+        artistEl.className = "text-[#6B6B8A] text-xs truncate";
         artistEl.textContent = artistName;
 
         textDiv.append(trackName, artistEl);
